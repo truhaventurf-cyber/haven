@@ -1,713 +1,1947 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Turf Installation Cost Calculator</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biologics CRM</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #21262d;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --accent: #2f81f7;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+  --purple: #bc8cff;
+  --teal: #56d364;
+  --radius: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;min-height:100vh}
 
-    :root {
-      --green:    #2d7a3a;
-      --green-lt: #3fa050;
-      --green-bg: #f0f7f1;
-      --gray-bg:  #f5f5f5;
-      --border:   #dce5dc;
-      --text:     #1a1a1a;
-      --muted:    #666;
-      --radius:   8px;
-      --shadow:   0 2px 8px rgba(0,0,0,.10);
-    }
+/* ── Header ── */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.header-logo{font-size:22px;flex-shrink:0}
+#companyNameDisplay{font-size:17px;font-weight:700;cursor:pointer;user-select:none}
+#companyNameDisplay:hover{color:var(--accent)}
+#companyNameInput{font-size:17px;font-weight:700;background:var(--surface2);border:1px solid var(--accent);color:var(--text);border-radius:var(--radius);padding:2px 8px;display:none;width:280px}
+.header-spacer{flex:1}
+.header-badge{background:rgba(47,129,247,0.15);color:var(--accent);border:1px solid rgba(47,129,247,0.3);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:500}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--gray-bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 24px 16px 64px;
-    }
+/* ── Nav ── */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;padding:0 20px}
+.nav::-webkit-scrollbar{display:none}
+.nav-tab{padding:11px 16px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);font-weight:500;white-space:nowrap;transition:color .15s;font-size:13px}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 
-    header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    header h1 {
-      font-size: 2rem;
-      color: var(--green);
-      letter-spacing: -.5px;
-    }
-    header p {
-      color: var(--muted);
-      margin-top: 6px;
-    }
+/* ── Layout ── */
+.main{padding:20px;max-width:1440px;margin:0 auto}
+.page{display:none}
+.page.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:14px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:960px){.grid-3,.grid-4{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.main{padding:10px}}
 
-    .layout {
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-      align-items: start;
-    }
+/* ── Forms ── */
+.form-group{margin-bottom:12px}
+label{display:block;margin-bottom:4px;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.6px;font-weight:500}
+input,select,textarea{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);padding:8px 10px;font-size:14px;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+textarea{resize:vertical;min-height:70px;font-family:inherit}
+select option{background:var(--surface2)}
+.form-row{display:flex;gap:10px;flex-wrap:wrap}
+.form-row .form-group{flex:1;min-width:120px}
 
-    @media (max-width: 820px) {
-      .layout { grid-template-columns: 1fr; }
-    }
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:var(--radius);border:none;cursor:pointer;font-size:13px;font-weight:500;transition:opacity .15s;white-space:nowrap}
+.btn:hover{opacity:.85}
+.btn:active{opacity:.7}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-success{background:var(--green);color:#fff}
+.btn-danger{background:var(--red);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-ghost{background:none;color:var(--text2);border:none;padding:4px 6px}
+.btn-ghost:hover{color:var(--text)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-xs{padding:2px 8px;font-size:11px}
 
-    .card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow);
-    }
+/* ── Tables ── */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:9px 12px;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap;font-weight:500}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:13px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.025)}
+.num{text-align:right;font-variant-numeric:tabular-nums}
 
-    .card h2 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      color: var(--green);
-      margin-bottom: 18px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--green-bg);
-    }
+/* ── Badges ── */
+.badge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.badge-green{background:rgba(63,185,80,.15);color:var(--green)}
+.badge-yellow{background:rgba(210,153,34,.15);color:var(--yellow)}
+.badge-red{background:rgba(248,81,73,.15);color:var(--red)}
+.badge-blue{background:rgba(47,129,247,.15);color:var(--accent)}
+.badge-purple{background:rgba(188,140,255,.15);color:var(--purple)}
+.badge-gray{background:rgba(139,148,158,.15);color:var(--text2)}
 
-    .field {
-      margin-bottom: 16px;
-    }
-    .field label {
-      display: block;
-      font-size: .85rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: .3px;
-    }
-    .field input,
-    .field select {
-      width: 100%;
-      padding: 9px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: .95rem;
-      transition: border-color .15s;
-      background: #fff;
-    }
-    .field input:focus,
-    .field select:focus {
-      outline: none;
-      border-color: var(--green-lt);
-      box-shadow: 0 0 0 3px rgba(63,160,80,.12);
-    }
-    .field .hint {
-      font-size: .78rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+/* ── Priority row borders ── */
+tr.pr-red td:first-child{border-left:3px solid var(--red)}
+tr.pr-yellow td:first-child{border-left:3px solid var(--yellow)}
+tr.pr-green td:first-child{border-left:3px solid var(--green)}
 
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+/* ── Metrics ── */
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.metric-label{color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.metric-value{font-size:26px;font-weight:700;line-height:1}
+.metric-sub{font-size:11px;color:var(--text2);margin-top:4px}
 
-    .section-divider {
-      margin: 8px 0 18px;
-      border: none;
-      border-top: 1px solid var(--border);
-    }
+/* ── Stat strip ── */
+.stat-strip{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.stat-pill{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 14px;font-size:12px;white-space:nowrap}
+.stat-pill strong{font-size:16px;font-weight:700;margin-right:4px}
+.stat-pill.red{border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.06)}
+.stat-pill.yellow{border-color:rgba(210,153,34,.4);background:rgba(210,153,34,.06)}
+.stat-pill.green{border-color:rgba(63,185,80,.4);background:rgba(63,185,80,.06)}
 
-    /* toggle-able advanced rows */
-    .toggle-btn {
-      background: none;
-      border: none;
-      color: var(--green);
-      font-size: .85rem;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 0;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .toggle-btn::before {
-      content: attr(data-icon);
-      font-size: 1rem;
-    }
-    .collapsible { display: none; }
-    .collapsible.open { display: block; }
+/* ── Filters ── */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end}
+.filters .form-group{margin-bottom:0;min-width:130px}
+.search-wrap{position:relative}
+.search-wrap input{padding-left:30px}
+.search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text2);pointer-events:none;font-size:13px}
 
-    /* Results panel */
-    .results-panel {
-      position: sticky;
-      top: 24px;
-    }
+/* ── Section header ── */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.section-title{font-size:17px;font-weight:600}
 
-    .line-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--green-bg);
-      font-size: .92rem;
-    }
-    .line-item:last-child { border-bottom: none; }
-    .line-item .label { color: var(--muted); }
-    .line-item .amount { font-weight: 600; }
-    .line-item.zero .amount { color: #bbb; }
+/* ── Modals ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;display:flex;flex-direction:column}
+.modal-lg{max-width:740px}
+.modal-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.modal-title{font-size:15px;font-weight:600}
+.modal-close{background:none;border:none;color:var(--text2);cursor:pointer;font-size:18px;line-height:1;padding:2px 4px}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:18px;overflow-y:auto}
+.modal-footer{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
 
-    .subtotal {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-top: 2px solid var(--border);
-      margin-top: 4px;
-      font-weight: 700;
-      font-size: 1rem;
-    }
+/* ── Toast ── */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 18px;z-index:2000;transform:translateY(70px);opacity:0;transition:transform .25s,opacity .25s;pointer-events:none;max-width:320px;font-size:13px}
+#toast.show{transform:translateY(0);opacity:1}
+#toast.success{border-color:var(--green)}
+#toast.error{border-color:var(--red)}
 
-    .total-box {
-      background: var(--green);
-      color: #fff;
-      border-radius: 6px;
-      padding: 14px 16px;
-      margin-top: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .total-box .total-label { font-size: .9rem; opacity: .85; }
-    .total-box .total-amount { font-size: 1.6rem; font-weight: 800; }
+/* ── Upload ── */
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:36px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(47,129,247,.05)}
+.upload-icon{font-size:38px;margin-bottom:10px}
+.upload-text{color:var(--text2);font-size:14px}
 
-    .per-sqft {
-      text-align: center;
-      color: var(--muted);
-      font-size: .82rem;
-      margin-top: 8px;
-    }
+/* ── Visit items ── */
+.visit-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:11px 14px;margin-bottom:8px}
+.visit-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:8px}
+.visit-date{font-weight:600;font-size:13px}
+.visit-notes{color:var(--text2);font-size:12px;margin-top:4px;line-height:1.5}
 
-    /* Turf product list */
-    .turf-list { list-style: none; }
-    .turf-list li {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 5px;
-      margin-bottom: 4px;
-      background: var(--green-bg);
-      font-size: .88rem;
-    }
-    .turf-list li span.turf-name { flex: 1; font-weight: 600; }
-    .turf-list li span.turf-price { color: var(--green); font-weight: 700; }
-    .turf-list li button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #c00;
-      font-size: 1rem;
-      line-height: 1;
-      padding: 0 2px;
-    }
+/* ── Tags ── */
+.rep-tag{display:inline-flex;align-items:center;background:rgba(47,129,247,.1);border:1px solid rgba(47,129,247,.3);color:var(--accent);border-radius:20px;padding:2px 9px;font-size:11px;white-space:nowrap}
+.unassigned-tag{display:inline-flex;align-items:center;background:rgba(139,148,158,.1);border:1px solid rgba(139,148,158,.3);color:var(--text2);border-radius:20px;padding:2px 9px;font-size:11px}
 
-    .add-turf-row {
-      display: grid;
-      grid-template-columns: 1fr 100px auto;
-      gap: 8px;
-      margin-top: 12px;
-      align-items: end;
-    }
-    .add-turf-row input {
-      padding: 8px 10px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: .88rem;
-    }
-    .add-turf-row input:focus {
-      outline: none;
-      border-color: var(--green-lt);
-    }
-    .btn-add {
-      background: var(--green);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 14px;
-      font-size: .88rem;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .btn-add:hover { background: var(--green-lt); }
+/* ── Inline status select ── */
+.status-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:20px;padding:2px 6px;font-size:11px;cursor:pointer;width:auto}
 
-    .upload-area {
-      border: 2px dashed var(--border);
-      border-radius: 6px;
-      padding: 16px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .85rem;
-      cursor: pointer;
-      margin-top: 12px;
-      transition: border-color .15s, background .15s;
-    }
-    .upload-area:hover {
-      border-color: var(--green-lt);
-      background: var(--green-bg);
-    }
-    .upload-area input { display: none; }
+/* ── Progress bars ── */
+.progress-bar{background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;background:var(--accent);border-radius:4px}
 
-    /* print */
-    @media print {
-      body { background: #fff; padding: 0; }
-      .layout { grid-template-columns: 1fr 360px; }
-      .btn-add, .toggle-btn, .upload-area, .turf-list button { display: none; }
-      .results-panel { position: static; }
-    }
-  </style>
+/* ── Hint box ── */
+.hint-box{display:none;padding:9px 12px;background:rgba(47,129,247,.08);border:1px solid rgba(47,129,247,.3);border-radius:var(--radius);margin-bottom:10px;font-size:13px;color:var(--accent)}
+
+/* ── Divider ── */
+.divider{border:none;border-top:1px solid var(--border);margin:14px 0}
+
+/* ── Inline edit icon ── */
+.edit-inline{background:none;border:none;color:var(--text2);cursor:pointer;font-size:12px;padding:1px 4px;opacity:.5}
+.edit-inline:hover{opacity:1;color:var(--accent)}
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Turf Installation Calculator</h1>
-  <p>Enter your project details to get a full material &amp; labor cost estimate.</p>
-</header>
-
-<div class="layout">
-
-  <!-- ===== LEFT: INPUTS ===== -->
-  <div>
-
-    <!-- Project -->
-    <div class="card" style="margin-bottom:20px">
-      <h2>Project</h2>
-      <div class="field-row">
-        <div class="field">
-          <label>Square Footage</label>
-          <input type="number" id="sqft" placeholder="e.g. 500" min="0" step="1" />
-        </div>
-        <div class="field">
-          <label>Perimeter (linear ft)</label>
-          <input type="number" id="perimeter" placeholder="e.g. 100" min="0" step="1" />
-          <span class="hint">For edging/bender board</span>
-        </div>
-      </div>
-      <div class="field">
-        <label>Seam Length (linear ft)</label>
-        <input type="number" id="seams" placeholder="e.g. 0" min="0" step="1" value="0" />
-        <span class="hint">Total length of all seams in the layout</span>
-      </div>
-    </div>
-
-    <!-- Turf Selection -->
-    <div class="card" style="margin-bottom:20px">
-      <h2>Turf Product</h2>
-      <div class="field">
-        <label>Select Product</label>
-        <select id="turfSelect">
-          <option value="">— Choose a turf —</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Waste Factor (%)</label>
-        <input type="number" id="wasteFactor" value="10" min="0" max="50" step="1" />
-        <span class="hint">Typical: 10–15% for cuts &amp; patterns</span>
-      </div>
-
-      <hr class="section-divider" />
-
-      <p style="font-size:.85rem;color:var(--muted);margin-bottom:10px;">Your turf products:</p>
-      <ul class="turf-list" id="turfList"></ul>
-
-      <div class="add-turf-row">
-        <input type="text" id="newTurfName" placeholder="Product name" />
-        <input type="number" id="newTurfPrice" placeholder="$/sq ft" min="0" step="0.01" />
-        <button class="btn-add" onclick="addTurfProduct()">+ Add</button>
-      </div>
-
-      <label class="upload-area" title="Upload CSV: Name, Price">
-        <input type="file" id="csvUpload" accept=".csv,.txt" onchange="loadCSV(event)" />
-        Upload price list (CSV: Name, Price per sq ft)
-      </label>
-    </div>
-
-    <!-- Base Materials -->
-    <div class="card" style="margin-bottom:20px">
-      <h2>Base &amp; Ground Prep</h2>
-
-      <div class="field-row">
-        <div class="field">
-          <label>DG / Crushed Base ($/ton)</label>
-          <input type="number" id="dgPrice" placeholder="e.g. 65" min="0" step="0.01" />
-        </div>
-        <div class="field">
-          <label>Base Depth (inches)</label>
-          <input type="number" id="dgDepth" value="3" min="0" max="12" step="0.5" />
-          <span class="hint">~3–4" typical. DG ≈ 1.35 tons/cy</span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Weed Barrier ($/sq ft)</label>
-        <input type="number" id="weedBarrierPrice" placeholder="e.g. 0.12" min="0" step="0.01" />
-      </div>
-    </div>
-
-    <!-- Infill -->
-    <div class="card" style="margin-bottom:20px">
-      <h2>Infill</h2>
-      <div class="field">
-        <label>Infill Type</label>
-        <select id="infillType" onchange="updateCalc()">
-          <option value="none">None / Included in turf price</option>
-          <option value="silica">Silica Sand</option>
-          <option value="rubber">Crumb Rubber</option>
-          <option value="both">Silica + Crumb Rubber</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Infill Cost ($/sq ft)</label>
-        <input type="number" id="infillPrice" placeholder="e.g. 0.35" min="0" step="0.01" />
-        <span class="hint">All-in per sq ft for your chosen infill type</span>
-      </div>
-    </div>
-
-    <!-- Edging & Seaming -->
-    <div class="card" style="margin-bottom:20px">
-      <h2>Edging &amp; Seaming</h2>
-      <div class="field-row">
-        <div class="field">
-          <label>Bender Board ($/linear ft)</label>
-          <input type="number" id="benderPrice" placeholder="e.g. 1.20" min="0" step="0.01" />
-        </div>
-        <div class="field">
-          <label>Nails / Staples ($/linear ft)</label>
-          <input type="number" id="nailsPrice" placeholder="e.g. 0.15" min="0" step="0.01" />
-          <span class="hint">Applied to perimeter</span>
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Seam Tape ($/linear ft)</label>
-          <input type="number" id="seamTapePrice" placeholder="e.g. 0.80" min="0" step="0.01" />
-        </div>
-        <div class="field">
-          <label>Seam Adhesive ($/linear ft)</label>
-          <input type="number" id="seamGluePrice" placeholder="e.g. 0.60" min="0" step="0.01" />
-        </div>
-      </div>
-    </div>
-
-    <!-- Labor -->
-    <div class="card" style="margin-bottom:20px">
-      <h2>Labor</h2>
-      <div class="field-row">
-        <div class="field">
-          <label>Excavation &amp; Removal ($/sq ft)</label>
-          <input type="number" id="laborExcavate" placeholder="e.g. 1.50" min="0" step="0.01" />
-        </div>
-        <div class="field">
-          <label>Base Install ($/sq ft)</label>
-          <input type="number" id="laborBase" placeholder="e.g. 0.75" min="0" step="0.01" />
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Turf Install ($/sq ft)</label>
-          <input type="number" id="laborTurf" placeholder="e.g. 2.00" min="0" step="0.01" />
-        </div>
-        <div class="field">
-          <label>Haul Away (flat $)</label>
-          <input type="number" id="laborHaul" placeholder="e.g. 250" min="0" step="1" />
-        </div>
-      </div>
-    </div>
-
-    <!-- Overhead & Markup -->
-    <div class="card">
-      <h2>Overhead &amp; Markup</h2>
-      <div class="field-row">
-        <div class="field">
-          <label>Overhead / Misc (flat $)</label>
-          <input type="number" id="overhead" placeholder="e.g. 0" min="0" step="1" value="0" />
-          <span class="hint">Permits, equipment rental, etc.</span>
-        </div>
-        <div class="field">
-          <label>Profit Markup (%)</label>
-          <input type="number" id="markup" placeholder="e.g. 20" min="0" max="100" step="1" value="20" />
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ===== RIGHT: RESULTS ===== -->
-  <div class="results-panel">
-    <div class="card">
-      <h2>Cost Breakdown</h2>
-
-      <div class="line-item" id="row-turf">
-        <span class="label">Turf Material</span>
-        <span class="amount" id="val-turf">—</span>
-      </div>
-      <div class="line-item" id="row-dg">
-        <span class="label">Base (DG / Aggregate)</span>
-        <span class="amount" id="val-dg">—</span>
-      </div>
-      <div class="line-item" id="row-weed">
-        <span class="label">Weed Barrier</span>
-        <span class="amount" id="val-weed">—</span>
-      </div>
-      <div class="line-item" id="row-infill">
-        <span class="label">Infill</span>
-        <span class="amount" id="val-infill">—</span>
-      </div>
-      <div class="line-item" id="row-edging">
-        <span class="label">Bender Board &amp; Nails</span>
-        <span class="amount" id="val-edging">—</span>
-      </div>
-      <div class="line-item" id="row-seam">
-        <span class="label">Seam Tape &amp; Adhesive</span>
-        <span class="amount" id="val-seam">—</span>
-      </div>
-
-      <div class="subtotal">
-        <span>Materials Subtotal</span>
-        <span id="val-materials-sub">—</span>
-      </div>
-
-      <div class="line-item" style="margin-top:8px" id="row-labor-ex">
-        <span class="label">Labor – Excavation</span>
-        <span class="amount" id="val-labor-ex">—</span>
-      </div>
-      <div class="line-item" id="row-labor-base">
-        <span class="label">Labor – Base Install</span>
-        <span class="amount" id="val-labor-base">—</span>
-      </div>
-      <div class="line-item" id="row-labor-turf">
-        <span class="label">Labor – Turf Install</span>
-        <span class="amount" id="val-labor-turf">—</span>
-      </div>
-      <div class="line-item" id="row-labor-haul">
-        <span class="label">Labor – Haul Away</span>
-        <span class="amount" id="val-labor-haul">—</span>
-      </div>
-
-      <div class="subtotal">
-        <span>Labor Subtotal</span>
-        <span id="val-labor-sub">—</span>
-      </div>
-
-      <div class="line-item" style="margin-top:8px" id="row-overhead">
-        <span class="label">Overhead / Misc</span>
-        <span class="amount" id="val-overhead">—</span>
-      </div>
-      <div class="line-item" id="row-markup">
-        <span class="label">Markup</span>
-        <span class="amount" id="val-markup">—</span>
-      </div>
-
-      <div class="total-box">
-        <span class="total-label">Total Project Cost</span>
-        <span class="total-amount" id="val-total">$0</span>
-      </div>
-      <div class="per-sqft" id="val-per-sqft"></div>
-    </div>
-
-    <button onclick="window.print()" style="
-      width:100%; margin-top:12px; padding:11px;
-      background:#fff; border:1px solid var(--border);
-      border-radius:var(--radius); cursor:pointer;
-      font-size:.9rem; font-weight:600; color:var(--muted);
-    ">Print / Save as PDF</button>
-  </div>
-
+<!-- Header -->
+<div class="header">
+  <span class="header-logo">🧬</span>
+  <span id="companyNameDisplay" title="Click to edit">Biologics Sales Co.</span>
+  <input id="companyNameInput" type="text" maxlength="60">
+  <div class="header-spacer"></div>
+  <span class="header-badge" id="headerBadge">0 doctors</span>
 </div>
 
+<!-- Nav -->
+<div class="nav">
+  <div class="nav-tab active" data-page="dashboard">📊 Dashboard</div>
+  <div class="nav-tab" data-page="doctors">👩‍⚕️ Doctors</div>
+  <div class="nav-tab" data-page="log">✏️ Log Visit</div>
+  <div class="nav-tab" data-page="analytics">📈 Analytics</div>
+  <div class="nav-tab" data-page="import">📥 Import</div>
+  <div class="nav-tab" data-page="settings">⚙️ Settings</div>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════════ -->
+<div class="page active" id="page-dashboard">
+  <div class="section-header">
+    <div class="section-title">Smart Sequencing Dashboard</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" onclick="openLogModal()">+ Log Visit</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportDashboardCSV()">↓ CSV</button>
+    </div>
+  </div>
+
+  <div class="stat-strip" id="dashStats"></div>
+
+  <div class="filters">
+    <div class="form-group" style="min-width:170px">
+      <label>Search</label>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="dashSearch" placeholder="Doctor, practice..." oninput="renderDashboard()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Rep</label>
+      <select id="dashRepFilter" onchange="renderDashboard()"><option value="">All Reps</option></select>
+    </div>
+    <div class="form-group">
+      <label>Hospital System</label>
+      <select id="dashHospFilter" onchange="renderDashboard()"><option value="">All</option></select>
+    </div>
+    <div class="form-group">
+      <label>Zip Code</label>
+      <select id="dashZipFilter" onchange="renderDashboard()"><option value="">All</option></select>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="dashStatusFilter" onchange="renderDashboard()">
+        <option value="">All</option>
+        <option>not contacted</option><option>contacted</option><option>yes</option>
+        <option>maybe</option><option>no</option><option>pipeline</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Priority</label>
+      <select id="dashPriorityFilter" onchange="renderDashboard()">
+        <option value="">All</option>
+        <option value="red">🔴 Overdue (14+ days)</option>
+        <option value="yellow">🟡 Due Soon (7–14 days)</option>
+        <option value="green">🟢 Recent (&lt;7 days)</option>
+        <option value="never">⬜ Never Visited</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:16px;margin-bottom:10px;font-size:11px;color:var(--text2)">
+    <span><span style="color:var(--red)">●</span> 14+ days overdue</span>
+    <span><span style="color:var(--yellow)">●</span> 7–14 days</span>
+    <span><span style="color:var(--green)">●</span> &lt;7 days</span>
+    <span>⬜ Never visited</span>
+  </div>
+
+  <div class="card" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Doctor</th><th>Practice / System</th><th>Rep</th><th>Status</th>
+            <th>Last Visit</th><th>Days Since</th><th>Next Follow-up</th><th>Visits</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="dashBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DOCTORS
+══════════════════════════════════════════ -->
+<div class="page" id="page-doctors">
+  <div class="section-header">
+    <div class="section-title">Doctor Directory</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" onclick="openAddDoctorModal()">+ Add Doctor</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportDashboardCSV()">↓ CSV</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="form-group" style="flex:1;min-width:190px">
+      <label>Search</label>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="docSearch" placeholder="Name, practice, system, phone..." oninput="renderDoctors()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Rep</label>
+      <select id="docRepFilter" onchange="renderDoctors()"><option value="">All Reps</option></select>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="docStatusFilter" onchange="renderDoctors()">
+        <option value="">All</option>
+        <option>not contacted</option><option>contacted</option><option>yes</option>
+        <option>maybe</option><option>no</option><option>pipeline</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Hospital System</label>
+      <select id="docHospFilter" onchange="renderDoctors()"><option value="">All</option></select>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Doctor</th><th>Practice</th><th>Hospital System</th><th>Phone</th>
+            <th>Zip</th><th>Rep</th><th>Status</th><th>Visits</th><th>Dr Convos</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="doctorsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     LOG VISIT
+══════════════════════════════════════════ -->
+<div class="page" id="page-log">
+  <div class="section-header"><div class="section-title">Log a Visit</div></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Quick Visit Entry</div>
+      <div class="form-group">
+        <label>Doctor *</label>
+        <select id="logDoctorSelect" onchange="onLogDoctorChange()"><option value="">Select doctor...</option></select>
+      </div>
+      <div id="logDoctorInfo" style="display:none;margin-bottom:12px;padding:10px;background:var(--surface2);border-radius:var(--radius);font-size:12px;color:var(--text2);line-height:1.6"></div>
+      <div class="form-group">
+        <label>Visit Date *</label>
+        <input type="date" id="logDate" onchange="updateLogFollowup()">
+      </div>
+      <div class="form-group">
+        <label>Result *</label>
+        <select id="logResult" onchange="updateLogFollowup()">
+          <option value="">Select result...</option>
+          <option value="front desk only">Front Desk Only</option>
+          <option value="got doctor conversation">Got Doctor Conversation</option>
+          <option value="didn't get in">Didn't Get In</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea id="logNotes" placeholder="Discussed, samples left, objections, next steps..."></textarea>
+      </div>
+      <div id="logFollowupHint" class="hint-box"></div>
+      <button class="btn btn-primary" onclick="submitVisit()" style="width:100%">✓ Log Visit</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Recent Visits <span style="color:var(--text2);font-weight:400;font-size:12px">(last 25)</span></div>
+      <div id="recentVisitsList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ANALYTICS
+══════════════════════════════════════════ -->
+<div class="page" id="page-analytics">
+  <div class="section-header">
+    <div class="section-title">Conversion Analytics</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-secondary btn-sm" onclick="exportAnalyticsCSV()">↓ Visit Log CSV</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportDashboardCSV()">↓ Doctors CSV</button>
+    </div>
+  </div>
+
+  <div class="grid-4" id="analyticsMetrics" style="margin-bottom:16px"></div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-title">Conversion Funnel</div>
+      <div id="funnelChart"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Key Averages</div>
+      <div id="keyAverages"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Maybe → Yes Conversion Trend</div>
+    <div id="maybeTrend"></div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Performance by Rep</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Rep</th><th class="num">Doctors</th><th class="num">Visits</th>
+          <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Maybe</th>
+          <th class="num">No</th><th class="num">Conv %</th><th class="num">YTD</th><th class="num">Last 4 Wks</th>
+        </tr></thead>
+        <tbody id="repAnalyticsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Performance by Hospital System</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Hospital System</th><th class="num">Doctors</th><th class="num">Visits</th>
+          <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Pipeline</th><th class="num">Conv %</th>
+        </tr></thead>
+        <tbody id="hospAnalyticsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Performance by Zip Code</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Zip Code</th><th class="num">Doctors</th><th class="num">Visits</th>
+          <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Conv %</th>
+        </tr></thead>
+        <tbody id="zipAnalyticsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     IMPORT
+══════════════════════════════════════════ -->
+<div class="page" id="page-import">
+  <div class="section-header"><div class="section-title">Import Doctor List</div></div>
+
+  <div class="card">
+    <div class="card-title">CSV Upload</div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:14px">
+      Expected columns: <strong>doctor name, practice name, hospital system, phone, address, zip code</strong><br>
+      Column order is flexible — matched by header name. First row must be headers. Duplicates are flagged.
+    </p>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('csvFile').click()">
+      <div class="upload-icon">📄</div>
+      <div class="upload-text">Click to select CSV or drag &amp; drop here</div>
+      <input type="file" id="csvFile" accept=".csv,.txt" style="display:none" onchange="handleCSVUpload(event)">
+    </div>
+
+    <div id="importOptions" style="display:none;margin-top:14px">
+      <div class="form-row" style="margin-bottom:12px">
+        <div class="form-group">
+          <label>Assign imported doctors to rep</label>
+          <select id="importRepAssign"><option value="">Unassigned</option></select>
+        </div>
+        <div class="form-group">
+          <label>On duplicate name</label>
+          <select id="importDupAction">
+            <option value="skip">Skip duplicate</option>
+            <option value="import">Import anyway</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="importPreview" style="display:none;margin-top:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+        <div id="importSummary" style="font-weight:600;font-size:13px"></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" onclick="cancelImport()">Cancel</button>
+          <button class="btn btn-success btn-sm" onclick="confirmImport()">✓ Import</button>
+        </div>
+      </div>
+      <div class="table-wrap" style="max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius)">
+        <table><thead><tr><th>#</th><th>Status</th><th>Doctor Name</th><th>Practice</th><th>Hospital System</th><th>Phone</th><th>Zip</th></tr></thead>
+        <tbody id="importPreviewBody"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Sample CSV Format</div>
+    <pre style="background:var(--surface2);padding:12px;border-radius:var(--radius);font-size:12px;overflow-x:auto;color:var(--text2);line-height:1.7">doctor name,practice name,hospital system,phone,address,zip code
+Dr. Jane Smith,Women's Health Clinic,Mayo Clinic,555-123-4567,123 Main St,55901
+Dr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902</pre>
+    <button class="btn btn-secondary btn-sm" onclick="downloadSampleCSV()" style="margin-top:10px">↓ Download Sample CSV</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Data Management</div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:12px">Data lives in your browser's localStorage. Export a JSON backup regularly.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-secondary btn-sm" onclick="exportAllData()">↓ Full Backup (JSON)</button>
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('jsonBackupFile').click()">↑ Restore Backup (JSON)</button>
+      <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑 Clear All Data</button>
+    </div>
+    <input type="file" id="jsonBackupFile" accept=".json" style="display:none" onchange="handleJSONImport(event)">
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SETTINGS
+══════════════════════════════════════════ -->
+<div class="page" id="page-settings">
+  <div class="section-header"><div class="section-title">Settings</div></div>
+
+  <div class="card">
+    <div class="card-title">Sales Reps</div>
+    <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+      <input type="text" id="newRepName" placeholder="Full name..." style="max-width:240px" onkeydown="if(event.key==='Enter')addRep()">
+      <button class="btn btn-primary" onclick="addRep()">+ Add Rep</button>
+    </div>
+    <div id="repsList"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Follow-up Windows</div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:12px">Days until recommended next visit, by last visit result.</p>
+    <div class="grid-3">
+      <div class="form-group">
+        <label>Front Desk Only (days)</label>
+        <input type="number" id="fwFrontDesk" min="1" max="90" onchange="saveFollowupWindows()">
+      </div>
+      <div class="form-group">
+        <label>Got Dr Conversation (days)</label>
+        <input type="number" id="fwDoctorConvo" min="1" max="90" onchange="saveFollowupWindows()">
+      </div>
+      <div class="form-group">
+        <label>Didn't Get In (days)</label>
+        <input type="number" id="fwNoEntry" min="1" max="90" onchange="saveFollowupWindows()">
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- ══════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════ -->
+
+<!-- Log Visit Modal -->
+<div class="modal-overlay" id="logModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Log Visit</span>
+      <button class="modal-close" onclick="closeModal('logModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Doctor *</label>
+        <select id="modalLogDoctor" onchange="onModalDoctorChange()"><option value="">Select doctor...</option></select>
+      </div>
+      <div id="modalDoctorInfo" style="display:none;margin-bottom:10px;padding:9px 12px;background:var(--surface2);border-radius:var(--radius);font-size:12px;color:var(--text2);line-height:1.6"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Visit Date *</label>
+          <input type="date" id="modalLogDate" onchange="updateModalFollowup()">
+        </div>
+        <div class="form-group">
+          <label>Result *</label>
+          <select id="modalLogResult" onchange="updateModalFollowup()">
+            <option value="">Select result...</option>
+            <option value="front desk only">Front Desk Only</option>
+            <option value="got doctor conversation">Got Doctor Conversation</option>
+            <option value="didn't get in">Didn't Get In</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea id="modalLogNotes" placeholder="What happened, samples left, next steps..."></textarea>
+      </div>
+      <div id="modalFollowupHint" class="hint-box"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('logModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitModalVisit()">✓ Log Visit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Doctor Detail Modal -->
+<div class="modal-overlay" id="doctorModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <span class="modal-title" id="doctorModalTitle">Doctor Details</span>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-secondary btn-sm" id="doctorModalEditBtn" onclick="openEditDoctorModal()">Edit Info</button>
+        <button class="modal-close" onclick="closeModal('doctorModal')">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="doctorModalBody"></div>
+  </div>
+</div>
+
+<!-- Add Doctor Modal -->
+<div class="modal-overlay" id="addDoctorModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Add Doctor</span>
+      <button class="modal-close" onclick="closeModal('addDoctorModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="grid-2">
+        <div class="form-group" style="grid-column:span 2"><label>Doctor Name *</label><input id="addDocName" type="text" placeholder="Dr. First Last"></div>
+        <div class="form-group"><label>Practice Name</label><input id="addDocPractice" type="text"></div>
+        <div class="form-group"><label>Hospital System</label><input id="addDocHosp" type="text"></div>
+        <div class="form-group"><label>Phone</label><input id="addDocPhone" type="text"></div>
+        <div class="form-group"><label>Address</label><input id="addDocAddress" type="text"></div>
+        <div class="form-group"><label>Zip Code</label><input id="addDocZip" type="text"></div>
+        <div class="form-group"><label>Assign Rep</label><select id="addDocRep"><option value="">Unassigned</option></select></div>
+        <div class="form-group"><label>Status</label>
+          <select id="addDocStatus">
+            <option>not contacted</option><option>contacted</option><option>yes</option>
+            <option>maybe</option><option>no</option><option>pipeline</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea id="addDocNotes" placeholder="General notes about this doctor..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('addDoctorModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNewDoctor()">Add Doctor</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Doctor Modal -->
+<div class="modal-overlay" id="editDoctorModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Edit Doctor Info</span>
+      <button class="modal-close" onclick="closeEditDoctorModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editDocId">
+      <div class="grid-2">
+        <div class="form-group" style="grid-column:span 2"><label>Doctor Name *</label><input id="editDocName" type="text"></div>
+        <div class="form-group"><label>Practice Name</label><input id="editDocPractice" type="text"></div>
+        <div class="form-group"><label>Hospital System</label><input id="editDocHosp" type="text"></div>
+        <div class="form-group"><label>Phone</label><input id="editDocPhone" type="text"></div>
+        <div class="form-group"><label>Address</label><input id="editDocAddress" type="text"></div>
+        <div class="form-group"><label>Zip Code</label><input id="editDocZip" type="text"></div>
+        <div class="form-group"><label>Assign Rep</label><select id="editDocRep"><option value="">Unassigned</option></select></div>
+        <div class="form-group"><label>Status</label>
+          <select id="editDocStatus">
+            <option>not contacted</option><option>contacted</option><option>yes</option>
+            <option>maybe</option><option>no</option><option>pipeline</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea id="editDocNotes" placeholder="General notes..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeEditDoctorModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditDoctor()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Visit Modal -->
+<div class="modal-overlay" id="editVisitModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Edit Visit</span>
+      <button class="modal-close" onclick="closeModal('editVisitModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editVisitId">
+      <input type="hidden" id="editVisitDoctorId">
+      <div class="form-row">
+        <div class="form-group"><label>Visit Date</label><input type="date" id="editVisitDate"></div>
+        <div class="form-group"><label>Result</label>
+          <select id="editVisitResult">
+            <option value="front desk only">Front Desk Only</option>
+            <option value="got doctor conversation">Got Doctor Conversation</option>
+            <option value="didn't get in">Didn't Get In</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Notes</label><textarea id="editVisitNotes"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="reopenDoctorFromEdit()">← Back</button>
+      <button class="btn btn-primary" onclick="saveEditVisit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rename Rep Modal -->
+<div class="modal-overlay" id="renameRepModal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <span class="modal-title">Rename Rep</span>
+      <button class="modal-close" onclick="closeModal('renameRepModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="renameRepId">
+      <div class="form-group"><label>New Name</label><input type="text" id="renameRepName" onkeydown="if(event.key==='Enter')saveRenameRep()"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('renameRepModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveRenameRep()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
 <script>
-  // ── Turf product store ──────────────────────────────────────────────
-  let turfProducts = [];
+// ═══════════════════════════════════════════
+// DATA LAYER
+// ═══════════════════════════════════════════
+const DB = {
+  get doctors(){ return JSON.parse(localStorage.getItem('crm_doctors')||'[]') },
+  set doctors(v){ localStorage.setItem('crm_doctors',JSON.stringify(v)) },
+  get visits(){ return JSON.parse(localStorage.getItem('crm_visits')||'[]') },
+  set visits(v){ localStorage.setItem('crm_visits',JSON.stringify(v)) },
+  get reps(){ return JSON.parse(localStorage.getItem('crm_reps')||'[]') },
+  set reps(v){ localStorage.setItem('crm_reps',JSON.stringify(v)) },
+  get companyName(){ return localStorage.getItem('crm_company')||'Biologics Sales Co.' },
+  set companyName(v){ localStorage.setItem('crm_company',v) },
+  get followupWindows(){
+    return JSON.parse(localStorage.getItem('crm_followup')||'{"front desk only":7,"got doctor conversation":14,"didn\'t get in":5}')
+  },
+  set followupWindows(v){ localStorage.setItem('crm_followup',JSON.stringify(v)) }
+}
 
-  function renderTurfList() {
-    const ul = document.getElementById('turfList');
-    ul.innerHTML = '';
-    turfProducts.forEach((p, i) => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <span class="turf-name">${p.name}</span>
-        <span class="turf-price">$${p.price.toFixed(2)}/sq ft</span>
-        <button onclick="removeTurf(${i})" title="Remove">×</button>
-      `;
-      ul.appendChild(li);
-    });
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,8) }
 
-    const sel = document.getElementById('turfSelect');
-    const prev = sel.value;
-    sel.innerHTML = '<option value="">— Choose a turf —</option>';
-    turfProducts.forEach((p, i) => {
-      const opt = document.createElement('option');
-      opt.value = i;
-      opt.textContent = `${p.name}  ($${p.price.toFixed(2)}/sq ft)`;
-      sel.appendChild(opt);
-    });
-    if (prev !== '') sel.value = prev;
-    updateCalc();
+// ═══════════════════════════════════════════
+// VISIT CACHE — recompute on each page render
+// ═══════════════════════════════════════════
+let _visitMap = null // doctorId → sorted visits[]
+function visitMap(){
+  if(_visitMap) return _visitMap
+  const visits = DB.visits
+  _visitMap = {}
+  visits.forEach(v => {
+    if(!_visitMap[v.doctorId]) _visitMap[v.doctorId]=[]
+    _visitMap[v.doctorId].push(v)
+  })
+  Object.values(_visitMap).forEach(arr => arr.sort((a,b)=>b.date.localeCompare(a.date)))
+  return _visitMap
+}
+function invalidateCache(){ _visitMap=null }
+
+function getDoctorVisits(docId){ return visitMap()[docId]||[] }
+function getLastVisit(docId){ const v=getDoctorVisits(docId); return v.length?v[0]:null }
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+let _toastTimer
+function toast(msg,type='success'){
+  clearTimeout(_toastTimer)
+  const t=document.getElementById('toast')
+  t.textContent=msg
+  t.className='show '+type
+  _toastTimer=setTimeout(()=>t.className='',2800)
+}
+
+// ═══════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════
+function openModal(id){ document.getElementById(id).classList.add('open') }
+function closeModal(id){ document.getElementById(id).classList.remove('open') }
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open') })
+})
+
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'))
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+    tab.classList.add('active')
+    document.getElementById('page-'+tab.dataset.page).classList.add('active')
+    const pg=tab.dataset.page
+    if(pg==='dashboard') renderDashboard()
+    else if(pg==='doctors') renderDoctors()
+    else if(pg==='log') renderLogPage()
+    else if(pg==='analytics') renderAnalytics()
+    else if(pg==='settings') renderSettings()
+  })
+})
+
+// ═══════════════════════════════════════════
+// COMPANY NAME
+// ═══════════════════════════════════════════
+function initCompanyName(){
+  const display=document.getElementById('companyNameDisplay')
+  const input=document.getElementById('companyNameInput')
+  display.textContent=DB.companyName
+  document.title=DB.companyName+' CRM'
+  display.onclick=()=>{
+    input.value=DB.companyName
+    display.style.display='none'
+    input.style.display='inline-block'
+    input.focus(); input.select()
+  }
+  const save=()=>{
+    const v=input.value.trim()||'Biologics Sales Co.'
+    DB.companyName=v
+    display.textContent=v
+    document.title=v+' CRM'
+    display.style.display=''
+    input.style.display='none'
+  }
+  input.addEventListener('blur',save)
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Enter') save()
+    if(e.key==='Escape'){ input.style.display='none'; display.style.display='' }
+  })
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function today(){ return new Date().toISOString().split('T')[0] }
+
+function daysSince(dateStr){
+  if(!dateStr) return null
+  return Math.floor((Date.now()-new Date(dateStr).getTime())/86400000)
+}
+
+function addDays(dateStr,n){
+  const d=new Date(dateStr)
+  d.setDate(d.getDate()+n)
+  return d.toISOString().split('T')[0]
+}
+
+function fmt(d){
+  if(!d) return '—'
+  const [y,m,day]=d.split('-')
+  return `${m}/${day}/${y}`
+}
+
+function getRepName(repId){
+  if(!repId) return 'Unassigned'
+  const r=DB.reps.find(r=>r.id===repId)
+  return r?r.name:'Unknown'
+}
+
+function getFollowupDate(visit){
+  if(!visit) return null
+  return addDays(visit.date,(DB.followupWindows[visit.result]||7))
+}
+
+function statusBadge(s){
+  const cls={'not contacted':'badge-gray','contacted':'badge-blue','yes':'badge-green','maybe':'badge-yellow','no':'badge-red','pipeline':'badge-purple'}
+  return `<span class="badge ${cls[s]||'badge-gray'}">${s||'unknown'}</span>`
+}
+
+function resultBadge(r){
+  if(r==='got doctor conversation') return '<span class="badge badge-green">Dr Convo</span>'
+  if(r==='front desk only') return '<span class="badge badge-yellow">Front Desk</span>'
+  if(r==="didn't get in") return '<span class="badge badge-red">No Entry</span>'
+  return `<span class="badge badge-gray">${r||'—'}</span>`
+}
+
+function escHtml(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+}
+
+function repTagHtml(repId){
+  if(!repId) return '<span class="unassigned-tag">Unassigned</span>'
+  return `<span class="rep-tag">${escHtml(getRepName(repId))}</span>`
+}
+
+// ═══════════════════════════════════════════
+// POPULATE SELECTS
+// ═══════════════════════════════════════════
+function populateRepSelect(id, allowAll=false){
+  const el=document.getElementById(id); if(!el) return
+  const val=el.value
+  el.innerHTML=(allowAll?'<option value="">All Reps</option>':'<option value="">Unassigned</option>')+
+    DB.reps.map(r=>`<option value="${r.id}">${escHtml(r.name)}</option>`).join('')
+  el.value=val
+}
+
+function populateAllRepSelects(){
+  populateRepSelect('dashRepFilter',true)
+  populateRepSelect('docRepFilter',true)
+}
+
+function populateFilterDropdowns(){
+  const docs=DB.doctors
+  const systems=[...new Set(docs.map(d=>d.hospitalSystem).filter(Boolean))].sort()
+  const zips=[...new Set(docs.map(d=>d.zipCode).filter(Boolean))].sort()
+  ;['dashHospFilter','docHospFilter'].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return
+    const val=el.value
+    el.innerHTML='<option value="">All</option>'+systems.map(s=>`<option value="${s}">${s}</option>`).join('')
+    el.value=val
+  })
+  const zf=document.getElementById('dashZipFilter')
+  if(zf){ const val=zf.value; zf.innerHTML='<option value="">All</option>'+zips.map(z=>`<option value="${z}">${z}</option>`).join(''); zf.value=val }
+}
+
+function populateDoctorSelect(id){
+  const el=document.getElementById(id); if(!el) return
+  const val=el.value
+  const docs=DB.doctors.slice().sort((a,b)=>a.name.localeCompare(b.name))
+  el.innerHTML='<option value="">Select doctor...</option>'+docs.map(d=>
+    `<option value="${d.id}">${escHtml(d.name)}${d.practice?' — '+escHtml(d.practice):''}</option>`
+  ).join('')
+  el.value=val
+}
+
+function updateHeaderBadge(){
+  document.getElementById('headerBadge').textContent=DB.doctors.length+' doctors'
+}
+
+// ═══════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════
+function renderDashboard(){
+  invalidateCache()
+  populateAllRepSelects()
+  populateFilterDropdowns()
+  updateHeaderBadge()
+
+  const search=document.getElementById('dashSearch').value.toLowerCase()
+  const repF=document.getElementById('dashRepFilter').value
+  const hospF=document.getElementById('dashHospFilter').value
+  const zipF=document.getElementById('dashZipFilter').value
+  const statusF=document.getElementById('dashStatusFilter').value
+  const priorityF=document.getElementById('dashPriorityFilter').value
+
+  let docs=DB.doctors
+  if(search) docs=docs.filter(d=>[d.name,d.practice,d.hospitalSystem,d.phone,d.zipCode].join(' ').toLowerCase().includes(search))
+  if(repF) docs=docs.filter(d=>d.repId===repF)
+  if(hospF) docs=docs.filter(d=>d.hospitalSystem===hospF)
+  if(zipF) docs=docs.filter(d=>d.zipCode===zipF)
+  if(statusF) docs=docs.filter(d=>d.status===statusF)
+
+  // Enrich
+  docs=docs.map(d=>{
+    const lv=getLastVisit(d.id)
+    const days=lv?daysSince(lv.date):null
+    return{...d,_lv:lv,_days:days,_followup:getFollowupDate(lv)}
+  })
+
+  // Priority filter
+  if(priorityF==='red') docs=docs.filter(d=>d._days!==null&&d._days>=14)
+  else if(priorityF==='yellow') docs=docs.filter(d=>d._days!==null&&d._days>=7&&d._days<14)
+  else if(priorityF==='green') docs=docs.filter(d=>d._days!==null&&d._days<7)
+  else if(priorityF==='never') docs=docs.filter(d=>d._days===null)
+
+  // Sort: never visited first, then highest days first
+  docs.sort((a,b)=>{
+    if(a._days===null&&b._days===null) return a.name.localeCompare(b.name)
+    if(a._days===null) return -1
+    if(b._days===null) return 1
+    return b._days-a._days
+  })
+
+  // Stat strip (always from full unfiltered set)
+  const allDocs=DB.doctors.map(d=>{const lv=getLastVisit(d.id);return{...d,_days:lv?daysSince(lv.date):null}})
+  const overdue=allDocs.filter(d=>d._days!==null&&d._days>=14).length
+  const dueSoon=allDocs.filter(d=>d._days!==null&&d._days>=7&&d._days<14).length
+  const recent=allDocs.filter(d=>d._days!==null&&d._days<7).length
+  const never=allDocs.filter(d=>d._days===null).length
+  document.getElementById('dashStats').innerHTML=`
+    <div class="stat-pill"><strong>${DB.doctors.length}</strong> total doctors</div>
+    <div class="stat-pill red"><strong>${overdue}</strong> overdue (14+ days)</div>
+    <div class="stat-pill yellow"><strong>${dueSoon}</strong> due soon (7–14 days)</div>
+    <div class="stat-pill green"><strong>${recent}</strong> recently visited</div>
+    <div class="stat-pill"><strong>${never}</strong> never visited</div>
+  `
+
+  const tbody=document.getElementById('dashBody')
+  if(!docs.length){
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text2)">No doctors match current filters</td></tr>'
+    return
   }
 
-  function addTurfProduct() {
-    const name  = document.getElementById('newTurfName').value.trim();
-    const price = parseFloat(document.getElementById('newTurfPrice').value);
-    if (!name || isNaN(price) || price < 0) {
-      alert('Please enter a product name and a valid price.');
-      return;
+  tbody.innerHTML=docs.map(d=>{
+    const pCls=d._days===null?'':d._days>=14?'pr-red':d._days>=7?'pr-yellow':'pr-green'
+    const visits=getDoctorVisits(d.id)
+    const daysCell=d._days===null
+      ?'<span style="color:var(--text2)">—</span>'
+      :`<span style="color:${d._days>=14?'var(--red)':d._days>=7?'var(--yellow)':'var(--green)'};font-weight:600">${d._days}d</span>`
+    const followupCell=d._followup
+      ?`<span style="color:${new Date(d._followup)<=new Date()?'var(--red)':'var(--text2)'}">${fmt(d._followup)}</span>`:'—'
+    return `<tr class="${pCls}" style="cursor:pointer" onclick="openDoctorDetail('${d.id}')">
+      <td><strong>${escHtml(d.name)}</strong></td>
+      <td style="color:var(--text2);font-size:12px">${escHtml(d.practice||'—')}<br>${escHtml(d.hospitalSystem||'')}</td>
+      <td>${repTagHtml(d.repId)}</td>
+      <td>${statusBadge(d.status)}</td>
+      <td>${d._lv?fmt(d._lv.date):'<span style="color:var(--text2)">Never</span>'}</td>
+      <td>${daysCell}</td>
+      <td>${followupCell}</td>
+      <td style="color:var(--text2)">${visits.length}</td>
+      <td><button class="btn btn-primary btn-xs" onclick="event.stopPropagation();openLogModalFor('${d.id}')">+ Visit</button></td>
+    </tr>`
+  }).join('')
+}
+
+// ═══════════════════════════════════════════
+// DOCTORS PAGE
+// ═══════════════════════════════════════════
+function renderDoctors(){
+  invalidateCache()
+  populateAllRepSelects()
+  populateFilterDropdowns()
+
+  const search=document.getElementById('docSearch').value.toLowerCase()
+  const repF=document.getElementById('docRepFilter').value
+  const statusF=document.getElementById('docStatusFilter').value
+  const hospF=document.getElementById('docHospFilter').value
+
+  let docs=DB.doctors
+  if(search) docs=docs.filter(d=>[d.name,d.practice,d.hospitalSystem,d.phone,d.zipCode,d.address].join(' ').toLowerCase().includes(search))
+  if(repF) docs=docs.filter(d=>d.repId===repF)
+  if(statusF) docs=docs.filter(d=>d.status===statusF)
+  if(hospF) docs=docs.filter(d=>d.hospitalSystem===hospF)
+  docs=docs.slice().sort((a,b)=>a.name.localeCompare(b.name))
+
+  const tbody=document.getElementById('doctorsBody')
+  if(!docs.length){
+    tbody.innerHTML='<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text2)">No doctors found</td></tr>'
+    return
+  }
+
+  tbody.innerHTML=docs.map(d=>{
+    const visits=getDoctorVisits(d.id)
+    const drConvos=visits.filter(v=>v.result==='got doctor conversation').length
+    const statOpts=['not contacted','contacted','yes','maybe','no','pipeline'].map(s=>`<option ${d.status===s?'selected':''}>${s}</option>`).join('')
+    return `<tr>
+      <td><a href="#" onclick="openDoctorDetail('${d.id}');return false" style="color:var(--text);font-weight:500">${escHtml(d.name)}</a></td>
+      <td style="color:var(--text2);font-size:12px">${escHtml(d.practice||'—')}</td>
+      <td style="font-size:12px">${escHtml(d.hospitalSystem||'—')}</td>
+      <td style="color:var(--text2);font-size:12px">${escHtml(d.phone||'—')}</td>
+      <td style="color:var(--text2);font-size:12px">${escHtml(d.zipCode||'—')}</td>
+      <td>${repTagHtml(d.repId)}</td>
+      <td><select class="status-select" onchange="updateDoctorField('${d.id}','status',this.value)" onclick="event.stopPropagation()">${statOpts}</select></td>
+      <td style="color:var(--text2)">${visits.length}</td>
+      <td style="color:${drConvos>0?'var(--green)':'var(--text2)'}">${drConvos}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-primary btn-xs" onclick="openLogModalFor('${d.id}')">+ Visit</button>
+        <button class="btn btn-secondary btn-xs" onclick="openDoctorDetail('${d.id}')">View</button>
+        <button class="btn btn-secondary btn-xs" onclick="openEditDoctorModalFor('${d.id}')">Edit</button>
+        <button class="btn btn-danger btn-xs" onclick="deleteDoctor('${d.id}')">Del</button>
+      </td>
+    </tr>`
+  }).join('')
+}
+
+function updateDoctorField(id,field,value){
+  invalidateCache()
+  const docs=DB.doctors
+  const i=docs.findIndex(d=>d.id===id)
+  if(i>=0){ docs[i][field]=value; DB.doctors=docs }
+  toast('Updated')
+}
+
+function deleteDoctor(id){
+  if(!confirm('Delete this doctor and all their visit history? This cannot be undone.')) return
+  DB.doctors=DB.doctors.filter(d=>d.id!==id)
+  DB.visits=DB.visits.filter(v=>v.doctorId!==id)
+  invalidateCache()
+  renderDoctors()
+  updateHeaderBadge()
+  toast('Doctor deleted')
+}
+
+// ═══════════════════════════════════════════
+// DOCTOR DETAIL MODAL
+// ═══════════════════════════════════════════
+let _currentDoctorId=null
+
+function openDoctorDetail(id){
+  _currentDoctorId=id
+  invalidateCache()
+  const doc=DB.doctors.find(d=>d.id===id)
+  if(!doc) return
+  const visits=getDoctorVisits(id)
+  const drConvos=visits.filter(v=>v.result==='got doctor conversation').length
+  const fdConvos=visits.filter(v=>v.result==='front desk only').length
+  const noEntry=visits.filter(v=>v.result==="didn't get in").length
+  const lv=visits[0]
+  const fw=getFollowupDate(lv)
+
+  document.getElementById('doctorModalTitle').textContent=doc.name
+  document.getElementById('doctorModalEditBtn').onclick=()=>openEditDoctorModalFor(id)
+
+  const repOpts='<option value="">Unassigned</option>'+DB.reps.map(r=>
+    `<option value="${r.id}" ${doc.repId===r.id?'selected':''}>${escHtml(r.name)}</option>`
+  ).join('')
+  const statOpts=['not contacted','contacted','yes','maybe','no','pipeline'].map(s=>
+    `<option ${doc.status===s?'selected':''}>${s}</option>`
+  ).join('')
+
+  document.getElementById('doctorModalBody').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <div>
+        <div style="font-size:19px;font-weight:700">${escHtml(doc.name)}</div>
+        <div style="color:var(--text2);font-size:13px;margin-top:3px">${[doc.practice,doc.hospitalSystem,doc.address,doc.zipCode].filter(Boolean).map(s=>escHtml(s)).join(' · ')}</div>
+        ${doc.phone?`<div style="color:var(--text2);font-size:13px">📞 ${escHtml(doc.phone)}</div>`:''}
+        ${doc.notes?`<div style="color:var(--text2);font-size:13px;margin-top:6px;font-style:italic">${escHtml(doc.notes)}</div>`:''}
+      </div>
+      <div>${statusBadge(doc.status)}</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px">
+      <div class="metric"><div class="metric-label">Visits</div><div class="metric-value" style="font-size:20px">${visits.length}</div></div>
+      <div class="metric"><div class="metric-label">Dr Convos</div><div class="metric-value" style="font-size:20px;color:var(--green)">${drConvos}</div></div>
+      <div class="metric"><div class="metric-label">Front Desk</div><div class="metric-value" style="font-size:20px;color:var(--yellow)">${fdConvos}</div></div>
+      <div class="metric"><div class="metric-label">No Entry</div><div class="metric-value" style="font-size:20px;color:var(--text2)">${noEntry}</div></div>
+      <div class="metric"><div class="metric-label">Next Visit</div><div class="metric-value" style="font-size:13px;margin-top:4px;color:${fw&&new Date(fw)<=new Date()?'var(--red)':'var(--text2)'}">${fw?fmt(fw):'—'}</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="form-group">
+        <label>Assigned Rep</label>
+        <select onchange="updateDoctorField('${id}','repId',this.value);this.blur()">${repOpts}</select>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select onchange="updateDoctorField('${id}','status',this.value);this.blur()">${statOpts}</select>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <strong style="font-size:14px">Visit History <span style="color:var(--text2);font-weight:400">(${visits.length})</span></strong>
+      <button class="btn btn-primary btn-sm" onclick="closeModal('doctorModal');openLogModalFor('${id}')">+ Log Visit</button>
+    </div>
+
+    ${visits.length===0
+      ?'<div style="color:var(--text2);text-align:center;padding:24px;font-size:13px">No visits logged yet</div>'
+      :visits.map(v=>`
+        <div class="visit-item">
+          <div class="visit-item-header">
+            <span class="visit-date">${fmt(v.date)}</span>
+            <span style="display:flex;gap:5px;align-items:center">
+              ${resultBadge(v.result)}
+              <button class="btn btn-secondary btn-xs" onclick="openEditVisit('${v.id}','${id}')">Edit</button>
+              <button class="btn btn-danger btn-xs" onclick="deleteVisit('${v.id}','${id}')">Del</button>
+            </span>
+          </div>
+          ${v.notes?`<div class="visit-notes">${escHtml(v.notes)}</div>`:''}
+        </div>
+      `).join('')
     }
-    turfProducts.push({ name, price });
-    document.getElementById('newTurfName').value  = '';
-    document.getElementById('newTurfPrice').value = '';
-    renderTurfList();
-  }
+  `
+  openModal('doctorModal')
+}
 
-  function removeTurf(i) {
-    turfProducts.splice(i, 1);
-    renderTurfList();
-  }
+// ═══════════════════════════════════════════
+// EDIT DOCTOR MODAL
+// ═══════════════════════════════════════════
+function openEditDoctorModalFor(id){
+  const doc=DB.doctors.find(d=>d.id===id)
+  if(!doc) return
+  document.getElementById('editDocId').value=id
+  document.getElementById('editDocName').value=doc.name||''
+  document.getElementById('editDocPractice').value=doc.practice||''
+  document.getElementById('editDocHosp').value=doc.hospitalSystem||''
+  document.getElementById('editDocPhone').value=doc.phone||''
+  document.getElementById('editDocAddress').value=doc.address||''
+  document.getElementById('editDocZip').value=doc.zipCode||''
+  document.getElementById('editDocNotes').value=doc.notes||''
+  document.getElementById('editDocStatus').value=doc.status||'not contacted'
+  populateRepSelect('editDocRep',false)
+  document.getElementById('editDocRep').value=doc.repId||''
+  openModal('editDoctorModal')
+}
 
-  function loadCSV(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const lines = ev.target.result.split(/\r?\n/).filter(l => l.trim());
-      let added = 0;
-      lines.forEach(line => {
-        // Skip header rows
-        if (/name|product|turf/i.test(line.split(',')[0]) && isNaN(parseFloat(line.split(',')[1]))) return;
-        const parts = line.split(',');
-        if (parts.length < 2) return;
-        const name  = parts[0].trim().replace(/^"|"$/g, '');
-        const price = parseFloat(parts[1].trim().replace(/[^0-9.]/g, ''));
-        if (name && !isNaN(price)) {
-          turfProducts.push({ name, price });
-          added++;
-        }
-      });
-      if (added === 0) {
-        alert('No products found. Make sure your CSV has columns: Name, Price');
-      } else {
-        renderTurfList();
-        alert(`Loaded ${added} turf product${added > 1 ? 's' : ''}.`);
+function openEditDoctorModal(){
+  if(_currentDoctorId){ closeModal('doctorModal'); openEditDoctorModalFor(_currentDoctorId) }
+}
+
+function closeEditDoctorModal(){
+  closeModal('editDoctorModal')
+  if(_currentDoctorId) openDoctorDetail(_currentDoctorId)
+}
+
+function saveEditDoctor(){
+  const id=document.getElementById('editDocId').value
+  const name=document.getElementById('editDocName').value.trim()
+  if(!name){ toast('Doctor name is required','error'); return }
+  const docs=DB.doctors
+  const i=docs.findIndex(d=>d.id===id)
+  if(i<0) return
+  docs[i].name=name
+  docs[i].practice=document.getElementById('editDocPractice').value.trim()
+  docs[i].hospitalSystem=document.getElementById('editDocHosp').value.trim()
+  docs[i].phone=document.getElementById('editDocPhone').value.trim()
+  docs[i].address=document.getElementById('editDocAddress').value.trim()
+  docs[i].zipCode=document.getElementById('editDocZip').value.trim()
+  docs[i].notes=document.getElementById('editDocNotes').value.trim()
+  docs[i].repId=document.getElementById('editDocRep').value
+  docs[i].status=document.getElementById('editDocStatus').value
+  DB.doctors=docs
+  invalidateCache()
+  populateFilterDropdowns()
+  closeModal('editDoctorModal')
+  openDoctorDetail(id)
+  toast('Doctor updated')
+}
+
+// ═══════════════════════════════════════════
+// VISIT EDIT / DELETE
+// ═══════════════════════════════════════════
+function openEditVisit(visitId,doctorId){
+  const visit=DB.visits.find(v=>v.id===visitId)
+  if(!visit) return
+  document.getElementById('editVisitId').value=visitId
+  document.getElementById('editVisitDoctorId').value=doctorId
+  document.getElementById('editVisitDate').value=visit.date
+  document.getElementById('editVisitResult').value=visit.result
+  document.getElementById('editVisitNotes').value=visit.notes||''
+  closeModal('doctorModal')
+  openModal('editVisitModal')
+}
+
+function reopenDoctorFromEdit(){
+  const docId=document.getElementById('editVisitDoctorId').value
+  closeModal('editVisitModal')
+  if(docId) openDoctorDetail(docId)
+}
+
+function saveEditVisit(){
+  const id=document.getElementById('editVisitId').value
+  const docId=document.getElementById('editVisitDoctorId').value
+  const visits=DB.visits
+  const i=visits.findIndex(v=>v.id===id)
+  if(i<0) return
+  visits[i].date=document.getElementById('editVisitDate').value
+  visits[i].result=document.getElementById('editVisitResult').value
+  visits[i].notes=document.getElementById('editVisitNotes').value
+  DB.visits=visits
+  invalidateCache()
+  closeModal('editVisitModal')
+  openDoctorDetail(docId)
+  toast('Visit updated')
+}
+
+function deleteVisit(visitId,doctorId){
+  if(!confirm('Delete this visit?')) return
+  DB.visits=DB.visits.filter(v=>v.id!==visitId)
+  invalidateCache()
+  openDoctorDetail(doctorId)
+  toast('Visit deleted')
+}
+
+// ═══════════════════════════════════════════
+// LOG VISIT — PAGE
+// ═══════════════════════════════════════════
+function renderLogPage(){
+  populateDoctorSelect('logDoctorSelect')
+  document.getElementById('logDate').value=today()
+  renderRecentVisits()
+}
+
+function renderRecentVisits(){
+  invalidateCache()
+  const visits=DB.visits.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25)
+  const el=document.getElementById('recentVisitsList')
+  if(!visits.length){ el.innerHTML='<div style="color:var(--text2);text-align:center;padding:20px">No visits logged yet</div>'; return }
+  const docs=DB.doctors
+  el.innerHTML=visits.map(v=>{
+    const doc=docs.find(d=>d.id===v.doctorId)
+    return `<div class="visit-item">
+      <div class="visit-item-header">
+        <span><strong>${escHtml(doc?doc.name:'Unknown')}</strong> <span style="color:var(--text2);font-size:11px">${fmt(v.date)}</span></span>
+        ${resultBadge(v.result)}
+      </div>
+      ${v.notes?`<div class="visit-notes">${escHtml(v.notes)}</div>`:''}
+    </div>`
+  }).join('')
+}
+
+function onLogDoctorChange(){
+  const id=document.getElementById('logDoctorSelect').value
+  const infoEl=document.getElementById('logDoctorInfo')
+  if(!id){ infoEl.style.display='none'; return }
+  const doc=DB.doctors.find(d=>d.id===id)
+  const lv=getLastVisit(id)
+  const visits=getDoctorVisits(id)
+  const drConvos=visits.filter(v=>v.result==='got doctor conversation').length
+  infoEl.style.display='block'
+  infoEl.innerHTML=`${escHtml([doc.practice,doc.hospitalSystem].filter(Boolean).join(' · '))} &nbsp;${statusBadge(doc.status)}<br>
+    Last visit: <strong>${lv?fmt(lv.date):'Never'}</strong> &nbsp;·&nbsp;
+    Total visits: <strong>${visits.length}</strong> &nbsp;·&nbsp;
+    Dr convos: <strong style="color:var(--green)">${drConvos}</strong>`
+  updateLogFollowup()
+}
+
+function updateLogFollowup(){
+  const result=document.getElementById('logResult').value
+  const date=document.getElementById('logDate').value
+  const hint=document.getElementById('logFollowupHint')
+  if(result&&date){
+    const days=DB.followupWindows[result]||7
+    hint.style.display='block'
+    hint.textContent=`→ Recommended next visit: ${fmt(addDays(date,days))} (in ${days} days)`
+  } else { hint.style.display='none' }
+}
+
+function submitVisit(){
+  const doctorId=document.getElementById('logDoctorSelect').value
+  const date=document.getElementById('logDate').value
+  const result=document.getElementById('logResult').value
+  const notes=document.getElementById('logNotes').value.trim()
+  if(!doctorId||!date||!result){ toast('Fill in all required fields','error'); return }
+  addVisitRecord(doctorId,date,result,notes)
+  document.getElementById('logDoctorSelect').value=''
+  document.getElementById('logDate').value=today()
+  document.getElementById('logResult').value=''
+  document.getElementById('logNotes').value=''
+  document.getElementById('logDoctorInfo').style.display='none'
+  document.getElementById('logFollowupHint').style.display='none'
+  renderRecentVisits()
+  toast('Visit logged!')
+}
+
+function addVisitRecord(doctorId,date,result,notes){
+  const visits=DB.visits
+  const visit={id:uid(),doctorId,date,result,notes}
+  visits.push(visit)
+  DB.visits=visits
+  invalidateCache()
+  // Auto-advance status
+  const docs=DB.doctors
+  const i=docs.findIndex(d=>d.id===doctorId)
+  if(i>=0){
+    const s=docs[i].status
+    if(!s||s==='not contacted') { docs[i].status='contacted'; DB.doctors=docs }
+  }
+  return visit
+}
+
+// ═══════════════════════════════════════════
+// LOG MODAL
+// ═══════════════════════════════════════════
+function openLogModal(doctorId){
+  populateDoctorSelect('modalLogDoctor')
+  document.getElementById('modalLogDate').value=today()
+  document.getElementById('modalLogResult').value=''
+  document.getElementById('modalLogNotes').value=''
+  document.getElementById('modalFollowupHint').style.display='none'
+  document.getElementById('modalDoctorInfo').style.display='none'
+  if(doctorId){ document.getElementById('modalLogDoctor').value=doctorId; onModalDoctorChange() }
+  openModal('logModal')
+}
+function openLogModalFor(id){ openLogModal(id) }
+
+function onModalDoctorChange(){
+  const id=document.getElementById('modalLogDoctor').value
+  const infoEl=document.getElementById('modalDoctorInfo')
+  if(!id){ infoEl.style.display='none'; updateModalFollowup(); return }
+  const doc=DB.doctors.find(d=>d.id===id)
+  const lv=getLastVisit(id)
+  const visits=getDoctorVisits(id)
+  const drConvos=visits.filter(v=>v.result==='got doctor conversation').length
+  infoEl.style.display='block'
+  infoEl.innerHTML=`${escHtml([doc.practice,doc.hospitalSystem].filter(Boolean).join(' · '))} &nbsp;${statusBadge(doc.status)}<br>
+    Last: <strong>${lv?fmt(lv.date):'Never'}</strong> · Visits: <strong>${visits.length}</strong> · Dr convos: <strong style="color:var(--green)">${drConvos}</strong>`
+  updateModalFollowup()
+}
+
+function updateModalFollowup(){
+  const result=document.getElementById('modalLogResult').value
+  const date=document.getElementById('modalLogDate').value
+  const hint=document.getElementById('modalFollowupHint')
+  if(result&&date){
+    const days=DB.followupWindows[result]||7
+    hint.style.display='block'
+    hint.textContent=`→ Recommended next visit: ${fmt(addDays(date,days))} (in ${days} days)`
+  } else { hint.style.display='none' }
+}
+
+function submitModalVisit(){
+  const doctorId=document.getElementById('modalLogDoctor').value
+  const date=document.getElementById('modalLogDate').value
+  const result=document.getElementById('modalLogResult').value
+  const notes=document.getElementById('modalLogNotes').value.trim()
+  if(!doctorId||!date||!result){ toast('Fill in all required fields','error'); return }
+  addVisitRecord(doctorId,date,result,notes)
+  closeModal('logModal')
+  renderDashboard()
+  toast('Visit logged!')
+}
+
+// ═══════════════════════════════════════════
+// ADD DOCTOR
+// ═══════════════════════════════════════════
+function openAddDoctorModal(){
+  populateRepSelect('addDocRep',false)
+  ;['addDocName','addDocPractice','addDocHosp','addDocPhone','addDocAddress','addDocZip','addDocNotes'].forEach(id=>{
+    document.getElementById(id).value=''
+  })
+  document.getElementById('addDocStatus').value='not contacted'
+  openModal('addDoctorModal')
+}
+
+function saveNewDoctor(){
+  const name=document.getElementById('addDocName').value.trim()
+  if(!name){ toast('Doctor name is required','error'); return }
+  const docs=DB.doctors
+  docs.push({
+    id:uid(), name,
+    practice:document.getElementById('addDocPractice').value.trim(),
+    hospitalSystem:document.getElementById('addDocHosp').value.trim(),
+    phone:document.getElementById('addDocPhone').value.trim(),
+    address:document.getElementById('addDocAddress').value.trim(),
+    zipCode:document.getElementById('addDocZip').value.trim(),
+    notes:document.getElementById('addDocNotes').value.trim(),
+    repId:document.getElementById('addDocRep').value,
+    status:document.getElementById('addDocStatus').value
+  })
+  DB.doctors=docs
+  invalidateCache()
+  closeModal('addDoctorModal')
+  renderDoctors()
+  populateFilterDropdowns()
+  updateHeaderBadge()
+  toast('Doctor added!')
+}
+
+// ═══════════════════════════════════════════
+// ANALYTICS
+// ═══════════════════════════════════════════
+function renderAnalytics(){
+  invalidateCache()
+  const docs=DB.doctors
+  const visits=DB.visits
+  const now=new Date()
+  const ytdStart=`${now.getFullYear()}-01-01`
+  const fourWeeksAgo=new Date(now-28*86400000).toISOString().split('T')[0]
+
+  const ytdVisits=visits.filter(v=>v.date>=ytdStart)
+  const last4=visits.filter(v=>v.date>=fourWeeksAgo)
+  const drConvosAll=visits.filter(v=>v.result==='got doctor conversation')
+  const yesDocs=docs.filter(d=>d.status==='yes')
+  const convRate=docs.length?((yesDocs.length/docs.length)*100).toFixed(1):0
+
+  // Metrics
+  document.getElementById('analyticsMetrics').innerHTML=[
+    {label:'Total Visits (YTD)',value:ytdVisits.length,sub:`${last4.length} in last 4 weeks`},
+    {label:'Dr Conversations (YTD)',value:drConvosAll.filter(v=>v.date>=ytdStart).length,sub:`${drConvosAll.filter(v=>v.date>=fourWeeksAgo).length} in last 4 weeks`},
+    {label:'Total Closes (Yes)',value:yesDocs.length,sub:`${convRate}% overall conv rate`},
+    {label:'Total Doctors',value:docs.length,sub:`${docs.filter(d=>d.status!=='not contacted').length} contacted`}
+  ].map(m=>`<div class="metric"><div class="metric-label">${m.label}</div><div class="metric-value">${m.value}</div><div class="metric-sub">${m.sub}</div></div>`).join('')
+
+  // Funnel
+  const contacted=docs.filter(d=>d.status!=='not contacted').length
+  const hadConvo=[...new Set(drConvosAll.map(v=>v.doctorId))].length
+  const closedOrPipe=docs.filter(d=>d.status==='yes'||d.status==='pipeline').length
+  const funnelItems=[
+    {label:'Doctors in System',n:docs.length,color:'var(--accent)'},
+    {label:'Contacted',n:contacted,color:'var(--accent)'},
+    {label:'Had Dr Conversation',n:hadConvo,color:'var(--yellow)'},
+    {label:'Yes / Pipeline',n:closedOrPipe,color:'var(--green)'},
+  ]
+  document.getElementById('funnelChart').innerHTML=funnelItems.map(f=>{
+    const pct=docs.length?Math.round(f.n/docs.length*100):0
+    return `<div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px">
+        <span>${f.label}</span>
+        <span style="font-weight:600">${f.n} <span style="color:var(--text2);font-weight:400">(${pct}%)</span></span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${f.color}"></div></div>
+    </div>`
+  }).join('')
+
+  // Key averages
+  const avgV=avgVisitsBeforeConvo(docs,visits)
+  const avgC=avgConvosBeforeYes(docs,visits)
+  document.getElementById('keyAverages').innerHTML=`
+    <div style="margin-bottom:18px">
+      <div class="metric-label">Avg Visits Before First Dr Conversation</div>
+      <div style="font-size:28px;font-weight:700;margin-top:4px">${avgV}</div>
+    </div>
+    <div style="margin-bottom:18px">
+      <div class="metric-label">Avg Dr Convos Before "Yes"</div>
+      <div style="font-size:28px;font-weight:700;margin-top:4px">${avgC}</div>
+    </div>
+    <div>
+      <div class="metric-label">Overall Conversion Rate</div>
+      <div style="font-size:28px;font-weight:700;margin-top:4px">${convRate}%</div>
+      <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:${convRate}%;background:var(--green)"></div></div>
+    </div>`
+
+  // Maybe → Yes trend
+  renderMaybeTrend(docs,visits)
+
+  // By rep
+  const reps=DB.reps
+  document.getElementById('repAnalyticsBody').innerHTML=reps.length
+    ?reps.map(rep=>{
+        const rd=docs.filter(d=>d.repId===rep.id)
+        const repDocIds=new Set(rd.map(d=>d.id))
+        const rv=visits.filter(v=>repDocIds.has(v.doctorId))
+        const rConvo=rv.filter(v=>v.result==='got doctor conversation').length
+        const rYes=rd.filter(d=>d.status==='yes').length
+        const rMaybe=rd.filter(d=>d.status==='maybe').length
+        const rNo=rd.filter(d=>d.status==='no').length
+        const rRate=rd.length?((rYes/rd.length)*100).toFixed(1):0
+        return `<tr>
+          <td><strong>${escHtml(rep.name)}</strong></td>
+          <td class="num">${rd.length}</td>
+          <td class="num">${rv.length}</td>
+          <td class="num">${rConvo}</td>
+          <td class="num"><span style="color:var(--green)">${rYes}</span></td>
+          <td class="num"><span style="color:var(--yellow)">${rMaybe}</span></td>
+          <td class="num"><span style="color:var(--red)">${rNo}</span></td>
+          <td class="num">${rRate}%</td>
+          <td class="num">${rv.filter(v=>v.date>=ytdStart).length}</td>
+          <td class="num">${rv.filter(v=>v.date>=fourWeeksAgo).length}</td>
+        </tr>`
+      }).join('')
+    :'<tr><td colspan="10" style="text-align:center;color:var(--text2);padding:20px">No reps added — go to Settings</td></tr>'
+
+  // By hospital
+  const hospitals=[...new Set(docs.map(d=>d.hospitalSystem).filter(Boolean))].sort()
+  document.getElementById('hospAnalyticsBody').innerHTML=hospitals.length
+    ?hospitals.map(h=>{
+        const hd=docs.filter(d=>d.hospitalSystem===h)
+        const hIds=new Set(hd.map(d=>d.id))
+        const hv=visits.filter(v=>hIds.has(v.doctorId))
+        const hConvo=hv.filter(v=>v.result==='got doctor conversation').length
+        const hYes=hd.filter(d=>d.status==='yes').length
+        const hPipe=hd.filter(d=>d.status==='pipeline').length
+        const hRate=hd.length?((hYes/hd.length)*100).toFixed(1):0
+        return `<tr><td>${escHtml(h)}</td><td class="num">${hd.length}</td><td class="num">${hv.length}</td><td class="num">${hConvo}</td><td class="num"><span style="color:var(--green)">${hYes}</span></td><td class="num"><span style="color:var(--purple)">${hPipe}</span></td><td class="num">${hRate}%</td></tr>`
+      }).join('')
+    :'<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:20px">No data</td></tr>'
+
+  // By zip
+  const zips=[...new Set(docs.map(d=>d.zipCode).filter(Boolean))].sort()
+  document.getElementById('zipAnalyticsBody').innerHTML=zips.length
+    ?zips.map(z=>{
+        const zd=docs.filter(d=>d.zipCode===z)
+        const zIds=new Set(zd.map(d=>d.id))
+        const zv=visits.filter(v=>zIds.has(v.doctorId))
+        const zConvo=zv.filter(v=>v.result==='got doctor conversation').length
+        const zYes=zd.filter(d=>d.status==='yes').length
+        const zRate=zd.length?((zYes/zd.length)*100).toFixed(1):0
+        return `<tr><td>${escHtml(z)}</td><td class="num">${zd.length}</td><td class="num">${zv.length}</td><td class="num">${zConvo}</td><td class="num"><span style="color:var(--green)">${zYes}</span></td><td class="num">${zRate}%</td></tr>`
+      }).join('')
+    :'<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px">No data</td></tr>'
+}
+
+function renderMaybeTrend(docs,visits){
+  // Compare doctors currently "maybe" vs doctors who converted to "yes"
+  const maybeDocs=docs.filter(d=>d.status==='maybe')
+  const yesDocs=docs.filter(d=>d.status==='yes')
+
+  const avgDaysBetween=(docList)=>{
+    const intervals=[]
+    docList.forEach(doc=>{
+      const dv=visits.filter(v=>v.doctorId===doc.id).sort((a,b)=>a.date.localeCompare(b.date))
+      for(let i=1;i<dv.length;i++){
+        const d=daysSince(dv[i-1].date)-daysSince(dv[i].date)
+        if(d>0&&d<90) intervals.push(d)
       }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
+    })
+    return intervals.length?(intervals.reduce((a,b)=>a+b,0)/intervals.length).toFixed(1):'—'
   }
 
-  // ── Calculation ─────────────────────────────────────────────────────
-  function num(id) {
-    const v = parseFloat(document.getElementById(id).value);
-    return isNaN(v) ? 0 : v;
+  const avgConvosYes=(docList)=>{
+    const vals=docList.map(doc=>visits.filter(v=>v.doctorId===doc.id&&v.result==='got doctor conversation').length)
+    return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—'
   }
 
-  function fmt(n) {
-    return n > 0 ? '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '$0.00';
+  const avgVisitsYes=(docList)=>{
+    const vals=docList.map(doc=>visits.filter(v=>v.doctorId===doc.id).length)
+    return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—'
   }
 
-  function setRow(id, value) {
-    const row = document.getElementById('row-' + id);
-    const val = document.getElementById('val-' + id);
-    if (row && val) {
-      val.textContent = fmt(value);
-      row.classList.toggle('zero', value === 0);
+  const el=document.getElementById('maybeTrend')
+  if(!maybeDocs.length&&!yesDocs.length){
+    el.innerHTML='<div style="color:var(--text2);font-size:13px;padding:12px 0">No "maybe" or "yes" doctors yet to compare.</div>'
+    return
+  }
+
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
+        <div style="font-weight:600;margin-bottom:10px;color:var(--yellow)">🟡 Still "Maybe" (${maybeDocs.length} doctors)</div>
+        <div class="metric-label">Avg days between visits</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px">${avgDaysBetween(maybeDocs)}</div>
+        <div class="metric-label">Avg total visits</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px">${avgVisitsYes(maybeDocs)}</div>
+        <div class="metric-label">Avg Dr conversations</div>
+        <div style="font-size:22px;font-weight:700">${avgConvosYes(maybeDocs)}</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid rgba(63,185,80,.3);border-radius:var(--radius);padding:14px">
+        <div style="font-weight:600;margin-bottom:10px;color:var(--green)">🟢 Converted to "Yes" (${yesDocs.length} doctors)</div>
+        <div class="metric-label">Avg days between visits</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px">${avgDaysBetween(yesDocs)}</div>
+        <div class="metric-label">Avg total visits</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px">${avgVisitsYes(yesDocs)}</div>
+        <div class="metric-label">Avg Dr conversations</div>
+        <div style="font-size:22px;font-weight:700">${avgConvosYes(yesDocs)}</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text2)">
+      Tip: Compare avg days between visits for "maybe" doctors vs converted "yes" doctors to identify optimal cadence.
+    </div>
+  `
+}
+
+function avgVisitsBeforeConvo(docs,visits){
+  const totals=[]
+  docs.forEach(doc=>{
+    const dv=visits.filter(v=>v.doctorId===doc.id).sort((a,b)=>a.date.localeCompare(b.date))
+    const idx=dv.findIndex(v=>v.result==='got doctor conversation')
+    if(idx>=0) totals.push(idx+1)
+  })
+  return totals.length?(totals.reduce((a,b)=>a+b,0)/totals.length).toFixed(1):'—'
+}
+
+function avgConvosBeforeYes(docs,visits){
+  const totals=[]
+  docs.filter(d=>d.status==='yes').forEach(doc=>{
+    const n=visits.filter(v=>v.doctorId===doc.id&&v.result==='got doctor conversation').length
+    if(n>0) totals.push(n)
+  })
+  return totals.length?(totals.reduce((a,b)=>a+b,0)/totals.length).toFixed(1):'—'
+}
+
+// ═══════════════════════════════════════════
+// IMPORT
+// ═══════════════════════════════════════════
+let _pendingImport=[]
+
+function handleCSVUpload(e){
+  const file=e.target.files[0]; if(!file) return
+  const reader=new FileReader()
+  reader.onload=ev=>parseAndPreviewCSV(ev.target.result)
+  reader.readAsText(file)
+  e.target.value=''
+}
+
+const _uploadZone=document.getElementById('uploadZone')
+_uploadZone.addEventListener('dragover',e=>{e.preventDefault();_uploadZone.classList.add('drag')})
+_uploadZone.addEventListener('dragleave',()=>_uploadZone.classList.remove('drag'))
+_uploadZone.addEventListener('drop',e=>{
+  e.preventDefault();_uploadZone.classList.remove('drag')
+  const file=e.dataTransfer.files[0]
+  if(file){const r=new FileReader();r.onload=ev=>parseAndPreviewCSV(ev.target.result);r.readAsText(file)}
+})
+
+function parseCSVLine(line){
+  const res=[];let cur='',inQ=false
+  for(const c of line){
+    if(c==='"') inQ=!inQ
+    else if(c===','&&!inQ){res.push(cur);cur=''}
+    else cur+=c
+  }
+  res.push(cur)
+  return res.map(s=>s.trim().replace(/^"|"$/g,''))
+}
+
+function findCol(header,names){
+  for(const name of names){const i=header.indexOf(name);if(i>=0)return i}
+  for(const name of names){const i=header.findIndex(h=>h.includes(name));if(i>=0)return i}
+  return -1
+}
+
+function parseAndPreviewCSV(text){
+  const lines=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean)
+  if(lines.length<2){toast('CSV needs a header row + at least one data row','error');return}
+  const header=parseCSVLine(lines[0]).map(h=>h.toLowerCase().replace(/[^a-z ]/g,'').trim())
+
+  const cols={
+    name:findCol(header,['doctor name','name','doctor','physician','dr']),
+    practice:findCol(header,['practice name','practice','clinic','group']),
+    hospitalSystem:findCol(header,['hospital system','hospital','system','health system','network']),
+    phone:findCol(header,['phone','phone number','tel','telephone']),
+    address:findCol(header,['address','street','location']),
+    zipCode:findCol(header,['zip code','zip','postal code','postal','post code'])
+  }
+
+  const existingNames=new Set(DB.doctors.map(d=>d.name.toLowerCase().trim()))
+  _pendingImport=[]
+  for(let i=1;i<lines.length;i++){
+    const c=parseCSVLine(lines[i])
+    const row={
+      name:cols.name>=0?c[cols.name]||'':'',
+      practice:cols.practice>=0?c[cols.practice]||'':'',
+      hospitalSystem:cols.hospitalSystem>=0?c[cols.hospitalSystem]||'':'',
+      phone:cols.phone>=0?c[cols.phone]||'':'',
+      address:cols.address>=0?c[cols.address]||'':'',
+      zipCode:cols.zipCode>=0?c[cols.zipCode]||'':''
+    }
+    if(row.name){
+      row._dup=existingNames.has(row.name.toLowerCase().trim())
+      _pendingImport.push(row)
     }
   }
 
-  function updateCalc() {
-    const sqft      = num('sqft');
-    const perimeter = num('perimeter');
-    const seams     = num('seams');
-    const waste     = num('wasteFactor') / 100;
+  if(!_pendingImport.length){toast('No valid doctor rows found — check column headers','error');return}
 
-    // Turf
-    const turfIdx   = document.getElementById('turfSelect').value;
-    const turfPrice = turfIdx !== '' ? turfProducts[parseInt(turfIdx)]?.price ?? 0 : 0;
-    const turfSqft  = sqft * (1 + waste);
-    const costTurf  = turfSqft * turfPrice;
+  const dups=_pendingImport.filter(r=>r._dup).length
+  const newCount=_pendingImport.length-dups
+  document.getElementById('importSummary').innerHTML=`
+    <strong>${_pendingImport.length}</strong> rows found &nbsp;·&nbsp;
+    <span style="color:var(--green)">${newCount} new</span>&nbsp;·&nbsp;
+    <span style="color:var(--yellow)">${dups} possible duplicates</span>`
 
-    // DG base
-    const dgDepthIn = num('dgDepth');
-    const dgPriceTon = num('dgPrice');
-    // Volume: sq ft * depth(ft) * 1.35 tons/cy / 27 cf per cy  ≈ sqft * depthFt * 0.05
-    const dgTons    = sqft * (dgDepthIn / 12) * (1.35 / 27) * 27; // = sqft * depthFt * 1.35 / 27 cy * ... simplify:
-    // 1 cy = 27 cf; DG ≈ 1.35 tons/cy
-    const dgCubicFt = sqft * (dgDepthIn / 12);
-    const dgCY      = dgCubicFt / 27;
-    const dgTonsCalc = dgCY * 1.35;
-    const costDG    = dgTonsCalc * dgPriceTon;
+  document.getElementById('importPreviewBody').innerHTML=_pendingImport.slice(0,50).map((r,i)=>{
+    const badge=r._dup?'<span class="badge badge-yellow">Dup?</span>':'<span class="badge badge-green">New</span>'
+    return `<tr ${r._dup?'style="opacity:.7"':''}>
+      <td style="color:var(--text2)">${i+1}</td>
+      <td>${badge}</td>
+      <td>${escHtml(r.name)}</td><td>${escHtml(r.practice)}</td><td>${escHtml(r.hospitalSystem)}</td>
+      <td>${escHtml(r.phone)}</td><td>${escHtml(r.zipCode)}</td>
+    </tr>`
+  }).join('')+(_pendingImport.length>50?`<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:8px">…and ${_pendingImport.length-50} more rows</td></tr>`:'')
 
-    // Weed barrier
-    const costWeed  = sqft * num('weedBarrierPrice');
+  // populate assign rep select
+  populateRepSelect('importRepAssign',false)
+  document.getElementById('importOptions').style.display='block'
+  document.getElementById('importPreview').style.display='block'
+}
 
-    // Infill
-    const costInfill = sqft * num('infillPrice');
+function cancelImport(){
+  _pendingImport=[]
+  document.getElementById('importPreview').style.display='none'
+  document.getElementById('importOptions').style.display='none'
+}
 
-    // Edging
-    const costEdging = perimeter * (num('benderPrice') + num('nailsPrice'));
+function confirmImport(){
+  if(!_pendingImport.length) return
+  const dupAction=document.getElementById('importDupAction').value
+  const assignRepId=document.getElementById('importRepAssign').value
+  const existing=DB.doctors
+  const existingNames=new Set(existing.map(d=>d.name.toLowerCase().trim()))
+  let imported=0,skipped=0
+  const newDocs=[]
+  _pendingImport.forEach(r=>{
+    if(r._dup&&dupAction==='skip'){ skipped++; return }
+    newDocs.push({id:uid(),...r,_dup:undefined,repId:assignRepId,status:'not contacted',notes:''})
+    imported++
+  })
+  DB.doctors=[...existing,...newDocs]
+  _pendingImport=[]
+  invalidateCache()
+  document.getElementById('importPreview').style.display='none'
+  document.getElementById('importOptions').style.display='none'
+  populateFilterDropdowns()
+  updateHeaderBadge()
+  toast(`✓ Imported ${imported} doctors${skipped?`, skipped ${skipped} duplicates`:''}`)
+}
 
-    // Seaming
-    const costSeam  = seams * (num('seamTapePrice') + num('seamGluePrice'));
+function downloadSampleCSV(){
+  const csv=`doctor name,practice name,hospital system,phone,address,zip code\r\nDr. Jane Smith,Women's Health Clinic,Mayo Clinic,555-123-4567,123 Main St,55901\r\nDr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902\r\nDr. Maria Chen,Lakeside Women's Center,Allina Health,555-456-7890,789 Lake Dr,55903`
+  dlFile('sample_doctors.csv',csv,'text/csv')
+}
 
-    const matSub = costTurf + costDG + costWeed + costInfill + costEdging + costSeam;
+function dlFile(name,content,type='text/csv'){
+  const blob=new Blob([content],{type})
+  const a=document.createElement('a')
+  a.href=URL.createObjectURL(blob)
+  a.download=name; a.click()
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000)
+}
 
-    // Labor
-    const costLaborEx   = sqft * num('laborExcavate');
-    const costLaborBase = sqft * num('laborBase');
-    const costLaborTurf = sqft * num('laborTurf');
-    const costLaborHaul = num('laborHaul');
+// ═══════════════════════════════════════════
+// EXPORT
+// ═══════════════════════════════════════════
+function csvRow(arr){
+  return arr.map(c=>`"${(c||'').toString().replace(/"/g,'""')}"`).join(',')
+}
 
-    const laborSub = costLaborEx + costLaborBase + costLaborTurf + costLaborHaul;
+function exportDashboardCSV(){
+  invalidateCache()
+  const docs=DB.doctors.slice().sort((a,b)=>a.name.localeCompare(b.name))
+  const rows=[csvRow(['Doctor Name','Practice','Hospital System','Phone','Address','Zip','Rep','Status','Notes','Total Visits','Dr Convos','Front Desk','No Entry','Last Visit','Days Since','Next Follow-up'])]
+  docs.forEach(d=>{
+    const visits=getDoctorVisits(d.id)
+    const lv=visits[0]
+    const drC=visits.filter(v=>v.result==='got doctor conversation').length
+    const fdC=visits.filter(v=>v.result==='front desk only').length
+    const ne=visits.filter(v=>v.result==="didn't get in").length
+    rows.push(csvRow([d.name,d.practice,d.hospitalSystem,d.phone,d.address,d.zipCode,getRepName(d.repId),d.status,d.notes||'',visits.length,drC,fdC,ne,lv?lv.date:'',lv?daysSince(lv.date):'',lv?getFollowupDate(lv):'']))
+  })
+  dlFile('doctors_export.csv',rows.join('\r\n'))
+}
 
-    // Overhead & markup
-    const overhead = num('overhead');
-    const markupPct = num('markup') / 100;
-    const preMark  = matSub + laborSub + overhead;
-    const markupAmt = preMark * markupPct;
-    const total     = preMark + markupAmt;
+function exportAnalyticsCSV(){
+  const docs=DB.doctors
+  const rows=[csvRow(['Visit Date','Doctor Name','Practice','Hospital System','Zip','Rep','Result','Notes'])]
+  DB.visits.slice().sort((a,b)=>b.date.localeCompare(a.date)).forEach(v=>{
+    const doc=docs.find(d=>d.id===v.doctorId)
+    rows.push(csvRow([v.date,doc?.name||'',doc?.practice||'',doc?.hospitalSystem||'',doc?.zipCode||'',getRepName(doc?.repId),v.result,v.notes||'']))
+  })
+  dlFile('visit_log_export.csv',rows.join('\r\n'))
+}
 
-    // Render
-    setRow('turf',   costTurf);
-    setRow('dg',     costDG);
-    setRow('weed',   costWeed);
-    setRow('infill', costInfill);
-    setRow('edging', costEdging);
-    setRow('seam',   costSeam);
-    document.getElementById('val-materials-sub').textContent = fmt(matSub);
+function exportAllData(){
+  const data={doctors:DB.doctors,visits:DB.visits,reps:DB.reps,companyName:DB.companyName,followupWindows:DB.followupWindows,exportedAt:new Date().toISOString(),version:2}
+  dlFile('crm_backup.json',JSON.stringify(data,null,2),'application/json')
+}
 
-    setRow('labor-ex',   costLaborEx);
-    setRow('labor-base', costLaborBase);
-    setRow('labor-turf', costLaborTurf);
-    setRow('labor-haul', costLaborHaul);
-    document.getElementById('val-labor-sub').textContent = fmt(laborSub);
+function handleJSONImport(e){
+  const file=e.target.files[0]; if(!file) return
+  const reader=new FileReader()
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result)
+      if(!confirm(`Restore backup? This replaces all current data.\n\nBackup: ${data.doctors?.length||0} doctors, ${data.visits?.length||0} visits, ${data.reps?.length||0} reps\nExported: ${data.exportedAt||'unknown'}`)) return
+      if(data.doctors) DB.doctors=data.doctors
+      if(data.visits) DB.visits=data.visits
+      if(data.reps) DB.reps=data.reps
+      if(data.companyName) DB.companyName=data.companyName
+      if(data.followupWindows) DB.followupWindows=data.followupWindows
+      invalidateCache()
+      initCompanyName()
+      renderDashboard()
+      toast('Backup restored!')
+    }catch{toast('Invalid or corrupt JSON file','error')}
+  }
+  reader.readAsText(file)
+  e.target.value=''
+}
 
-    setRow('overhead', overhead);
-    setRow('markup',   markupAmt);
-    document.getElementById('val-total').textContent = fmt(total);
+function clearAllData(){
+  if(!confirm('Delete ALL data? This cannot be undone.')) return
+  if(!confirm('Final confirmation: permanently delete all doctors, visits, and reps?')) return
+  ;['crm_doctors','crm_visits','crm_reps','crm_company','crm_followup'].forEach(k=>localStorage.removeItem(k))
+  invalidateCache()
+  initCompanyName()
+  updateHeaderBadge()
+  renderDashboard()
+  renderSettings()
+  toast('All data cleared')
+}
 
-    if (sqft > 0 && total > 0) {
-      document.getElementById('val-per-sqft').textContent =
-        `${fmt(total / sqft)} per sq ft  ·  ${sqft.toLocaleString()} sq ft`;
-    } else {
-      document.getElementById('val-per-sqft').textContent = '';
-    }
+// ═══════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════
+function addRep(){
+  const name=document.getElementById('newRepName').value.trim()
+  if(!name) return
+  const reps=DB.reps
+  if(reps.find(r=>r.name.toLowerCase()===name.toLowerCase())){toast('Rep already exists','error');return}
+  reps.push({id:uid(),name})
+  DB.reps=reps
+  document.getElementById('newRepName').value=''
+  renderSettings()
+  toast('Rep added!')
+}
+
+function openRenameRep(id){
+  const rep=DB.reps.find(r=>r.id===id)
+  if(!rep) return
+  document.getElementById('renameRepId').value=id
+  document.getElementById('renameRepName').value=rep.name
+  openModal('renameRepModal')
+  setTimeout(()=>document.getElementById('renameRepName').select(),50)
+}
+
+function saveRenameRep(){
+  const id=document.getElementById('renameRepId').value
+  const name=document.getElementById('renameRepName').value.trim()
+  if(!name){toast('Name required','error');return}
+  const reps=DB.reps
+  const i=reps.findIndex(r=>r.id===id)
+  if(i>=0){reps[i].name=name;DB.reps=reps}
+  closeModal('renameRepModal')
+  renderSettings()
+  toast('Rep renamed')
+}
+
+function deleteRep(id){
+  const rep=DB.reps.find(r=>r.id===id)
+  const docCount=DB.doctors.filter(d=>d.repId===id).length
+  if(!confirm(`Remove rep "${rep?.name}"? Their ${docCount} doctor(s) become unassigned.`)) return
+  DB.reps=DB.reps.filter(r=>r.id!==id)
+  const docs=DB.doctors
+  docs.forEach(d=>{if(d.repId===id)d.repId=''})
+  DB.doctors=docs
+  renderSettings()
+  toast('Rep removed')
+}
+
+function renderSettings(){
+  const reps=DB.reps
+  const el=document.getElementById('repsList')
+  if(!reps.length){
+    el.innerHTML='<div style="color:var(--text2);padding:10px 0">No reps yet. Add one above.</div>'
+  }else{
+    el.innerHTML=reps.map(r=>{
+      const docCount=DB.doctors.filter(d=>d.repId===r.id).length
+      const visitCount=DB.visits.filter(v=>{const doc=DB.doctors.find(d=>d.id===v.doctorId);return doc?.repId===r.id}).length
+      const yes=DB.doctors.filter(d=>d.repId===r.id&&d.status==='yes').length
+      return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <div style="flex:1">
+          <div style="font-weight:600">${escHtml(r.name)}</div>
+          <div style="color:var(--text2);font-size:12px">${docCount} doctors · ${visitCount} visits · <span style="color:var(--green)">${yes} yes</span></div>
+        </div>
+        <button class="btn btn-secondary btn-xs" onclick="openRenameRep('${r.id}')">Rename</button>
+        <button class="btn btn-danger btn-xs" onclick="deleteRep('${r.id}')">Remove</button>
+      </div>`
+    }).join('')
   }
 
-  // ── Wire up live recalculation ──────────────────────────────────────
-  document.querySelectorAll('input[type="number"], select').forEach(el => {
-    el.addEventListener('input', updateCalc);
-  });
+  const fw=DB.followupWindows
+  document.getElementById('fwFrontDesk').value=fw['front desk only']||7
+  document.getElementById('fwDoctorConvo').value=fw['got doctor conversation']||14
+  document.getElementById('fwNoEntry').value=fw["didn't get in"]||5
+}
 
-  renderTurfList();
+function saveFollowupWindows(){
+  DB.followupWindows={
+    'front desk only':parseInt(document.getElementById('fwFrontDesk').value)||7,
+    'got doctor conversation':parseInt(document.getElementById('fwDoctorConvo').value)||14,
+    "didn't get in":parseInt(document.getElementById('fwNoEntry').value)||5
+  }
+  toast('Follow-up windows saved')
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+initCompanyName()
+updateHeaderBadge()
+renderDashboard()
 </script>
 </body>
 </html>
