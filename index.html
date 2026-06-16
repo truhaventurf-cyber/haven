@@ -17,131 +17,175 @@
   --yellow: #d29922;
   --red: #f85149;
   --purple: #bc8cff;
+  --teal: #56d364;
   --radius: 8px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; min-height: 100vh; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;min-height:100vh}
 
-.header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 100; }
-.header-logo { font-size: 22px; }
-#companyNameDisplay { font-size: 18px; font-weight: 700; cursor: pointer; }
-#companyNameDisplay:hover { color: var(--accent); }
-#companyNameInput { font-size: 18px; font-weight: 700; background: var(--surface2); border: 1px solid var(--accent); color: var(--text); border-radius: var(--radius); padding: 2px 8px; display: none; width: 300px; }
+/* ── Header ── */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.header-logo{font-size:22px;flex-shrink:0}
+#companyNameDisplay{font-size:17px;font-weight:700;cursor:pointer;user-select:none}
+#companyNameDisplay:hover{color:var(--accent)}
+#companyNameInput{font-size:17px;font-weight:700;background:var(--surface2);border:1px solid var(--accent);color:var(--text);border-radius:var(--radius);padding:2px 8px;display:none;width:280px}
+.header-spacer{flex:1}
+.header-badge{background:rgba(47,129,247,0.15);color:var(--accent);border:1px solid rgba(47,129,247,0.3);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:500}
 
-.nav { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; overflow-x: auto; padding: 0 20px; }
-.nav-tab { padding: 12px 18px; cursor: pointer; border-bottom: 2px solid transparent; color: var(--text2); font-weight: 500; white-space: nowrap; transition: color 0.15s; }
-.nav-tab:hover { color: var(--text); }
-.nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+/* ── Nav ── */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;padding:0 20px}
+.nav::-webkit-scrollbar{display:none}
+.nav-tab{padding:11px 16px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);font-weight:500;white-space:nowrap;transition:color .15s;font-size:13px}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 
-.main { padding: 20px; max-width: 1400px; margin: 0 auto; }
-.page { display: none; }
-.page.active { display: block; }
+/* ── Layout ── */
+.main{padding:20px;max-width:1440px;margin:0 auto}
+.page{display:none}
+.page.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:14px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:960px){.grid-3,.grid-4{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.main{padding:10px}}
 
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
-.card-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+/* ── Forms ── */
+.form-group{margin-bottom:12px}
+label{display:block;margin-bottom:4px;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.6px;font-weight:500}
+input,select,textarea{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);padding:8px 10px;font-size:14px;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+textarea{resize:vertical;min-height:70px;font-family:inherit}
+select option{background:var(--surface2)}
+.form-row{display:flex;gap:10px;flex-wrap:wrap}
+.form-row .form-group{flex:1;min-width:120px}
 
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-@media (max-width: 900px) { .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; } .main { padding: 10px; } }
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:var(--radius);border:none;cursor:pointer;font-size:13px;font-weight:500;transition:opacity .15s;white-space:nowrap}
+.btn:hover{opacity:.85}
+.btn:active{opacity:.7}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-success{background:var(--green);color:#fff}
+.btn-danger{background:var(--red);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-ghost{background:none;color:var(--text2);border:none;padding:4px 6px}
+.btn-ghost:hover{color:var(--text)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-xs{padding:2px 8px;font-size:11px}
 
-.form-group { margin-bottom: 12px; }
-label { display: block; margin-bottom: 4px; color: var(--text2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-input, select, textarea { width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius); padding: 8px 10px; font-size: 14px; transition: border-color 0.15s; }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
-textarea { resize: vertical; min-height: 70px; }
-select option { background: var(--surface2); }
+/* ── Tables ── */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:9px 12px;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap;font-weight:500}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:13px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.025)}
+.num{text-align:right;font-variant-numeric:tabular-nums}
 
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius); border: none; cursor: pointer; font-size: 14px; font-weight: 500; transition: opacity 0.15s; }
-.btn:hover { opacity: 0.85; }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-success { background: var(--green); color: #fff; }
-.btn-danger { background: var(--red); color: #fff; }
-.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-.btn-sm { padding: 5px 12px; font-size: 13px; }
-.btn-xs { padding: 2px 8px; font-size: 11px; }
+/* ── Badges ── */
+.badge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.badge-green{background:rgba(63,185,80,.15);color:var(--green)}
+.badge-yellow{background:rgba(210,153,34,.15);color:var(--yellow)}
+.badge-red{background:rgba(248,81,73,.15);color:var(--red)}
+.badge-blue{background:rgba(47,129,247,.15);color:var(--accent)}
+.badge-purple{background:rgba(188,140,255,.15);color:var(--purple)}
+.badge-gray{background:rgba(139,148,158,.15);color:var(--text2)}
 
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; }
-th { text-align: left; padding: 10px 12px; color: var(--text2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); white-space: nowrap; }
-td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(255,255,255,0.02); }
+/* ── Priority row borders ── */
+tr.pr-red td:first-child{border-left:3px solid var(--red)}
+tr.pr-yellow td:first-child{border-left:3px solid var(--yellow)}
+tr.pr-green td:first-child{border-left:3px solid var(--green)}
 
-.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
-.badge-green { background: rgba(63,185,80,0.15); color: var(--green); }
-.badge-yellow { background: rgba(210,153,34,0.15); color: var(--yellow); }
-.badge-red { background: rgba(248,81,73,0.15); color: var(--red); }
-.badge-blue { background: rgba(47,129,247,0.15); color: var(--accent); }
-.badge-purple { background: rgba(188,140,255,0.15); color: var(--purple); }
-.badge-gray { background: rgba(139,148,158,0.15); color: var(--text2); }
+/* ── Metrics ── */
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.metric-label{color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.metric-value{font-size:26px;font-weight:700;line-height:1}
+.metric-sub{font-size:11px;color:var(--text2);margin-top:4px}
 
-tr.pr-red td:first-child { border-left: 3px solid var(--red); }
-tr.pr-yellow td:first-child { border-left: 3px solid var(--yellow); }
-tr.pr-green td:first-child { border-left: 3px solid var(--green); }
+/* ── Stat strip ── */
+.stat-strip{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.stat-pill{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 14px;font-size:12px;white-space:nowrap}
+.stat-pill strong{font-size:16px;font-weight:700;margin-right:4px}
+.stat-pill.red{border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.06)}
+.stat-pill.yellow{border-color:rgba(210,153,34,.4);background:rgba(210,153,34,.06)}
+.stat-pill.green{border-color:rgba(63,185,80,.4);background:rgba(63,185,80,.06)}
 
-.metric { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
-.metric-label { color: var(--text2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-.metric-value { font-size: 28px; font-weight: 700; }
-.metric-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+/* ── Filters ── */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end}
+.filters .form-group{margin-bottom:0;min-width:130px}
+.search-wrap{position:relative}
+.search-wrap input{padding-left:30px}
+.search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text2);pointer-events:none;font-size:13px}
 
-.filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-end; }
-.filters .form-group { margin-bottom: 0; min-width: 140px; }
+/* ── Section header ── */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.section-title{font-size:17px;font-weight:600}
 
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
-.modal-overlay.open { display: flex; }
-.modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
-.modal-lg { max-width: 720px; }
-.modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.modal-title { font-size: 16px; font-weight: 600; }
-.modal-close { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 20px; line-height: 1; padding: 0; }
-.modal-close:hover { color: var(--text); }
-.modal-body { padding: 20px; }
-.modal-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+/* ── Modals ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;display:flex;flex-direction:column}
+.modal-lg{max-width:740px}
+.modal-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.modal-title{font-size:15px;font-weight:600}
+.modal-close{background:none;border:none;color:var(--text2);cursor:pointer;font-size:18px;line-height:1;padding:2px 4px}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:18px;overflow-y:auto}
+.modal-footer{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
 
-#toast { position: fixed; bottom: 20px; right: 20px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 20px; z-index: 2000; transform: translateY(80px); opacity: 0; transition: transform 0.3s, opacity 0.3s; pointer-events: none; max-width: 300px; }
-#toast.show { transform: translateY(0); opacity: 1; }
-#toast.success { border-color: var(--green); }
-#toast.error { border-color: var(--red); }
+/* ── Toast ── */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 18px;z-index:2000;transform:translateY(70px);opacity:0;transition:transform .25s,opacity .25s;pointer-events:none;max-width:320px;font-size:13px}
+#toast.show{transform:translateY(0);opacity:1}
+#toast.success{border-color:var(--green)}
+#toast.error{border-color:var(--red)}
 
-.upload-zone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 40px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
-.upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: rgba(47,129,247,0.05); }
-.upload-icon { font-size: 40px; margin-bottom: 12px; }
-.upload-text { color: var(--text2); }
+/* ── Upload ── */
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:36px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(47,129,247,.05)}
+.upload-icon{font-size:38px;margin-bottom:10px}
+.upload-text{color:var(--text2);font-size:14px}
 
-.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
-.section-title { font-size: 18px; font-weight: 600; }
+/* ── Visit items ── */
+.visit-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:11px 14px;margin-bottom:8px}
+.visit-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:8px}
+.visit-date{font-weight:600;font-size:13px}
+.visit-notes{color:var(--text2);font-size:12px;margin-top:4px;line-height:1.5}
 
-.visit-item { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; margin-bottom: 8px; }
-.visit-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.visit-notes { color: var(--text2); font-size: 13px; margin-top: 4px; }
+/* ── Tags ── */
+.rep-tag{display:inline-flex;align-items:center;background:rgba(47,129,247,.1);border:1px solid rgba(47,129,247,.3);color:var(--accent);border-radius:20px;padding:2px 9px;font-size:11px;white-space:nowrap}
+.unassigned-tag{display:inline-flex;align-items:center;background:rgba(139,148,158,.1);border:1px solid rgba(139,148,158,.3);color:var(--text2);border-radius:20px;padding:2px 9px;font-size:11px}
 
-.rep-tag { display: inline-flex; align-items: center; background: rgba(47,129,247,0.1); border: 1px solid rgba(47,129,247,0.3); color: var(--accent); border-radius: 20px; padding: 2px 10px; font-size: 12px; }
+/* ── Inline status select ── */
+.status-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:20px;padding:2px 6px;font-size:11px;cursor:pointer;width:auto}
 
-.search-wrap { position: relative; }
-.search-wrap input { padding-left: 32px; }
-.search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text2); pointer-events: none; }
+/* ── Progress bars ── */
+.progress-bar{background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;background:var(--accent);border-radius:4px}
 
-.status-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 20px; padding: 2px 8px; font-size: 12px; cursor: pointer; width: auto; }
+/* ── Hint box ── */
+.hint-box{display:none;padding:9px 12px;background:rgba(47,129,247,.08);border:1px solid rgba(47,129,247,.3);border-radius:var(--radius);margin-bottom:10px;font-size:13px;color:var(--accent)}
 
-.progress-bar { background: var(--surface2); border-radius: 4px; height: 6px; overflow: hidden; margin-top: 6px; }
-.progress-fill { height: 100%; background: var(--accent); border-radius: 4px; }
+/* ── Divider ── */
+.divider{border:none;border-top:1px solid var(--border);margin:14px 0}
 
-.analytics-table td { font-size: 13px; }
-.num { text-align: right; font-variant-numeric: tabular-nums; }
-
-.hint-box { display: none; padding: 10px; background: rgba(47,129,247,0.08); border: 1px solid rgba(47,129,247,0.3); border-radius: var(--radius); margin-bottom: 12px; font-size: 13px; color: var(--accent); }
+/* ── Inline edit icon ── */
+.edit-inline{background:none;border:none;color:var(--text2);cursor:pointer;font-size:12px;padding:1px 4px;opacity:.5}
+.edit-inline:hover{opacity:1;color:var(--accent)}
 </style>
 </head>
 <body>
 
+<!-- Header -->
 <div class="header">
   <span class="header-logo">🧬</span>
-  <span id="companyNameDisplay" title="Click to edit company name">Biologics Sales Co.</span>
-  <input id="companyNameInput" type="text" maxlength="60" placeholder="Company name...">
+  <span id="companyNameDisplay" title="Click to edit">Biologics Sales Co.</span>
+  <input id="companyNameInput" type="text" maxlength="60">
+  <div class="header-spacer"></div>
+  <span class="header-badge" id="headerBadge">0 doctors</span>
 </div>
 
+<!-- Nav -->
 <div class="nav">
   <div class="nav-tab active" data-page="dashboard">📊 Dashboard</div>
   <div class="nav-tab" data-page="doctors">👩‍⚕️ Doctors</div>
@@ -153,314 +197,358 @@ tr.pr-green td:first-child { border-left: 3px solid var(--green); }
 
 <div class="main">
 
-  <!-- DASHBOARD -->
-  <div class="page active" id="page-dashboard">
-    <div class="section-header">
-      <div class="section-title">Smart Sequencing Dashboard</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-primary btn-sm" onclick="openLogModal()">+ Log Visit</button>
-        <button class="btn btn-secondary btn-sm" onclick="exportDashboardCSV()">↓ Export CSV</button>
-      </div>
-    </div>
-
-    <div class="filters">
-      <div class="form-group">
-        <label>Rep</label>
-        <select id="dashRepFilter" onchange="renderDashboard()"><option value="">All Reps</option></select>
-      </div>
-      <div class="form-group">
-        <label>Hospital System</label>
-        <select id="dashHospFilter" onchange="renderDashboard()"><option value="">All Systems</option></select>
-      </div>
-      <div class="form-group">
-        <label>Zip Code</label>
-        <select id="dashZipFilter" onchange="renderDashboard()"><option value="">All Zips</option></select>
-      </div>
-      <div class="form-group">
-        <label>Status</label>
-        <select id="dashStatusFilter" onchange="renderDashboard()">
-          <option value="">All Statuses</option>
-          <option>not contacted</option><option>contacted</option><option>yes</option>
-          <option>maybe</option><option>no</option><option>pipeline</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Priority</label>
-        <select id="dashPriorityFilter" onchange="renderDashboard()">
-          <option value="">All</option>
-          <option value="red">🔴 Overdue (14+ days)</option>
-          <option value="yellow">🟡 Due Soon (7–14 days)</option>
-          <option value="green">🟢 Recent (&lt;7 days)</option>
-          <option value="never">⬜ Never Visited</option>
-        </select>
-      </div>
-    </div>
-
-    <div style="display:flex;gap:16px;margin-bottom:10px;font-size:12px;color:var(--text2)">
-      <span><span style="color:var(--red)">●</span> 14+ days overdue</span>
-      <span><span style="color:var(--yellow)">●</span> 7–14 days</span>
-      <span><span style="color:var(--green)">●</span> &lt;7 days (recent)</span>
-      <span>⬜ Never visited</span>
-    </div>
-
-    <div class="card" style="padding:0">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Doctor</th><th>Practice</th><th>Hospital System</th>
-              <th>Rep</th><th>Status</th><th>Last Visit</th>
-              <th>Days Since</th><th>Next Follow-up</th><th>Visits</th><th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="dashBody"></tbody>
-        </table>
-      </div>
+<!-- ══════════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════════ -->
+<div class="page active" id="page-dashboard">
+  <div class="section-header">
+    <div class="section-title">Smart Sequencing Dashboard</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" onclick="openLogModal()">+ Log Visit</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportDashboardCSV()">↓ CSV</button>
     </div>
   </div>
 
-  <!-- DOCTORS -->
-  <div class="page" id="page-doctors">
-    <div class="section-header">
-      <div class="section-title">Doctor Directory</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-primary btn-sm" onclick="openAddDoctorModal()">+ Add Doctor</button>
-        <button class="btn btn-secondary btn-sm" onclick="exportDashboardCSV()">↓ Export CSV</button>
+  <div class="stat-strip" id="dashStats"></div>
+
+  <div class="filters">
+    <div class="form-group" style="min-width:170px">
+      <label>Search</label>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="dashSearch" placeholder="Doctor, practice..." oninput="renderDashboard()">
       </div>
     </div>
-
-    <div class="filters">
-      <div class="form-group" style="flex:1;min-width:200px">
-        <label>Search</label>
-        <div class="search-wrap">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="docSearch" placeholder="Name, practice, system..." oninput="renderDoctors()">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Rep</label>
-        <select id="docRepFilter" onchange="renderDoctors()"><option value="">All Reps</option></select>
-      </div>
-      <div class="form-group">
-        <label>Status</label>
-        <select id="docStatusFilter" onchange="renderDoctors()">
-          <option value="">All</option>
-          <option>not contacted</option><option>contacted</option><option>yes</option>
-          <option>maybe</option><option>no</option><option>pipeline</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Hospital System</label>
-        <select id="docHospFilter" onchange="renderDoctors()"><option value="">All</option></select>
-      </div>
+    <div class="form-group">
+      <label>Rep</label>
+      <select id="dashRepFilter" onchange="renderDashboard()"><option value="">All Reps</option></select>
     </div>
-
-    <div class="card" style="padding:0">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Doctor</th><th>Practice</th><th>Hospital System</th><th>Phone</th>
-              <th>Zip</th><th>Rep</th><th>Status</th><th>Visits</th><th>Dr Convos</th><th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="doctorsBody"></tbody>
-        </table>
-      </div>
+    <div class="form-group">
+      <label>Hospital System</label>
+      <select id="dashHospFilter" onchange="renderDashboard()"><option value="">All</option></select>
+    </div>
+    <div class="form-group">
+      <label>Zip Code</label>
+      <select id="dashZipFilter" onchange="renderDashboard()"><option value="">All</option></select>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="dashStatusFilter" onchange="renderDashboard()">
+        <option value="">All</option>
+        <option>not contacted</option><option>contacted</option><option>yes</option>
+        <option>maybe</option><option>no</option><option>pipeline</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Priority</label>
+      <select id="dashPriorityFilter" onchange="renderDashboard()">
+        <option value="">All</option>
+        <option value="red">🔴 Overdue (14+ days)</option>
+        <option value="yellow">🟡 Due Soon (7–14 days)</option>
+        <option value="green">🟢 Recent (&lt;7 days)</option>
+        <option value="never">⬜ Never Visited</option>
+      </select>
     </div>
   </div>
 
-  <!-- LOG VISIT -->
-  <div class="page" id="page-log">
-    <div class="section-header"><div class="section-title">Log a Visit</div></div>
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-title">Quick Visit Entry</div>
+  <div style="display:flex;gap:16px;margin-bottom:10px;font-size:11px;color:var(--text2)">
+    <span><span style="color:var(--red)">●</span> 14+ days overdue</span>
+    <span><span style="color:var(--yellow)">●</span> 7–14 days</span>
+    <span><span style="color:var(--green)">●</span> &lt;7 days</span>
+    <span>⬜ Never visited</span>
+  </div>
+
+  <div class="card" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Doctor</th><th>Practice / System</th><th>Rep</th><th>Status</th>
+            <th>Last Visit</th><th>Days Since</th><th>Next Follow-up</th><th>Visits</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="dashBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DOCTORS
+══════════════════════════════════════════ -->
+<div class="page" id="page-doctors">
+  <div class="section-header">
+    <div class="section-title">Doctor Directory</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" onclick="openAddDoctorModal()">+ Add Doctor</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportDashboardCSV()">↓ CSV</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="form-group" style="flex:1;min-width:190px">
+      <label>Search</label>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="docSearch" placeholder="Name, practice, system, phone..." oninput="renderDoctors()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Rep</label>
+      <select id="docRepFilter" onchange="renderDoctors()"><option value="">All Reps</option></select>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="docStatusFilter" onchange="renderDoctors()">
+        <option value="">All</option>
+        <option>not contacted</option><option>contacted</option><option>yes</option>
+        <option>maybe</option><option>no</option><option>pipeline</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Hospital System</label>
+      <select id="docHospFilter" onchange="renderDoctors()"><option value="">All</option></select>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Doctor</th><th>Practice</th><th>Hospital System</th><th>Phone</th>
+            <th>Zip</th><th>Rep</th><th>Status</th><th>Visits</th><th>Dr Convos</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="doctorsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     LOG VISIT
+══════════════════════════════════════════ -->
+<div class="page" id="page-log">
+  <div class="section-header"><div class="section-title">Log a Visit</div></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Quick Visit Entry</div>
+      <div class="form-group">
+        <label>Doctor *</label>
+        <select id="logDoctorSelect" onchange="onLogDoctorChange()"><option value="">Select doctor...</option></select>
+      </div>
+      <div id="logDoctorInfo" style="display:none;margin-bottom:12px;padding:10px;background:var(--surface2);border-radius:var(--radius);font-size:12px;color:var(--text2);line-height:1.6"></div>
+      <div class="form-group">
+        <label>Visit Date *</label>
+        <input type="date" id="logDate" onchange="updateLogFollowup()">
+      </div>
+      <div class="form-group">
+        <label>Result *</label>
+        <select id="logResult" onchange="updateLogFollowup()">
+          <option value="">Select result...</option>
+          <option value="front desk only">Front Desk Only</option>
+          <option value="got doctor conversation">Got Doctor Conversation</option>
+          <option value="didn't get in">Didn't Get In</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea id="logNotes" placeholder="Discussed, samples left, objections, next steps..."></textarea>
+      </div>
+      <div id="logFollowupHint" class="hint-box"></div>
+      <button class="btn btn-primary" onclick="submitVisit()" style="width:100%">✓ Log Visit</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Recent Visits <span style="color:var(--text2);font-weight:400;font-size:12px">(last 25)</span></div>
+      <div id="recentVisitsList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ANALYTICS
+══════════════════════════════════════════ -->
+<div class="page" id="page-analytics">
+  <div class="section-header">
+    <div class="section-title">Conversion Analytics</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-secondary btn-sm" onclick="exportAnalyticsCSV()">↓ Visit Log CSV</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportDashboardCSV()">↓ Doctors CSV</button>
+    </div>
+  </div>
+
+  <div class="grid-4" id="analyticsMetrics" style="margin-bottom:16px"></div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-title">Conversion Funnel</div>
+      <div id="funnelChart"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Key Averages</div>
+      <div id="keyAverages"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Maybe → Yes Conversion Trend</div>
+    <div id="maybeTrend"></div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Performance by Rep</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Rep</th><th class="num">Doctors</th><th class="num">Visits</th>
+          <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Maybe</th>
+          <th class="num">No</th><th class="num">Conv %</th><th class="num">YTD</th><th class="num">Last 4 Wks</th>
+        </tr></thead>
+        <tbody id="repAnalyticsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Performance by Hospital System</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Hospital System</th><th class="num">Doctors</th><th class="num">Visits</th>
+          <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Pipeline</th><th class="num">Conv %</th>
+        </tr></thead>
+        <tbody id="hospAnalyticsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Performance by Zip Code</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Zip Code</th><th class="num">Doctors</th><th class="num">Visits</th>
+          <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Conv %</th>
+        </tr></thead>
+        <tbody id="zipAnalyticsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     IMPORT
+══════════════════════════════════════════ -->
+<div class="page" id="page-import">
+  <div class="section-header"><div class="section-title">Import Doctor List</div></div>
+
+  <div class="card">
+    <div class="card-title">CSV Upload</div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:14px">
+      Expected columns: <strong>doctor name, practice name, hospital system, phone, address, zip code</strong><br>
+      Column order is flexible — matched by header name. First row must be headers. Duplicates are flagged.
+    </p>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('csvFile').click()">
+      <div class="upload-icon">📄</div>
+      <div class="upload-text">Click to select CSV or drag &amp; drop here</div>
+      <input type="file" id="csvFile" accept=".csv,.txt" style="display:none" onchange="handleCSVUpload(event)">
+    </div>
+
+    <div id="importOptions" style="display:none;margin-top:14px">
+      <div class="form-row" style="margin-bottom:12px">
         <div class="form-group">
-          <label>Doctor *</label>
-          <select id="logDoctorSelect" onchange="onLogDoctorChange()"><option value="">Select doctor...</option></select>
+          <label>Assign imported doctors to rep</label>
+          <select id="importRepAssign"><option value="">Unassigned</option></select>
         </div>
-        <div id="logDoctorInfo" style="display:none;margin-bottom:12px;padding:10px;background:var(--surface2);border-radius:var(--radius);font-size:13px;color:var(--text2)"></div>
         <div class="form-group">
-          <label>Visit Date *</label>
-          <input type="date" id="logDate" onchange="updateLogFollowup()">
-        </div>
-        <div class="form-group">
-          <label>Result *</label>
-          <select id="logResult" onchange="updateLogFollowup()">
-            <option value="">Select result...</option>
-            <option value="front desk only">Front Desk Only</option>
-            <option value="got doctor conversation">Got Doctor Conversation</option>
-            <option value="didn't get in">Didn't Get In</option>
+          <label>On duplicate name</label>
+          <select id="importDupAction">
+            <option value="skip">Skip duplicate</option>
+            <option value="import">Import anyway</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Notes</label>
-          <textarea id="logNotes" placeholder="What was discussed, samples left, next steps..."></textarea>
-        </div>
-        <div id="logFollowupHint" class="hint-box"></div>
-        <button class="btn btn-primary" onclick="submitVisit()" style="width:100%;margin-top:4px">✓ Log Visit</button>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">Recent Visits</div>
-        <div id="recentVisitsList"></div>
+    <div id="importPreview" style="display:none;margin-top:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+        <div id="importSummary" style="font-weight:600;font-size:13px"></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" onclick="cancelImport()">Cancel</button>
+          <button class="btn btn-success btn-sm" onclick="confirmImport()">✓ Import</button>
+        </div>
+      </div>
+      <div class="table-wrap" style="max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius)">
+        <table><thead><tr><th>#</th><th>Status</th><th>Doctor Name</th><th>Practice</th><th>Hospital System</th><th>Phone</th><th>Zip</th></tr></thead>
+        <tbody id="importPreviewBody"></tbody></table>
       </div>
     </div>
   </div>
 
-  <!-- ANALYTICS -->
-  <div class="page" id="page-analytics">
-    <div class="section-header">
-      <div class="section-title">Conversion Analytics</div>
-      <button class="btn btn-secondary btn-sm" onclick="exportAnalyticsCSV()">↓ Export Visit Log CSV</button>
-    </div>
-
-    <div class="grid-4" id="analyticsMetrics" style="margin-bottom:16px"></div>
-
-    <div class="grid-2" style="margin-bottom:16px">
-      <div class="card">
-        <div class="card-title">Conversion Funnel</div>
-        <div id="funnelChart"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Key Averages</div>
-        <div id="keyAverages"></div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-title">Performance by Rep</div>
-      <div class="table-wrap">
-        <table class="analytics-table">
-          <thead><tr>
-            <th>Rep</th><th class="num">Doctors</th><th class="num">Total Visits</th>
-            <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Maybe</th>
-            <th class="num">Conv %</th><th class="num">YTD Visits</th><th class="num">Last 4 Wks</th>
-          </tr></thead>
-          <tbody id="repAnalyticsBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-title">Performance by Hospital System</div>
-      <div class="table-wrap">
-        <table class="analytics-table">
-          <thead><tr>
-            <th>Hospital System</th><th class="num">Doctors</th><th class="num">Visits</th>
-            <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Conv %</th>
-          </tr></thead>
-          <tbody id="hospAnalyticsBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Performance by Zip Code</div>
-      <div class="table-wrap">
-        <table class="analytics-table">
-          <thead><tr>
-            <th>Zip Code</th><th class="num">Doctors</th><th class="num">Visits</th>
-            <th class="num">Dr Convos</th><th class="num">Yes</th><th class="num">Conv %</th>
-          </tr></thead>
-          <tbody id="zipAnalyticsBody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- IMPORT -->
-  <div class="page" id="page-import">
-    <div class="section-header"><div class="section-title">Import Doctor List</div></div>
-
-    <div class="card">
-      <div class="card-title">CSV Upload</div>
-      <p style="color:var(--text2);font-size:13px;margin-bottom:16px">
-        Expected columns: <strong>doctor name, practice name, hospital system, phone, address, zip code</strong><br>
-        Column order is flexible — headers are matched by name. First row must be headers.
-      </p>
-      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('csvFile').click()">
-        <div class="upload-icon">📄</div>
-        <div class="upload-text">Click to select CSV or drag &amp; drop here</div>
-        <input type="file" id="csvFile" accept=".csv,.txt" style="display:none" onchange="handleCSVUpload(event)">
-      </div>
-
-      <div id="importPreview" style="display:none;margin-top:16px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
-          <div id="importSummary" style="font-weight:600"></div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-secondary btn-sm" onclick="cancelImport()">Cancel</button>
-            <button class="btn btn-success btn-sm" onclick="confirmImport()">✓ Import All</button>
-          </div>
-        </div>
-        <div class="table-wrap" style="max-height:320px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius)">
-          <table id="importPreviewTable">
-            <thead><tr><th>#</th><th>Doctor Name</th><th>Practice</th><th>Hospital System</th><th>Phone</th><th>Address</th><th>Zip</th></tr></thead>
-            <tbody id="importPreviewBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Sample CSV Format</div>
-      <pre style="background:var(--surface2);padding:12px;border-radius:var(--radius);font-size:12px;overflow-x:auto;color:var(--text2);line-height:1.6">doctor name,practice name,hospital system,phone,address,zip code
+  <div class="card">
+    <div class="card-title">Sample CSV Format</div>
+    <pre style="background:var(--surface2);padding:12px;border-radius:var(--radius);font-size:12px;overflow-x:auto;color:var(--text2);line-height:1.7">doctor name,practice name,hospital system,phone,address,zip code
 Dr. Jane Smith,Women's Health Clinic,Mayo Clinic,555-123-4567,123 Main St,55901
 Dr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902</pre>
-      <button class="btn btn-secondary btn-sm" onclick="downloadSampleCSV()" style="margin-top:12px">↓ Download Sample CSV</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Data Management</div>
-      <p style="color:var(--text2);font-size:13px;margin-bottom:14px">All data lives in your browser's localStorage. Export a JSON backup before clearing browser data.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn btn-secondary btn-sm" onclick="exportAllData()">↓ Export Full Backup (JSON)</button>
-        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('jsonBackupFile').click()">↑ Restore Backup (JSON)</button>
-        <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑 Clear All Data</button>
-      </div>
-      <input type="file" id="jsonBackupFile" accept=".json" style="display:none" onchange="handleJSONImport(event)">
-    </div>
+    <button class="btn btn-secondary btn-sm" onclick="downloadSampleCSV()" style="margin-top:10px">↓ Download Sample CSV</button>
   </div>
 
-  <!-- SETTINGS -->
-  <div class="page" id="page-settings">
-    <div class="section-header"><div class="section-title">Settings</div></div>
-
-    <div class="card">
-      <div class="card-title">Sales Reps</div>
-      <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-        <input type="text" id="newRepName" placeholder="Full name..." style="max-width:260px" onkeydown="if(event.key==='Enter')addRep()">
-        <button class="btn btn-primary" onclick="addRep()">+ Add Rep</button>
-      </div>
-      <div id="repsList"></div>
+  <div class="card">
+    <div class="card-title">Data Management</div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:12px">Data lives in your browser's localStorage. Export a JSON backup regularly.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-secondary btn-sm" onclick="exportAllData()">↓ Full Backup (JSON)</button>
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('jsonBackupFile').click()">↑ Restore Backup (JSON)</button>
+      <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑 Clear All Data</button>
     </div>
+    <input type="file" id="jsonBackupFile" accept=".json" style="display:none" onchange="handleJSONImport(event)">
+  </div>
+</div>
 
-    <div class="card">
-      <div class="card-title">Follow-up Windows</div>
-      <p style="color:var(--text2);font-size:13px;margin-bottom:14px">Days until recommended next visit, based on last visit result.</p>
-      <div class="grid-3">
-        <div class="form-group">
-          <label>Front Desk Only (days)</label>
-          <input type="number" id="fwFrontDesk" min="1" max="90" value="7" onchange="saveFollowupWindows()">
-        </div>
-        <div class="form-group">
-          <label>Got Dr Conversation (days)</label>
-          <input type="number" id="fwDoctorConvo" min="1" max="90" value="14" onchange="saveFollowupWindows()">
-        </div>
-        <div class="form-group">
-          <label>Didn't Get In (days)</label>
-          <input type="number" id="fwNoEntry" min="1" max="90" value="5" onchange="saveFollowupWindows()">
-        </div>
+<!-- ══════════════════════════════════════════
+     SETTINGS
+══════════════════════════════════════════ -->
+<div class="page" id="page-settings">
+  <div class="section-header"><div class="section-title">Settings</div></div>
+
+  <div class="card">
+    <div class="card-title">Sales Reps</div>
+    <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+      <input type="text" id="newRepName" placeholder="Full name..." style="max-width:240px" onkeydown="if(event.key==='Enter')addRep()">
+      <button class="btn btn-primary" onclick="addRep()">+ Add Rep</button>
+    </div>
+    <div id="repsList"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Follow-up Windows</div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:12px">Days until recommended next visit, by last visit result.</p>
+    <div class="grid-3">
+      <div class="form-group">
+        <label>Front Desk Only (days)</label>
+        <input type="number" id="fwFrontDesk" min="1" max="90" onchange="saveFollowupWindows()">
+      </div>
+      <div class="form-group">
+        <label>Got Dr Conversation (days)</label>
+        <input type="number" id="fwDoctorConvo" min="1" max="90" onchange="saveFollowupWindows()">
+      </div>
+      <div class="form-group">
+        <label>Didn't Get In (days)</label>
+        <input type="number" id="fwNoEntry" min="1" max="90" onchange="saveFollowupWindows()">
       </div>
     </div>
   </div>
+</div>
 
 </div><!-- /main -->
 
-<!-- MODALS -->
+<!-- ══════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════ -->
 
-<!-- Quick Log Modal -->
+<!-- Log Visit Modal -->
 <div class="modal-overlay" id="logModal">
   <div class="modal">
     <div class="modal-header">
@@ -470,24 +558,27 @@ Dr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902
     <div class="modal-body">
       <div class="form-group">
         <label>Doctor *</label>
-        <select id="modalLogDoctor"><option value="">Select doctor...</option></select>
+        <select id="modalLogDoctor" onchange="onModalDoctorChange()"><option value="">Select doctor...</option></select>
       </div>
-      <div class="form-group">
-        <label>Visit Date *</label>
-        <input type="date" id="modalLogDate" onchange="updateModalFollowup()">
-      </div>
-      <div class="form-group">
-        <label>Result *</label>
-        <select id="modalLogResult" onchange="updateModalFollowup()">
-          <option value="">Select result...</option>
-          <option value="front desk only">Front Desk Only</option>
-          <option value="got doctor conversation">Got Doctor Conversation</option>
-          <option value="didn't get in">Didn't Get In</option>
-        </select>
+      <div id="modalDoctorInfo" style="display:none;margin-bottom:10px;padding:9px 12px;background:var(--surface2);border-radius:var(--radius);font-size:12px;color:var(--text2);line-height:1.6"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Visit Date *</label>
+          <input type="date" id="modalLogDate" onchange="updateModalFollowup()">
+        </div>
+        <div class="form-group">
+          <label>Result *</label>
+          <select id="modalLogResult" onchange="updateModalFollowup()">
+            <option value="">Select result...</option>
+            <option value="front desk only">Front Desk Only</option>
+            <option value="got doctor conversation">Got Doctor Conversation</option>
+            <option value="didn't get in">Didn't Get In</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
         <label>Notes</label>
-        <textarea id="modalLogNotes" placeholder="Notes..."></textarea>
+        <textarea id="modalLogNotes" placeholder="What happened, samples left, next steps..."></textarea>
       </div>
       <div id="modalFollowupHint" class="hint-box"></div>
     </div>
@@ -503,7 +594,10 @@ Dr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902
   <div class="modal modal-lg">
     <div class="modal-header">
       <span class="modal-title" id="doctorModalTitle">Doctor Details</span>
-      <button class="modal-close" onclick="closeModal('doctorModal')">✕</button>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-secondary btn-sm" id="doctorModalEditBtn" onclick="openEditDoctorModal()">Edit Info</button>
+        <button class="modal-close" onclick="closeModal('doctorModal')">✕</button>
+      </div>
     </div>
     <div class="modal-body" id="doctorModalBody"></div>
   </div>
@@ -518,15 +612,13 @@ Dr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902
     </div>
     <div class="modal-body">
       <div class="grid-2">
-        <div class="form-group"><label>Doctor Name *</label><input id="addDocName" type="text" placeholder="Dr. First Last"></div>
+        <div class="form-group" style="grid-column:span 2"><label>Doctor Name *</label><input id="addDocName" type="text" placeholder="Dr. First Last"></div>
         <div class="form-group"><label>Practice Name</label><input id="addDocPractice" type="text"></div>
         <div class="form-group"><label>Hospital System</label><input id="addDocHosp" type="text"></div>
         <div class="form-group"><label>Phone</label><input id="addDocPhone" type="text"></div>
         <div class="form-group"><label>Address</label><input id="addDocAddress" type="text"></div>
         <div class="form-group"><label>Zip Code</label><input id="addDocZip" type="text"></div>
-        <div class="form-group"><label>Assign Rep</label>
-          <select id="addDocRep"><option value="">Unassigned</option></select>
-        </div>
+        <div class="form-group"><label>Assign Rep</label><select id="addDocRep"><option value="">Unassigned</option></select></div>
         <div class="form-group"><label>Status</label>
           <select id="addDocStatus">
             <option>not contacted</option><option>contacted</option><option>yes</option>
@@ -534,10 +626,50 @@ Dr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902
           </select>
         </div>
       </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea id="addDocNotes" placeholder="General notes about this doctor..."></textarea>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('addDoctorModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveNewDoctor()">Add Doctor</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Doctor Modal -->
+<div class="modal-overlay" id="editDoctorModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Edit Doctor Info</span>
+      <button class="modal-close" onclick="closeEditDoctorModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editDocId">
+      <div class="grid-2">
+        <div class="form-group" style="grid-column:span 2"><label>Doctor Name *</label><input id="editDocName" type="text"></div>
+        <div class="form-group"><label>Practice Name</label><input id="editDocPractice" type="text"></div>
+        <div class="form-group"><label>Hospital System</label><input id="editDocHosp" type="text"></div>
+        <div class="form-group"><label>Phone</label><input id="editDocPhone" type="text"></div>
+        <div class="form-group"><label>Address</label><input id="editDocAddress" type="text"></div>
+        <div class="form-group"><label>Zip Code</label><input id="editDocZip" type="text"></div>
+        <div class="form-group"><label>Assign Rep</label><select id="editDocRep"><option value="">Unassigned</option></select></div>
+        <div class="form-group"><label>Status</label>
+          <select id="editDocStatus">
+            <option>not contacted</option><option>contacted</option><option>yes</option>
+            <option>maybe</option><option>no</option><option>pipeline</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea id="editDocNotes" placeholder="General notes..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeEditDoctorModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditDoctor()">Save Changes</button>
     </div>
   </div>
 </div>
@@ -552,19 +684,39 @@ Dr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902
     <div class="modal-body">
       <input type="hidden" id="editVisitId">
       <input type="hidden" id="editVisitDoctorId">
-      <div class="form-group"><label>Visit Date</label><input type="date" id="editVisitDate"></div>
-      <div class="form-group"><label>Result</label>
-        <select id="editVisitResult">
-          <option value="front desk only">Front Desk Only</option>
-          <option value="got doctor conversation">Got Doctor Conversation</option>
-          <option value="didn't get in">Didn't Get In</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group"><label>Visit Date</label><input type="date" id="editVisitDate"></div>
+        <div class="form-group"><label>Result</label>
+          <select id="editVisitResult">
+            <option value="front desk only">Front Desk Only</option>
+            <option value="got doctor conversation">Got Doctor Conversation</option>
+            <option value="didn't get in">Didn't Get In</option>
+          </select>
+        </div>
       </div>
       <div class="form-group"><label>Notes</label><textarea id="editVisitNotes"></textarea></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="reopenDoctorFromEdit()">Back</button>
+      <button class="btn btn-secondary" onclick="reopenDoctorFromEdit()">← Back</button>
       <button class="btn btn-primary" onclick="saveEditVisit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rename Rep Modal -->
+<div class="modal-overlay" id="renameRepModal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <span class="modal-title">Rename Rep</span>
+      <button class="modal-close" onclick="closeModal('renameRepModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="renameRepId">
+      <div class="form-group"><label>New Name</label><input type="text" id="renameRepName" onkeydown="if(event.key==='Enter')saveRenameRep()"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('renameRepModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveRenameRep()">Save</button>
     </div>
   </div>
 </div>
@@ -572,946 +724,1224 @@ Dr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902
 <div id="toast"></div>
 
 <script>
-// ========== DATA ==========
+// ═══════════════════════════════════════════
+// DATA LAYER
+// ═══════════════════════════════════════════
 const DB = {
-  get doctors() { return JSON.parse(localStorage.getItem('crm_doctors') || '[]'); },
-  set doctors(v) { localStorage.setItem('crm_doctors', JSON.stringify(v)); },
-  get visits() { return JSON.parse(localStorage.getItem('crm_visits') || '[]'); },
-  set visits(v) { localStorage.setItem('crm_visits', JSON.stringify(v)); },
-  get reps() { return JSON.parse(localStorage.getItem('crm_reps') || '[]'); },
-  set reps(v) { localStorage.setItem('crm_reps', JSON.stringify(v)); },
-  get companyName() { return localStorage.getItem('crm_company') || 'Biologics Sales Co.'; },
-  set companyName(v) { localStorage.setItem('crm_company', v); },
-  get followupWindows() {
-    return JSON.parse(localStorage.getItem('crm_followup') || '{"front desk only":7,"got doctor conversation":14,"didn\'t get in":5}');
+  get doctors(){ return JSON.parse(localStorage.getItem('crm_doctors')||'[]') },
+  set doctors(v){ localStorage.setItem('crm_doctors',JSON.stringify(v)) },
+  get visits(){ return JSON.parse(localStorage.getItem('crm_visits')||'[]') },
+  set visits(v){ localStorage.setItem('crm_visits',JSON.stringify(v)) },
+  get reps(){ return JSON.parse(localStorage.getItem('crm_reps')||'[]') },
+  set reps(v){ localStorage.setItem('crm_reps',JSON.stringify(v)) },
+  get companyName(){ return localStorage.getItem('crm_company')||'Biologics Sales Co.' },
+  set companyName(v){ localStorage.setItem('crm_company',v) },
+  get followupWindows(){
+    return JSON.parse(localStorage.getItem('crm_followup')||'{"front desk only":7,"got doctor conversation":14,"didn\'t get in":5}')
   },
-  set followupWindows(v) { localStorage.setItem('crm_followup', JSON.stringify(v)); }
-};
-
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
-
-// ========== TOAST ==========
-let toastTimer;
-function toast(msg, type = 'success') {
-  clearTimeout(toastTimer);
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'show ' + type;
-  toastTimer = setTimeout(() => t.className = '', 2800);
+  set followupWindows(v){ localStorage.setItem('crm_followup',JSON.stringify(v)) }
 }
 
-// ========== MODALS ==========
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(m => {
-  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
-});
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,8) }
 
-// ========== NAV ==========
-document.querySelectorAll('.nav-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('page-' + tab.dataset.page).classList.add('active');
-    const page = tab.dataset.page;
-    if (page === 'dashboard') renderDashboard();
-    else if (page === 'doctors') renderDoctors();
-    else if (page === 'log') renderLogPage();
-    else if (page === 'analytics') renderAnalytics();
-    else if (page === 'settings') renderSettings();
-  });
-});
+// ═══════════════════════════════════════════
+// VISIT CACHE — recompute on each page render
+// ═══════════════════════════════════════════
+let _visitMap = null // doctorId → sorted visits[]
+function visitMap(){
+  if(_visitMap) return _visitMap
+  const visits = DB.visits
+  _visitMap = {}
+  visits.forEach(v => {
+    if(!_visitMap[v.doctorId]) _visitMap[v.doctorId]=[]
+    _visitMap[v.doctorId].push(v)
+  })
+  Object.values(_visitMap).forEach(arr => arr.sort((a,b)=>b.date.localeCompare(a.date)))
+  return _visitMap
+}
+function invalidateCache(){ _visitMap=null }
 
-// ========== COMPANY NAME ==========
-function initCompanyName() {
-  const display = document.getElementById('companyNameDisplay');
-  const input = document.getElementById('companyNameInput');
-  display.textContent = DB.companyName;
-  document.title = DB.companyName + ' CRM';
+function getDoctorVisits(docId){ return visitMap()[docId]||[] }
+function getLastVisit(docId){ const v=getDoctorVisits(docId); return v.length?v[0]:null }
 
-  display.addEventListener('click', () => {
-    input.value = DB.companyName;
-    display.style.display = 'none';
-    input.style.display = 'inline-block';
-    input.focus(); input.select();
-  });
-  const save = () => {
-    const v = input.value.trim() || 'Biologics Sales Co.';
-    DB.companyName = v;
-    display.textContent = v;
-    document.title = v + ' CRM';
-    display.style.display = '';
-    input.style.display = 'none';
-  };
-  input.addEventListener('blur', save);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') save(); if (e.key === 'Escape') { input.style.display = 'none'; display.style.display = ''; } });
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+let _toastTimer
+function toast(msg,type='success'){
+  clearTimeout(_toastTimer)
+  const t=document.getElementById('toast')
+  t.textContent=msg
+  t.className='show '+type
+  _toastTimer=setTimeout(()=>t.className='',2800)
 }
 
-// ========== HELPERS ==========
-function today() { return new Date().toISOString().split('T')[0]; }
+// ═══════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════
+function openModal(id){ document.getElementById(id).classList.add('open') }
+function closeModal(id){ document.getElementById(id).classList.remove('open') }
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open') })
+})
 
-function daysSince(dateStr) {
-  if (!dateStr) return null;
-  return Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
-}
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'))
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+    tab.classList.add('active')
+    document.getElementById('page-'+tab.dataset.page).classList.add('active')
+    const pg=tab.dataset.page
+    if(pg==='dashboard') renderDashboard()
+    else if(pg==='doctors') renderDoctors()
+    else if(pg==='log') renderLogPage()
+    else if(pg==='analytics') renderAnalytics()
+    else if(pg==='settings') renderSettings()
+  })
+})
 
-function addDays(dateStr, n) {
-  const d = new Date(dateStr);
-  d.setDate(d.getDate() + n);
-  return d.toISOString().split('T')[0];
-}
-
-function fmt(d) {
-  if (!d) return '—';
-  const [y, m, day] = d.split('-');
-  return `${m}/${day}/${y}`;
-}
-
-function getRepName(repId) {
-  if (!repId) return 'Unassigned';
-  const r = DB.reps.find(r => r.id === repId);
-  return r ? r.name : 'Unknown';
-}
-
-function getDoctorVisits(doctorId) {
-  return DB.visits.filter(v => v.doctorId === doctorId).sort((a,b) => b.date.localeCompare(a.date));
-}
-
-function getLastVisit(doctorId) {
-  const v = getDoctorVisits(doctorId);
-  return v.length ? v[0] : null;
-}
-
-function getFollowupDate(visit) {
-  if (!visit) return null;
-  const fw = DB.followupWindows;
-  return addDays(visit.date, fw[visit.result] || 7);
-}
-
-function statusBadge(s) {
-  const cls = { 'not contacted':'badge-gray','contacted':'badge-blue','yes':'badge-green','maybe':'badge-yellow','no':'badge-red','pipeline':'badge-purple' };
-  return `<span class="badge ${cls[s]||'badge-gray'}">${s||'unknown'}</span>`;
-}
-
-function resultBadge(r) {
-  if (r === 'got doctor conversation') return '<span class="badge badge-green">Dr Convo</span>';
-  if (r === 'front desk only') return '<span class="badge badge-yellow">Front Desk</span>';
-  if (r === "didn't get in") return '<span class="badge badge-red">No Entry</span>';
-  return `<span class="badge badge-gray">${r||'—'}</span>`;
-}
-
-function populateRepSelects(...ids) {
-  const reps = DB.reps;
-  (ids.length ? ids : ['dashRepFilter','docRepFilter']).forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const val = el.value;
-    const prefix = (id === 'addDocRep' || id === 'editDocRep') ? '<option value="">Unassigned</option>' : '<option value="">All Reps</option>';
-    el.innerHTML = prefix + reps.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
-    el.value = val;
-  });
-}
-
-function populateFilterSelects() {
-  const docs = DB.doctors;
-  const systems = [...new Set(docs.map(d => d.hospitalSystem).filter(Boolean))].sort();
-  const zips = [...new Set(docs.map(d => d.zipCode).filter(Boolean))].sort();
-
-  ['dashHospFilter','docHospFilter'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const val = el.value;
-    el.innerHTML = '<option value="">All Systems</option>' + systems.map(s=>`<option value="${s}">${s}</option>`).join('');
-    el.value = val;
-  });
-
-  const zf = document.getElementById('dashZipFilter');
-  if (zf) {
-    const val = zf.value;
-    zf.innerHTML = '<option value="">All Zips</option>' + zips.map(z=>`<option value="${z}">${z}</option>`).join('');
-    zf.value = val;
+// ═══════════════════════════════════════════
+// COMPANY NAME
+// ═══════════════════════════════════════════
+function initCompanyName(){
+  const display=document.getElementById('companyNameDisplay')
+  const input=document.getElementById('companyNameInput')
+  display.textContent=DB.companyName
+  document.title=DB.companyName+' CRM'
+  display.onclick=()=>{
+    input.value=DB.companyName
+    display.style.display='none'
+    input.style.display='inline-block'
+    input.focus(); input.select()
   }
+  const save=()=>{
+    const v=input.value.trim()||'Biologics Sales Co.'
+    DB.companyName=v
+    display.textContent=v
+    document.title=v+' CRM'
+    display.style.display=''
+    input.style.display='none'
+  }
+  input.addEventListener('blur',save)
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Enter') save()
+    if(e.key==='Escape'){ input.style.display='none'; display.style.display='' }
+  })
 }
 
-function populateDoctorSelect(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const val = el.value;
-  const docs = DB.doctors.slice().sort((a,b) => a.name.localeCompare(b.name));
-  el.innerHTML = '<option value="">Select doctor...</option>' + docs.map(d =>
-    `<option value="${d.id}">${d.name}${d.practice ? ' — ' + d.practice : ''}</option>`
-  ).join('');
-  el.value = val;
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function today(){ return new Date().toISOString().split('T')[0] }
+
+function daysSince(dateStr){
+  if(!dateStr) return null
+  return Math.floor((Date.now()-new Date(dateStr).getTime())/86400000)
 }
 
-// ========== DASHBOARD ==========
-function renderDashboard() {
-  populateRepSelects('dashRepFilter');
-  populateFilterSelects();
+function addDays(dateStr,n){
+  const d=new Date(dateStr)
+  d.setDate(d.getDate()+n)
+  return d.toISOString().split('T')[0]
+}
 
-  const repF = document.getElementById('dashRepFilter').value;
-  const hospF = document.getElementById('dashHospFilter').value;
-  const zipF = document.getElementById('dashZipFilter').value;
-  const statusF = document.getElementById('dashStatusFilter').value;
-  const priorityF = document.getElementById('dashPriorityFilter').value;
+function fmt(d){
+  if(!d) return '—'
+  const [y,m,day]=d.split('-')
+  return `${m}/${day}/${y}`
+}
 
-  let docs = DB.doctors;
-  if (repF) docs = docs.filter(d => d.repId === repF);
-  if (hospF) docs = docs.filter(d => d.hospitalSystem === hospF);
-  if (zipF) docs = docs.filter(d => d.zipCode === zipF);
-  if (statusF) docs = docs.filter(d => d.status === statusF);
+function getRepName(repId){
+  if(!repId) return 'Unassigned'
+  const r=DB.reps.find(r=>r.id===repId)
+  return r?r.name:'Unknown'
+}
 
-  docs = docs.map(d => {
-    const lv = getLastVisit(d.id);
-    const days = lv ? daysSince(lv.date) : null;
-    return { ...d, _lv: lv, _days: days, _followup: getFollowupDate(lv) };
-  });
+function getFollowupDate(visit){
+  if(!visit) return null
+  return addDays(visit.date,(DB.followupWindows[visit.result]||7))
+}
 
-  if (priorityF === 'red') docs = docs.filter(d => d._days !== null && d._days >= 14);
-  else if (priorityF === 'yellow') docs = docs.filter(d => d._days !== null && d._days >= 7 && d._days < 14);
-  else if (priorityF === 'green') docs = docs.filter(d => d._days !== null && d._days < 7);
-  else if (priorityF === 'never') docs = docs.filter(d => d._days === null);
+function statusBadge(s){
+  const cls={'not contacted':'badge-gray','contacted':'badge-blue','yes':'badge-green','maybe':'badge-yellow','no':'badge-red','pipeline':'badge-purple'}
+  return `<span class="badge ${cls[s]||'badge-gray'}">${s||'unknown'}</span>`
+}
 
-  docs.sort((a, b) => {
-    if (a._days === null && b._days === null) return a.name.localeCompare(b.name);
-    if (a._days === null) return -1;
-    if (b._days === null) return 1;
-    return b._days - a._days;
-  });
+function resultBadge(r){
+  if(r==='got doctor conversation') return '<span class="badge badge-green">Dr Convo</span>'
+  if(r==='front desk only') return '<span class="badge badge-yellow">Front Desk</span>'
+  if(r==="didn't get in") return '<span class="badge badge-red">No Entry</span>'
+  return `<span class="badge badge-gray">${r||'—'}</span>`
+}
 
-  const tbody = document.getElementById('dashBody');
+function escHtml(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+}
 
-  if (!docs.length) {
-    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text2)">No doctors match current filters</td></tr>';
-    return;
+function repTagHtml(repId){
+  if(!repId) return '<span class="unassigned-tag">Unassigned</span>'
+  return `<span class="rep-tag">${escHtml(getRepName(repId))}</span>`
+}
+
+// ═══════════════════════════════════════════
+// POPULATE SELECTS
+// ═══════════════════════════════════════════
+function populateRepSelect(id, allowAll=false){
+  const el=document.getElementById(id); if(!el) return
+  const val=el.value
+  el.innerHTML=(allowAll?'<option value="">All Reps</option>':'<option value="">Unassigned</option>')+
+    DB.reps.map(r=>`<option value="${r.id}">${escHtml(r.name)}</option>`).join('')
+  el.value=val
+}
+
+function populateAllRepSelects(){
+  populateRepSelect('dashRepFilter',true)
+  populateRepSelect('docRepFilter',true)
+}
+
+function populateFilterDropdowns(){
+  const docs=DB.doctors
+  const systems=[...new Set(docs.map(d=>d.hospitalSystem).filter(Boolean))].sort()
+  const zips=[...new Set(docs.map(d=>d.zipCode).filter(Boolean))].sort()
+  ;['dashHospFilter','docHospFilter'].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return
+    const val=el.value
+    el.innerHTML='<option value="">All</option>'+systems.map(s=>`<option value="${s}">${s}</option>`).join('')
+    el.value=val
+  })
+  const zf=document.getElementById('dashZipFilter')
+  if(zf){ const val=zf.value; zf.innerHTML='<option value="">All</option>'+zips.map(z=>`<option value="${z}">${z}</option>`).join(''); zf.value=val }
+}
+
+function populateDoctorSelect(id){
+  const el=document.getElementById(id); if(!el) return
+  const val=el.value
+  const docs=DB.doctors.slice().sort((a,b)=>a.name.localeCompare(b.name))
+  el.innerHTML='<option value="">Select doctor...</option>'+docs.map(d=>
+    `<option value="${d.id}">${escHtml(d.name)}${d.practice?' — '+escHtml(d.practice):''}</option>`
+  ).join('')
+  el.value=val
+}
+
+function updateHeaderBadge(){
+  document.getElementById('headerBadge').textContent=DB.doctors.length+' doctors'
+}
+
+// ═══════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════
+function renderDashboard(){
+  invalidateCache()
+  populateAllRepSelects()
+  populateFilterDropdowns()
+  updateHeaderBadge()
+
+  const search=document.getElementById('dashSearch').value.toLowerCase()
+  const repF=document.getElementById('dashRepFilter').value
+  const hospF=document.getElementById('dashHospFilter').value
+  const zipF=document.getElementById('dashZipFilter').value
+  const statusF=document.getElementById('dashStatusFilter').value
+  const priorityF=document.getElementById('dashPriorityFilter').value
+
+  let docs=DB.doctors
+  if(search) docs=docs.filter(d=>[d.name,d.practice,d.hospitalSystem,d.phone,d.zipCode].join(' ').toLowerCase().includes(search))
+  if(repF) docs=docs.filter(d=>d.repId===repF)
+  if(hospF) docs=docs.filter(d=>d.hospitalSystem===hospF)
+  if(zipF) docs=docs.filter(d=>d.zipCode===zipF)
+  if(statusF) docs=docs.filter(d=>d.status===statusF)
+
+  // Enrich
+  docs=docs.map(d=>{
+    const lv=getLastVisit(d.id)
+    const days=lv?daysSince(lv.date):null
+    return{...d,_lv:lv,_days:days,_followup:getFollowupDate(lv)}
+  })
+
+  // Priority filter
+  if(priorityF==='red') docs=docs.filter(d=>d._days!==null&&d._days>=14)
+  else if(priorityF==='yellow') docs=docs.filter(d=>d._days!==null&&d._days>=7&&d._days<14)
+  else if(priorityF==='green') docs=docs.filter(d=>d._days!==null&&d._days<7)
+  else if(priorityF==='never') docs=docs.filter(d=>d._days===null)
+
+  // Sort: never visited first, then highest days first
+  docs.sort((a,b)=>{
+    if(a._days===null&&b._days===null) return a.name.localeCompare(b.name)
+    if(a._days===null) return -1
+    if(b._days===null) return 1
+    return b._days-a._days
+  })
+
+  // Stat strip (always from full unfiltered set)
+  const allDocs=DB.doctors.map(d=>{const lv=getLastVisit(d.id);return{...d,_days:lv?daysSince(lv.date):null}})
+  const overdue=allDocs.filter(d=>d._days!==null&&d._days>=14).length
+  const dueSoon=allDocs.filter(d=>d._days!==null&&d._days>=7&&d._days<14).length
+  const recent=allDocs.filter(d=>d._days!==null&&d._days<7).length
+  const never=allDocs.filter(d=>d._days===null).length
+  document.getElementById('dashStats').innerHTML=`
+    <div class="stat-pill"><strong>${DB.doctors.length}</strong> total doctors</div>
+    <div class="stat-pill red"><strong>${overdue}</strong> overdue (14+ days)</div>
+    <div class="stat-pill yellow"><strong>${dueSoon}</strong> due soon (7–14 days)</div>
+    <div class="stat-pill green"><strong>${recent}</strong> recently visited</div>
+    <div class="stat-pill"><strong>${never}</strong> never visited</div>
+  `
+
+  const tbody=document.getElementById('dashBody')
+  if(!docs.length){
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text2)">No doctors match current filters</td></tr>'
+    return
   }
 
-  const rows = docs.map(d => {
-    const pCls = d._days === null ? '' : d._days >= 14 ? 'pr-red' : d._days >= 7 ? 'pr-yellow' : 'pr-green';
-    const visitCount = getDoctorVisits(d.id).length;
-
-    const daysCell = d._days === null
-      ? '<span style="color:var(--text2)">Never visited</span>'
-      : `<span style="color:${d._days>=14?'var(--red)':d._days>=7?'var(--yellow)':'var(--green)'};font-weight:600">${d._days}d</span>`;
-
-    const followupCell = d._followup
-      ? `<span style="color:${new Date(d._followup)<=new Date()?'var(--red)':'var(--text2)'}">${fmt(d._followup)}</span>`
-      : '—';
-
+  tbody.innerHTML=docs.map(d=>{
+    const pCls=d._days===null?'':d._days>=14?'pr-red':d._days>=7?'pr-yellow':'pr-green'
+    const visits=getDoctorVisits(d.id)
+    const daysCell=d._days===null
+      ?'<span style="color:var(--text2)">—</span>'
+      :`<span style="color:${d._days>=14?'var(--red)':d._days>=7?'var(--yellow)':'var(--green)'};font-weight:600">${d._days}d</span>`
+    const followupCell=d._followup
+      ?`<span style="color:${new Date(d._followup)<=new Date()?'var(--red)':'var(--text2)'}">${fmt(d._followup)}</span>`:'—'
     return `<tr class="${pCls}" style="cursor:pointer" onclick="openDoctorDetail('${d.id}')">
-      <td><strong>${d.name}</strong></td>
-      <td style="color:var(--text2)">${d.practice||'—'}</td>
-      <td>${d.hospitalSystem||'—'}</td>
-      <td><span class="rep-tag">${getRepName(d.repId)}</span></td>
+      <td><strong>${escHtml(d.name)}</strong></td>
+      <td style="color:var(--text2);font-size:12px">${escHtml(d.practice||'—')}<br>${escHtml(d.hospitalSystem||'')}</td>
+      <td>${repTagHtml(d.repId)}</td>
       <td>${statusBadge(d.status)}</td>
-      <td>${d._lv ? fmt(d._lv.date) : '<span style="color:var(--text2)">—</span>'}</td>
+      <td>${d._lv?fmt(d._lv.date):'<span style="color:var(--text2)">Never</span>'}</td>
       <td>${daysCell}</td>
       <td>${followupCell}</td>
-      <td>${visitCount}</td>
+      <td style="color:var(--text2)">${visits.length}</td>
       <td><button class="btn btn-primary btn-xs" onclick="event.stopPropagation();openLogModalFor('${d.id}')">+ Visit</button></td>
-    </tr>`;
-  });
-
-  tbody.innerHTML = rows.join('');
+    </tr>`
+  }).join('')
 }
 
-// ========== DOCTORS PAGE ==========
-function renderDoctors() {
-  populateRepSelects('docRepFilter');
-  populateFilterSelects();
+// ═══════════════════════════════════════════
+// DOCTORS PAGE
+// ═══════════════════════════════════════════
+function renderDoctors(){
+  invalidateCache()
+  populateAllRepSelects()
+  populateFilterDropdowns()
 
-  const search = document.getElementById('docSearch').value.toLowerCase();
-  const repF = document.getElementById('docRepFilter').value;
-  const statusF = document.getElementById('docStatusFilter').value;
-  const hospF = document.getElementById('docHospFilter').value;
+  const search=document.getElementById('docSearch').value.toLowerCase()
+  const repF=document.getElementById('docRepFilter').value
+  const statusF=document.getElementById('docStatusFilter').value
+  const hospF=document.getElementById('docHospFilter').value
 
-  let docs = DB.doctors;
-  if (search) docs = docs.filter(d => [d.name,d.practice,d.hospitalSystem,d.phone,d.zipCode,d.address].join(' ').toLowerCase().includes(search));
-  if (repF) docs = docs.filter(d => d.repId === repF);
-  if (statusF) docs = docs.filter(d => d.status === statusF);
-  if (hospF) docs = docs.filter(d => d.hospitalSystem === hospF);
-  docs = docs.slice().sort((a,b) => a.name.localeCompare(b.name));
+  let docs=DB.doctors
+  if(search) docs=docs.filter(d=>[d.name,d.practice,d.hospitalSystem,d.phone,d.zipCode,d.address].join(' ').toLowerCase().includes(search))
+  if(repF) docs=docs.filter(d=>d.repId===repF)
+  if(statusF) docs=docs.filter(d=>d.status===statusF)
+  if(hospF) docs=docs.filter(d=>d.hospitalSystem===hospF)
+  docs=docs.slice().sort((a,b)=>a.name.localeCompare(b.name))
 
-  const tbody = document.getElementById('doctorsBody');
-  if (!docs.length) {
-    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text2)">No doctors found</td></tr>';
-    return;
+  const tbody=document.getElementById('doctorsBody')
+  if(!docs.length){
+    tbody.innerHTML='<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text2)">No doctors found</td></tr>'
+    return
   }
 
-  tbody.innerHTML = docs.map(d => {
-    const visits = getDoctorVisits(d.id);
-    const drConvos = visits.filter(v => v.result === 'got doctor conversation').length;
-    const statOpts = ['not contacted','contacted','yes','maybe','no','pipeline'].map(s =>
-      `<option ${d.status===s?'selected':''}>${s}</option>`
-    ).join('');
+  tbody.innerHTML=docs.map(d=>{
+    const visits=getDoctorVisits(d.id)
+    const drConvos=visits.filter(v=>v.result==='got doctor conversation').length
+    const statOpts=['not contacted','contacted','yes','maybe','no','pipeline'].map(s=>`<option ${d.status===s?'selected':''}>${s}</option>`).join('')
     return `<tr>
-      <td><a href="#" onclick="openDoctorDetail('${d.id}');return false" style="color:var(--text);font-weight:500">${d.name}</a></td>
-      <td style="color:var(--text2)">${d.practice||'—'}</td>
-      <td>${d.hospitalSystem||'—'}</td>
-      <td>${d.phone||'—'}</td>
-      <td>${d.zipCode||'—'}</td>
-      <td><span class="rep-tag">${getRepName(d.repId)}</span></td>
+      <td><a href="#" onclick="openDoctorDetail('${d.id}');return false" style="color:var(--text);font-weight:500">${escHtml(d.name)}</a></td>
+      <td style="color:var(--text2);font-size:12px">${escHtml(d.practice||'—')}</td>
+      <td style="font-size:12px">${escHtml(d.hospitalSystem||'—')}</td>
+      <td style="color:var(--text2);font-size:12px">${escHtml(d.phone||'—')}</td>
+      <td style="color:var(--text2);font-size:12px">${escHtml(d.zipCode||'—')}</td>
+      <td>${repTagHtml(d.repId)}</td>
       <td><select class="status-select" onchange="updateDoctorField('${d.id}','status',this.value)" onclick="event.stopPropagation()">${statOpts}</select></td>
-      <td>${visits.length}</td>
-      <td>${drConvos}</td>
+      <td style="color:var(--text2)">${visits.length}</td>
+      <td style="color:${drConvos>0?'var(--green)':'var(--text2)'}">${drConvos}</td>
       <td style="white-space:nowrap">
         <button class="btn btn-primary btn-xs" onclick="openLogModalFor('${d.id}')">+ Visit</button>
         <button class="btn btn-secondary btn-xs" onclick="openDoctorDetail('${d.id}')">View</button>
+        <button class="btn btn-secondary btn-xs" onclick="openEditDoctorModalFor('${d.id}')">Edit</button>
         <button class="btn btn-danger btn-xs" onclick="deleteDoctor('${d.id}')">Del</button>
       </td>
-    </tr>`;
-  }).join('');
+    </tr>`
+  }).join('')
 }
 
-function updateDoctorField(id, field, value) {
-  const docs = DB.doctors;
-  const i = docs.findIndex(d => d.id === id);
-  if (i >= 0) { docs[i][field] = value; DB.doctors = docs; }
-  toast(`Updated`);
+function updateDoctorField(id,field,value){
+  invalidateCache()
+  const docs=DB.doctors
+  const i=docs.findIndex(d=>d.id===id)
+  if(i>=0){ docs[i][field]=value; DB.doctors=docs }
+  toast('Updated')
 }
 
-function deleteDoctor(id) {
-  if (!confirm('Delete this doctor and all their visit history? This cannot be undone.')) return;
-  DB.doctors = DB.doctors.filter(d => d.id !== id);
-  DB.visits = DB.visits.filter(v => v.doctorId !== id);
-  renderDoctors();
-  toast('Doctor deleted');
+function deleteDoctor(id){
+  if(!confirm('Delete this doctor and all their visit history? This cannot be undone.')) return
+  DB.doctors=DB.doctors.filter(d=>d.id!==id)
+  DB.visits=DB.visits.filter(v=>v.doctorId!==id)
+  invalidateCache()
+  renderDoctors()
+  updateHeaderBadge()
+  toast('Doctor deleted')
 }
 
-// ========== DOCTOR DETAIL ==========
-function openDoctorDetail(id) {
-  const doc = DB.doctors.find(d => d.id === id);
-  if (!doc) return;
-  const visits = getDoctorVisits(id);
-  const drConvos = visits.filter(v => v.result === 'got doctor conversation').length;
-  const fdConvos = visits.filter(v => v.result === 'front desk only').length;
-  const lv = visits[0];
+// ═══════════════════════════════════════════
+// DOCTOR DETAIL MODAL
+// ═══════════════════════════════════════════
+let _currentDoctorId=null
 
-  document.getElementById('doctorModalTitle').textContent = doc.name;
+function openDoctorDetail(id){
+  _currentDoctorId=id
+  invalidateCache()
+  const doc=DB.doctors.find(d=>d.id===id)
+  if(!doc) return
+  const visits=getDoctorVisits(id)
+  const drConvos=visits.filter(v=>v.result==='got doctor conversation').length
+  const fdConvos=visits.filter(v=>v.result==='front desk only').length
+  const noEntry=visits.filter(v=>v.result==="didn't get in").length
+  const lv=visits[0]
+  const fw=getFollowupDate(lv)
 
-  const repOpts = '<option value="">Unassigned</option>' + DB.reps.map(r =>
-    `<option value="${r.id}" ${doc.repId===r.id?'selected':''}>${r.name}</option>`
-  ).join('');
-  const statOpts = ['not contacted','contacted','yes','maybe','no','pipeline'].map(s =>
+  document.getElementById('doctorModalTitle').textContent=doc.name
+  document.getElementById('doctorModalEditBtn').onclick=()=>openEditDoctorModalFor(id)
+
+  const repOpts='<option value="">Unassigned</option>'+DB.reps.map(r=>
+    `<option value="${r.id}" ${doc.repId===r.id?'selected':''}>${escHtml(r.name)}</option>`
+  ).join('')
+  const statOpts=['not contacted','contacted','yes','maybe','no','pipeline'].map(s=>
     `<option ${doc.status===s?'selected':''}>${s}</option>`
-  ).join('');
+  ).join('')
 
-  document.getElementById('doctorModalBody').innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+  document.getElementById('doctorModalBody').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:16px">
       <div>
-        <div style="font-size:20px;font-weight:700">${doc.name}</div>
-        <div style="color:var(--text2);font-size:13px;margin-top:4px">${[doc.practice,doc.hospitalSystem,doc.address,doc.zipCode].filter(Boolean).join(' · ')}</div>
-        ${doc.phone ? `<div style="color:var(--text2);font-size:13px">📞 ${doc.phone}</div>` : ''}
+        <div style="font-size:19px;font-weight:700">${escHtml(doc.name)}</div>
+        <div style="color:var(--text2);font-size:13px;margin-top:3px">${[doc.practice,doc.hospitalSystem,doc.address,doc.zipCode].filter(Boolean).map(s=>escHtml(s)).join(' · ')}</div>
+        ${doc.phone?`<div style="color:var(--text2);font-size:13px">📞 ${escHtml(doc.phone)}</div>`:''}
+        ${doc.notes?`<div style="color:var(--text2);font-size:13px;margin-top:6px;font-style:italic">${escHtml(doc.notes)}</div>`:''}
       </div>
       <div>${statusBadge(doc.status)}</div>
     </div>
 
-    <div class="grid-4" style="margin-bottom:16px">
-      <div class="metric"><div class="metric-label">Total Visits</div><div class="metric-value" style="font-size:22px">${visits.length}</div></div>
-      <div class="metric"><div class="metric-label">Dr Convos</div><div class="metric-value" style="font-size:22px">${drConvos}</div></div>
-      <div class="metric"><div class="metric-label">Front Desk</div><div class="metric-value" style="font-size:22px">${fdConvos}</div></div>
-      <div class="metric"><div class="metric-label">Last Visit</div><div class="metric-value" style="font-size:16px;margin-top:4px">${lv ? fmt(lv.date) : 'Never'}</div></div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px">
+      <div class="metric"><div class="metric-label">Visits</div><div class="metric-value" style="font-size:20px">${visits.length}</div></div>
+      <div class="metric"><div class="metric-label">Dr Convos</div><div class="metric-value" style="font-size:20px;color:var(--green)">${drConvos}</div></div>
+      <div class="metric"><div class="metric-label">Front Desk</div><div class="metric-value" style="font-size:20px;color:var(--yellow)">${fdConvos}</div></div>
+      <div class="metric"><div class="metric-label">No Entry</div><div class="metric-value" style="font-size:20px;color:var(--text2)">${noEntry}</div></div>
+      <div class="metric"><div class="metric-label">Next Visit</div><div class="metric-value" style="font-size:13px;margin-top:4px;color:${fw&&new Date(fw)<=new Date()?'var(--red)':'var(--text2)'}">${fw?fmt(fw):'—'}</div></div>
     </div>
 
-    <div class="grid-2" style="margin-bottom:16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
       <div class="form-group">
         <label>Assigned Rep</label>
-        <select onchange="updateDoctorField('${id}','repId',this.value)">${repOpts}</select>
+        <select onchange="updateDoctorField('${id}','repId',this.value);this.blur()">${repOpts}</select>
       </div>
       <div class="form-group">
         <label>Status</label>
-        <select onchange="updateDoctorField('${id}','status',this.value)">${statOpts}</select>
+        <select onchange="updateDoctorField('${id}','status',this.value);this.blur()">${statOpts}</select>
       </div>
     </div>
 
+    <hr class="divider">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <strong>Visit History (${visits.length})</strong>
+      <strong style="font-size:14px">Visit History <span style="color:var(--text2);font-weight:400">(${visits.length})</span></strong>
       <button class="btn btn-primary btn-sm" onclick="closeModal('doctorModal');openLogModalFor('${id}')">+ Log Visit</button>
     </div>
 
-    ${visits.length === 0
-      ? '<div style="color:var(--text2);text-align:center;padding:24px">No visits logged yet</div>'
-      : visits.map(v => `
-          <div class="visit-item">
-            <div class="visit-item-header">
-              <span style="font-weight:600">${fmt(v.date)}</span>
-              <span style="display:flex;gap:6px;align-items:center">
-                ${resultBadge(v.result)}
-                <button class="btn btn-secondary btn-xs" onclick="openEditVisit('${v.id}','${id}')">Edit</button>
-                <button class="btn btn-danger btn-xs" onclick="deleteVisit('${v.id}','${id}')">Del</button>
-              </span>
-            </div>
-            ${v.notes ? `<div class="visit-notes">${escHtml(v.notes)}</div>` : ''}
+    ${visits.length===0
+      ?'<div style="color:var(--text2);text-align:center;padding:24px;font-size:13px">No visits logged yet</div>'
+      :visits.map(v=>`
+        <div class="visit-item">
+          <div class="visit-item-header">
+            <span class="visit-date">${fmt(v.date)}</span>
+            <span style="display:flex;gap:5px;align-items:center">
+              ${resultBadge(v.result)}
+              <button class="btn btn-secondary btn-xs" onclick="openEditVisit('${v.id}','${id}')">Edit</button>
+              <button class="btn btn-danger btn-xs" onclick="deleteVisit('${v.id}','${id}')">Del</button>
+            </span>
           </div>
-        `).join('')
+          ${v.notes?`<div class="visit-notes">${escHtml(v.notes)}</div>`:''}
+        </div>
+      `).join('')
     }
-  `;
-  openModal('doctorModal');
+  `
+  openModal('doctorModal')
 }
 
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+// ═══════════════════════════════════════════
+// EDIT DOCTOR MODAL
+// ═══════════════════════════════════════════
+function openEditDoctorModalFor(id){
+  const doc=DB.doctors.find(d=>d.id===id)
+  if(!doc) return
+  document.getElementById('editDocId').value=id
+  document.getElementById('editDocName').value=doc.name||''
+  document.getElementById('editDocPractice').value=doc.practice||''
+  document.getElementById('editDocHosp').value=doc.hospitalSystem||''
+  document.getElementById('editDocPhone').value=doc.phone||''
+  document.getElementById('editDocAddress').value=doc.address||''
+  document.getElementById('editDocZip').value=doc.zipCode||''
+  document.getElementById('editDocNotes').value=doc.notes||''
+  document.getElementById('editDocStatus').value=doc.status||'not contacted'
+  populateRepSelect('editDocRep',false)
+  document.getElementById('editDocRep').value=doc.repId||''
+  openModal('editDoctorModal')
 }
 
-function openEditVisit(visitId, doctorId) {
-  const visit = DB.visits.find(v => v.id === visitId);
-  if (!visit) return;
-  document.getElementById('editVisitId').value = visitId;
-  document.getElementById('editVisitDoctorId').value = doctorId;
-  document.getElementById('editVisitDate').value = visit.date;
-  document.getElementById('editVisitResult').value = visit.result;
-  document.getElementById('editVisitNotes').value = visit.notes || '';
-  closeModal('doctorModal');
-  openModal('editVisitModal');
+function openEditDoctorModal(){
+  if(_currentDoctorId){ closeModal('doctorModal'); openEditDoctorModalFor(_currentDoctorId) }
 }
 
-function reopenDoctorFromEdit() {
-  const docId = document.getElementById('editVisitDoctorId').value;
-  closeModal('editVisitModal');
-  if (docId) openDoctorDetail(docId);
+function closeEditDoctorModal(){
+  closeModal('editDoctorModal')
+  if(_currentDoctorId) openDoctorDetail(_currentDoctorId)
 }
 
-function saveEditVisit() {
-  const id = document.getElementById('editVisitId').value;
-  const docId = document.getElementById('editVisitDoctorId').value;
-  const visits = DB.visits;
-  const i = visits.findIndex(v => v.id === id);
-  if (i < 0) return;
-  visits[i].date = document.getElementById('editVisitDate').value;
-  visits[i].result = document.getElementById('editVisitResult').value;
-  visits[i].notes = document.getElementById('editVisitNotes').value;
-  DB.visits = visits;
-  closeModal('editVisitModal');
-  openDoctorDetail(docId);
-  toast('Visit updated');
+function saveEditDoctor(){
+  const id=document.getElementById('editDocId').value
+  const name=document.getElementById('editDocName').value.trim()
+  if(!name){ toast('Doctor name is required','error'); return }
+  const docs=DB.doctors
+  const i=docs.findIndex(d=>d.id===id)
+  if(i<0) return
+  docs[i].name=name
+  docs[i].practice=document.getElementById('editDocPractice').value.trim()
+  docs[i].hospitalSystem=document.getElementById('editDocHosp').value.trim()
+  docs[i].phone=document.getElementById('editDocPhone').value.trim()
+  docs[i].address=document.getElementById('editDocAddress').value.trim()
+  docs[i].zipCode=document.getElementById('editDocZip').value.trim()
+  docs[i].notes=document.getElementById('editDocNotes').value.trim()
+  docs[i].repId=document.getElementById('editDocRep').value
+  docs[i].status=document.getElementById('editDocStatus').value
+  DB.doctors=docs
+  invalidateCache()
+  populateFilterDropdowns()
+  closeModal('editDoctorModal')
+  openDoctorDetail(id)
+  toast('Doctor updated')
 }
 
-function deleteVisit(visitId, doctorId) {
-  if (!confirm('Delete this visit?')) return;
-  DB.visits = DB.visits.filter(v => v.id !== visitId);
-  openDoctorDetail(doctorId);
-  toast('Visit deleted');
+// ═══════════════════════════════════════════
+// VISIT EDIT / DELETE
+// ═══════════════════════════════════════════
+function openEditVisit(visitId,doctorId){
+  const visit=DB.visits.find(v=>v.id===visitId)
+  if(!visit) return
+  document.getElementById('editVisitId').value=visitId
+  document.getElementById('editVisitDoctorId').value=doctorId
+  document.getElementById('editVisitDate').value=visit.date
+  document.getElementById('editVisitResult').value=visit.result
+  document.getElementById('editVisitNotes').value=visit.notes||''
+  closeModal('doctorModal')
+  openModal('editVisitModal')
 }
 
-// ========== LOG VISIT PAGE ==========
-function renderLogPage() {
-  populateDoctorSelect('logDoctorSelect');
-  document.getElementById('logDate').value = today();
-  renderRecentVisits();
+function reopenDoctorFromEdit(){
+  const docId=document.getElementById('editVisitDoctorId').value
+  closeModal('editVisitModal')
+  if(docId) openDoctorDetail(docId)
 }
 
-function renderRecentVisits() {
-  const visits = DB.visits.slice().sort((a,b) => b.date.localeCompare(a.date)).slice(0,25);
-  const el = document.getElementById('recentVisitsList');
-  if (!visits.length) {
-    el.innerHTML = '<div style="color:var(--text2);text-align:center;padding:20px">No visits logged yet</div>';
-    return;
-  }
-  const docs = DB.doctors;
-  el.innerHTML = visits.map(v => {
-    const doc = docs.find(d => d.id === v.doctorId);
+function saveEditVisit(){
+  const id=document.getElementById('editVisitId').value
+  const docId=document.getElementById('editVisitDoctorId').value
+  const visits=DB.visits
+  const i=visits.findIndex(v=>v.id===id)
+  if(i<0) return
+  visits[i].date=document.getElementById('editVisitDate').value
+  visits[i].result=document.getElementById('editVisitResult').value
+  visits[i].notes=document.getElementById('editVisitNotes').value
+  DB.visits=visits
+  invalidateCache()
+  closeModal('editVisitModal')
+  openDoctorDetail(docId)
+  toast('Visit updated')
+}
+
+function deleteVisit(visitId,doctorId){
+  if(!confirm('Delete this visit?')) return
+  DB.visits=DB.visits.filter(v=>v.id!==visitId)
+  invalidateCache()
+  openDoctorDetail(doctorId)
+  toast('Visit deleted')
+}
+
+// ═══════════════════════════════════════════
+// LOG VISIT — PAGE
+// ═══════════════════════════════════════════
+function renderLogPage(){
+  populateDoctorSelect('logDoctorSelect')
+  document.getElementById('logDate').value=today()
+  renderRecentVisits()
+}
+
+function renderRecentVisits(){
+  invalidateCache()
+  const visits=DB.visits.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,25)
+  const el=document.getElementById('recentVisitsList')
+  if(!visits.length){ el.innerHTML='<div style="color:var(--text2);text-align:center;padding:20px">No visits logged yet</div>'; return }
+  const docs=DB.doctors
+  el.innerHTML=visits.map(v=>{
+    const doc=docs.find(d=>d.id===v.doctorId)
     return `<div class="visit-item">
       <div class="visit-item-header">
-        <span><strong>${doc ? escHtml(doc.name) : 'Unknown'}</strong> <span style="color:var(--text2);font-size:12px">${fmt(v.date)}</span></span>
+        <span><strong>${escHtml(doc?doc.name:'Unknown')}</strong> <span style="color:var(--text2);font-size:11px">${fmt(v.date)}</span></span>
         ${resultBadge(v.result)}
       </div>
-      ${v.notes ? `<div class="visit-notes">${escHtml(v.notes)}</div>` : ''}
-    </div>`;
-  }).join('');
+      ${v.notes?`<div class="visit-notes">${escHtml(v.notes)}</div>`:''}
+    </div>`
+  }).join('')
 }
 
-function onLogDoctorChange() {
-  const id = document.getElementById('logDoctorSelect').value;
-  const infoEl = document.getElementById('logDoctorInfo');
-  if (!id) { infoEl.style.display = 'none'; return; }
-  const doc = DB.doctors.find(d => d.id === id);
-  const lv = getLastVisit(id);
-  infoEl.style.display = 'block';
-  infoEl.innerHTML = `${[doc.practice,doc.hospitalSystem].filter(Boolean).join(' · ')} &nbsp;${statusBadge(doc.status)}&nbsp; Last: ${lv ? fmt(lv.date) : 'Never'}`;
-  updateLogFollowup();
+function onLogDoctorChange(){
+  const id=document.getElementById('logDoctorSelect').value
+  const infoEl=document.getElementById('logDoctorInfo')
+  if(!id){ infoEl.style.display='none'; return }
+  const doc=DB.doctors.find(d=>d.id===id)
+  const lv=getLastVisit(id)
+  const visits=getDoctorVisits(id)
+  const drConvos=visits.filter(v=>v.result==='got doctor conversation').length
+  infoEl.style.display='block'
+  infoEl.innerHTML=`${escHtml([doc.practice,doc.hospitalSystem].filter(Boolean).join(' · '))} &nbsp;${statusBadge(doc.status)}<br>
+    Last visit: <strong>${lv?fmt(lv.date):'Never'}</strong> &nbsp;·&nbsp;
+    Total visits: <strong>${visits.length}</strong> &nbsp;·&nbsp;
+    Dr convos: <strong style="color:var(--green)">${drConvos}</strong>`
+  updateLogFollowup()
 }
 
-function updateLogFollowup() {
-  const result = document.getElementById('logResult').value;
-  const date = document.getElementById('logDate').value;
-  const hint = document.getElementById('logFollowupHint');
-  if (result && date) {
-    const fw = DB.followupWindows;
-    const days = fw[result] || 7;
-    hint.style.display = 'block';
-    hint.textContent = `→ Recommended next visit: ${fmt(addDays(date, days))} (in ${days} days)`;
-  } else {
-    hint.style.display = 'none';
+function updateLogFollowup(){
+  const result=document.getElementById('logResult').value
+  const date=document.getElementById('logDate').value
+  const hint=document.getElementById('logFollowupHint')
+  if(result&&date){
+    const days=DB.followupWindows[result]||7
+    hint.style.display='block'
+    hint.textContent=`→ Recommended next visit: ${fmt(addDays(date,days))} (in ${days} days)`
+  } else { hint.style.display='none' }
+}
+
+function submitVisit(){
+  const doctorId=document.getElementById('logDoctorSelect').value
+  const date=document.getElementById('logDate').value
+  const result=document.getElementById('logResult').value
+  const notes=document.getElementById('logNotes').value.trim()
+  if(!doctorId||!date||!result){ toast('Fill in all required fields','error'); return }
+  addVisitRecord(doctorId,date,result,notes)
+  document.getElementById('logDoctorSelect').value=''
+  document.getElementById('logDate').value=today()
+  document.getElementById('logResult').value=''
+  document.getElementById('logNotes').value=''
+  document.getElementById('logDoctorInfo').style.display='none'
+  document.getElementById('logFollowupHint').style.display='none'
+  renderRecentVisits()
+  toast('Visit logged!')
+}
+
+function addVisitRecord(doctorId,date,result,notes){
+  const visits=DB.visits
+  const visit={id:uid(),doctorId,date,result,notes}
+  visits.push(visit)
+  DB.visits=visits
+  invalidateCache()
+  // Auto-advance status
+  const docs=DB.doctors
+  const i=docs.findIndex(d=>d.id===doctorId)
+  if(i>=0){
+    const s=docs[i].status
+    if(!s||s==='not contacted') { docs[i].status='contacted'; DB.doctors=docs }
   }
+  return visit
 }
 
-function submitVisit() {
-  const doctorId = document.getElementById('logDoctorSelect').value;
-  const date = document.getElementById('logDate').value;
-  const result = document.getElementById('logResult').value;
-  const notes = document.getElementById('logNotes').value.trim();
-  if (!doctorId || !date || !result) { toast('Please fill in all required fields', 'error'); return; }
-  addVisitRecord(doctorId, date, result, notes);
-  document.getElementById('logDoctorSelect').value = '';
-  document.getElementById('logDate').value = today();
-  document.getElementById('logResult').value = '';
-  document.getElementById('logNotes').value = '';
-  document.getElementById('logDoctorInfo').style.display = 'none';
-  document.getElementById('logFollowupHint').style.display = 'none';
-  renderRecentVisits();
-  toast('Visit logged!');
+// ═══════════════════════════════════════════
+// LOG MODAL
+// ═══════════════════════════════════════════
+function openLogModal(doctorId){
+  populateDoctorSelect('modalLogDoctor')
+  document.getElementById('modalLogDate').value=today()
+  document.getElementById('modalLogResult').value=''
+  document.getElementById('modalLogNotes').value=''
+  document.getElementById('modalFollowupHint').style.display='none'
+  document.getElementById('modalDoctorInfo').style.display='none'
+  if(doctorId){ document.getElementById('modalLogDoctor').value=doctorId; onModalDoctorChange() }
+  openModal('logModal')
+}
+function openLogModalFor(id){ openLogModal(id) }
+
+function onModalDoctorChange(){
+  const id=document.getElementById('modalLogDoctor').value
+  const infoEl=document.getElementById('modalDoctorInfo')
+  if(!id){ infoEl.style.display='none'; updateModalFollowup(); return }
+  const doc=DB.doctors.find(d=>d.id===id)
+  const lv=getLastVisit(id)
+  const visits=getDoctorVisits(id)
+  const drConvos=visits.filter(v=>v.result==='got doctor conversation').length
+  infoEl.style.display='block'
+  infoEl.innerHTML=`${escHtml([doc.practice,doc.hospitalSystem].filter(Boolean).join(' · '))} &nbsp;${statusBadge(doc.status)}<br>
+    Last: <strong>${lv?fmt(lv.date):'Never'}</strong> · Visits: <strong>${visits.length}</strong> · Dr convos: <strong style="color:var(--green)">${drConvos}</strong>`
+  updateModalFollowup()
 }
 
-function addVisitRecord(doctorId, date, result, notes) {
-  const visits = DB.visits;
-  const visit = { id: uid(), doctorId, date, result, notes };
-  visits.push(visit);
-  DB.visits = visits;
-
-  const docs = DB.doctors;
-  const i = docs.findIndex(d => d.id === doctorId);
-  if (i >= 0 && (docs[i].status === 'not contacted' || !docs[i].status)) {
-    docs[i].status = 'contacted';
-    DB.doctors = docs;
-  }
-  return visit;
+function updateModalFollowup(){
+  const result=document.getElementById('modalLogResult').value
+  const date=document.getElementById('modalLogDate').value
+  const hint=document.getElementById('modalFollowupHint')
+  if(result&&date){
+    const days=DB.followupWindows[result]||7
+    hint.style.display='block'
+    hint.textContent=`→ Recommended next visit: ${fmt(addDays(date,days))} (in ${days} days)`
+  } else { hint.style.display='none' }
 }
 
-// ========== LOG MODAL ==========
-function openLogModal(doctorId) {
-  populateDoctorSelect('modalLogDoctor');
-  document.getElementById('modalLogDate').value = today();
-  document.getElementById('modalLogResult').value = '';
-  document.getElementById('modalLogNotes').value = '';
-  document.getElementById('modalFollowupHint').style.display = 'none';
-  if (doctorId) document.getElementById('modalLogDoctor').value = doctorId;
-  openModal('logModal');
+function submitModalVisit(){
+  const doctorId=document.getElementById('modalLogDoctor').value
+  const date=document.getElementById('modalLogDate').value
+  const result=document.getElementById('modalLogResult').value
+  const notes=document.getElementById('modalLogNotes').value.trim()
+  if(!doctorId||!date||!result){ toast('Fill in all required fields','error'); return }
+  addVisitRecord(doctorId,date,result,notes)
+  closeModal('logModal')
+  renderDashboard()
+  toast('Visit logged!')
 }
 
-function openLogModalFor(doctorId) { openLogModal(doctorId); }
-
-function updateModalFollowup() {
-  const result = document.getElementById('modalLogResult').value;
-  const date = document.getElementById('modalLogDate').value;
-  const hint = document.getElementById('modalFollowupHint');
-  if (result && date) {
-    const days = DB.followupWindows[result] || 7;
-    hint.style.display = 'block';
-    hint.textContent = `→ Recommended next visit: ${fmt(addDays(date, days))} (in ${days} days)`;
-  } else {
-    hint.style.display = 'none';
-  }
+// ═══════════════════════════════════════════
+// ADD DOCTOR
+// ═══════════════════════════════════════════
+function openAddDoctorModal(){
+  populateRepSelect('addDocRep',false)
+  ;['addDocName','addDocPractice','addDocHosp','addDocPhone','addDocAddress','addDocZip','addDocNotes'].forEach(id=>{
+    document.getElementById(id).value=''
+  })
+  document.getElementById('addDocStatus').value='not contacted'
+  openModal('addDoctorModal')
 }
 
-function submitModalVisit() {
-  const doctorId = document.getElementById('modalLogDoctor').value;
-  const date = document.getElementById('modalLogDate').value;
-  const result = document.getElementById('modalLogResult').value;
-  const notes = document.getElementById('modalLogNotes').value.trim();
-  if (!doctorId || !date || !result) { toast('Fill in all required fields', 'error'); return; }
-  addVisitRecord(doctorId, date, result, notes);
-  closeModal('logModal');
-  renderDashboard();
-  toast('Visit logged!');
-}
-
-// ========== ADD DOCTOR ==========
-function openAddDoctorModal() {
-  populateRepSelects('addDocRep');
-  ['addDocName','addDocPractice','addDocHosp','addDocPhone','addDocAddress','addDocZip'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  document.getElementById('addDocStatus').value = 'not contacted';
-  openModal('addDoctorModal');
-}
-
-function saveNewDoctor() {
-  const name = document.getElementById('addDocName').value.trim();
-  if (!name) { toast('Doctor name is required', 'error'); return; }
-  const docs = DB.doctors;
+function saveNewDoctor(){
+  const name=document.getElementById('addDocName').value.trim()
+  if(!name){ toast('Doctor name is required','error'); return }
+  const docs=DB.doctors
   docs.push({
-    id: uid(), name,
-    practice: document.getElementById('addDocPractice').value.trim(),
-    hospitalSystem: document.getElementById('addDocHosp').value.trim(),
-    phone: document.getElementById('addDocPhone').value.trim(),
-    address: document.getElementById('addDocAddress').value.trim(),
-    zipCode: document.getElementById('addDocZip').value.trim(),
-    repId: document.getElementById('addDocRep').value,
-    status: document.getElementById('addDocStatus').value
-  });
-  DB.doctors = docs;
-  closeModal('addDoctorModal');
-  renderDoctors();
-  populateFilterSelects();
-  toast('Doctor added!');
+    id:uid(), name,
+    practice:document.getElementById('addDocPractice').value.trim(),
+    hospitalSystem:document.getElementById('addDocHosp').value.trim(),
+    phone:document.getElementById('addDocPhone').value.trim(),
+    address:document.getElementById('addDocAddress').value.trim(),
+    zipCode:document.getElementById('addDocZip').value.trim(),
+    notes:document.getElementById('addDocNotes').value.trim(),
+    repId:document.getElementById('addDocRep').value,
+    status:document.getElementById('addDocStatus').value
+  })
+  DB.doctors=docs
+  invalidateCache()
+  closeModal('addDoctorModal')
+  renderDoctors()
+  populateFilterDropdowns()
+  updateHeaderBadge()
+  toast('Doctor added!')
 }
 
-// ========== ANALYTICS ==========
-function renderAnalytics() {
-  const docs = DB.doctors;
-  const visits = DB.visits;
-  const now = new Date();
-  const ytdStart = `${now.getFullYear()}-01-01`;
-  const fourWeeksAgo = new Date(now - 28*86400000).toISOString().split('T')[0];
+// ═══════════════════════════════════════════
+// ANALYTICS
+// ═══════════════════════════════════════════
+function renderAnalytics(){
+  invalidateCache()
+  const docs=DB.doctors
+  const visits=DB.visits
+  const now=new Date()
+  const ytdStart=`${now.getFullYear()}-01-01`
+  const fourWeeksAgo=new Date(now-28*86400000).toISOString().split('T')[0]
 
-  const ytdVisits = visits.filter(v => v.date >= ytdStart);
-  const last4 = visits.filter(v => v.date >= fourWeeksAgo);
-  const drConvosAll = visits.filter(v => v.result === 'got doctor conversation');
-  const yesDocs = docs.filter(d => d.status === 'yes');
-  const convRate = docs.length ? ((yesDocs.length / docs.length)*100).toFixed(1) : 0;
+  const ytdVisits=visits.filter(v=>v.date>=ytdStart)
+  const last4=visits.filter(v=>v.date>=fourWeeksAgo)
+  const drConvosAll=visits.filter(v=>v.result==='got doctor conversation')
+  const yesDocs=docs.filter(d=>d.status==='yes')
+  const convRate=docs.length?((yesDocs.length/docs.length)*100).toFixed(1):0
 
-  document.getElementById('analyticsMetrics').innerHTML = [
-    { label:'Total Visits (YTD)', value: ytdVisits.length, sub: `${last4.length} in last 4 weeks` },
-    { label:'Dr Conversations (YTD)', value: drConvosAll.filter(v=>v.date>=ytdStart).length, sub: `${drConvosAll.filter(v=>v.date>=fourWeeksAgo).length} in last 4 weeks` },
-    { label:'Total Closes (Yes)', value: yesDocs.length, sub: `${convRate}% overall conversion` },
-    { label:'Active Doctors', value: docs.length, sub: `${docs.filter(d=>d.status!=='not contacted').length} contacted` }
-  ].map(m => `<div class="metric"><div class="metric-label">${m.label}</div><div class="metric-value">${m.value}</div><div class="metric-sub">${m.sub}</div></div>`).join('');
+  // Metrics
+  document.getElementById('analyticsMetrics').innerHTML=[
+    {label:'Total Visits (YTD)',value:ytdVisits.length,sub:`${last4.length} in last 4 weeks`},
+    {label:'Dr Conversations (YTD)',value:drConvosAll.filter(v=>v.date>=ytdStart).length,sub:`${drConvosAll.filter(v=>v.date>=fourWeeksAgo).length} in last 4 weeks`},
+    {label:'Total Closes (Yes)',value:yesDocs.length,sub:`${convRate}% overall conv rate`},
+    {label:'Total Doctors',value:docs.length,sub:`${docs.filter(d=>d.status!=='not contacted').length} contacted`}
+  ].map(m=>`<div class="metric"><div class="metric-label">${m.label}</div><div class="metric-value">${m.value}</div><div class="metric-sub">${m.sub}</div></div>`).join('')
 
   // Funnel
-  const contacted = docs.filter(d => d.status !== 'not contacted').length;
-  const hadConvo = [...new Set(drConvosAll.map(v => v.doctorId))].length;
-  const closedOrPipe = docs.filter(d => d.status==='yes'||d.status==='pipeline').length;
-  const funnelItems = [
-    { label:'Doctors in System', n: docs.length },
-    { label:'Contacted', n: contacted },
-    { label:'Had Dr Conversation', n: hadConvo },
-    { label:'Yes / Pipeline', n: closedOrPipe },
-  ];
-  document.getElementById('funnelChart').innerHTML = funnelItems.map(f => {
-    const pct = docs.length ? Math.round(f.n/docs.length*100) : 0;
+  const contacted=docs.filter(d=>d.status!=='not contacted').length
+  const hadConvo=[...new Set(drConvosAll.map(v=>v.doctorId))].length
+  const closedOrPipe=docs.filter(d=>d.status==='yes'||d.status==='pipeline').length
+  const funnelItems=[
+    {label:'Doctors in System',n:docs.length,color:'var(--accent)'},
+    {label:'Contacted',n:contacted,color:'var(--accent)'},
+    {label:'Had Dr Conversation',n:hadConvo,color:'var(--yellow)'},
+    {label:'Yes / Pipeline',n:closedOrPipe,color:'var(--green)'},
+  ]
+  document.getElementById('funnelChart').innerHTML=funnelItems.map(f=>{
+    const pct=docs.length?Math.round(f.n/docs.length*100):0
     return `<div style="margin-bottom:14px">
       <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px">
         <span>${f.label}</span>
         <span style="font-weight:600">${f.n} <span style="color:var(--text2);font-weight:400">(${pct}%)</span></span>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-    </div>`;
-  }).join('');
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${f.color}"></div></div>
+    </div>`
+  }).join('')
 
-  const avgV = avgVisitsBeforeConvo(docs, visits);
-  const avgC = avgConvosBeforeYes(docs, visits);
-
-  document.getElementById('keyAverages').innerHTML = `
-    <div style="margin-bottom:18px"><div class="metric-label">Avg Visits Before First Dr Conversation</div><div style="font-size:26px;font-weight:700;margin-top:4px">${avgV}</div></div>
-    <div style="margin-bottom:18px"><div class="metric-label">Avg Dr Convos Before "Yes"</div><div style="font-size:26px;font-weight:700;margin-top:4px">${avgC}</div></div>
-    <div><div class="metric-label">Overall Conversion Rate</div>
-      <div style="font-size:26px;font-weight:700;margin-top:4px">${convRate}%</div>
+  // Key averages
+  const avgV=avgVisitsBeforeConvo(docs,visits)
+  const avgC=avgConvosBeforeYes(docs,visits)
+  document.getElementById('keyAverages').innerHTML=`
+    <div style="margin-bottom:18px">
+      <div class="metric-label">Avg Visits Before First Dr Conversation</div>
+      <div style="font-size:28px;font-weight:700;margin-top:4px">${avgV}</div>
+    </div>
+    <div style="margin-bottom:18px">
+      <div class="metric-label">Avg Dr Convos Before "Yes"</div>
+      <div style="font-size:28px;font-weight:700;margin-top:4px">${avgC}</div>
+    </div>
+    <div>
+      <div class="metric-label">Overall Conversion Rate</div>
+      <div style="font-size:28px;font-weight:700;margin-top:4px">${convRate}%</div>
       <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:${convRate}%;background:var(--green)"></div></div>
-    </div>`;
+    </div>`
+
+  // Maybe → Yes trend
+  renderMaybeTrend(docs,visits)
 
   // By rep
-  const reps = DB.reps;
-  document.getElementById('repAnalyticsBody').innerHTML = reps.length
-    ? reps.map(rep => {
-        const rd = docs.filter(d => d.repId === rep.id);
-        const rv = visits.filter(v => rd.find(d => d.id === v.doctorId));
-        const rConvo = rv.filter(v => v.result==='got doctor conversation').length;
-        const rYes = rd.filter(d => d.status==='yes').length;
-        const rMaybe = rd.filter(d => d.status==='maybe').length;
-        const rRate = rd.length ? ((rYes/rd.length)*100).toFixed(1) : 0;
+  const reps=DB.reps
+  document.getElementById('repAnalyticsBody').innerHTML=reps.length
+    ?reps.map(rep=>{
+        const rd=docs.filter(d=>d.repId===rep.id)
+        const repDocIds=new Set(rd.map(d=>d.id))
+        const rv=visits.filter(v=>repDocIds.has(v.doctorId))
+        const rConvo=rv.filter(v=>v.result==='got doctor conversation').length
+        const rYes=rd.filter(d=>d.status==='yes').length
+        const rMaybe=rd.filter(d=>d.status==='maybe').length
+        const rNo=rd.filter(d=>d.status==='no').length
+        const rRate=rd.length?((rYes/rd.length)*100).toFixed(1):0
         return `<tr>
-          <td><strong>${rep.name}</strong></td>
-          <td class="num">${rd.length}</td><td class="num">${rv.length}</td>
+          <td><strong>${escHtml(rep.name)}</strong></td>
+          <td class="num">${rd.length}</td>
+          <td class="num">${rv.length}</td>
           <td class="num">${rConvo}</td>
           <td class="num"><span style="color:var(--green)">${rYes}</span></td>
           <td class="num"><span style="color:var(--yellow)">${rMaybe}</span></td>
+          <td class="num"><span style="color:var(--red)">${rNo}</span></td>
           <td class="num">${rRate}%</td>
           <td class="num">${rv.filter(v=>v.date>=ytdStart).length}</td>
           <td class="num">${rv.filter(v=>v.date>=fourWeeksAgo).length}</td>
-        </tr>`;
+        </tr>`
       }).join('')
-    : '<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:20px">No reps added yet — go to Settings to add reps</td></tr>';
+    :'<tr><td colspan="10" style="text-align:center;color:var(--text2);padding:20px">No reps added — go to Settings</td></tr>'
 
   // By hospital
-  const hospitals = [...new Set(docs.map(d=>d.hospitalSystem).filter(Boolean))].sort();
-  document.getElementById('hospAnalyticsBody').innerHTML = hospitals.length
-    ? hospitals.map(h => {
-        const hd = docs.filter(d => d.hospitalSystem===h);
-        const hv = visits.filter(v => hd.find(d=>d.id===v.doctorId));
-        const hConvo = hv.filter(v=>v.result==='got doctor conversation').length;
-        const hYes = hd.filter(d=>d.status==='yes').length;
-        const hRate = hd.length ? ((hYes/hd.length)*100).toFixed(1) : 0;
-        return `<tr><td>${h}</td><td class="num">${hd.length}</td><td class="num">${hv.length}</td><td class="num">${hConvo}</td><td class="num"><span style="color:var(--green)">${hYes}</span></td><td class="num">${hRate}%</td></tr>`;
+  const hospitals=[...new Set(docs.map(d=>d.hospitalSystem).filter(Boolean))].sort()
+  document.getElementById('hospAnalyticsBody').innerHTML=hospitals.length
+    ?hospitals.map(h=>{
+        const hd=docs.filter(d=>d.hospitalSystem===h)
+        const hIds=new Set(hd.map(d=>d.id))
+        const hv=visits.filter(v=>hIds.has(v.doctorId))
+        const hConvo=hv.filter(v=>v.result==='got doctor conversation').length
+        const hYes=hd.filter(d=>d.status==='yes').length
+        const hPipe=hd.filter(d=>d.status==='pipeline').length
+        const hRate=hd.length?((hYes/hd.length)*100).toFixed(1):0
+        return `<tr><td>${escHtml(h)}</td><td class="num">${hd.length}</td><td class="num">${hv.length}</td><td class="num">${hConvo}</td><td class="num"><span style="color:var(--green)">${hYes}</span></td><td class="num"><span style="color:var(--purple)">${hPipe}</span></td><td class="num">${hRate}%</td></tr>`
       }).join('')
-    : '<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px">No data</td></tr>';
+    :'<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:20px">No data</td></tr>'
 
   // By zip
-  const zips = [...new Set(docs.map(d=>d.zipCode).filter(Boolean))].sort();
-  document.getElementById('zipAnalyticsBody').innerHTML = zips.length
-    ? zips.map(z => {
-        const zd = docs.filter(d=>d.zipCode===z);
-        const zv = visits.filter(v=>zd.find(d=>d.id===v.doctorId));
-        const zConvo = zv.filter(v=>v.result==='got doctor conversation').length;
-        const zYes = zd.filter(d=>d.status==='yes').length;
-        const zRate = zd.length ? ((zYes/zd.length)*100).toFixed(1) : 0;
-        return `<tr><td>${z}</td><td class="num">${zd.length}</td><td class="num">${zv.length}</td><td class="num">${zConvo}</td><td class="num"><span style="color:var(--green)">${zYes}</span></td><td class="num">${zRate}%</td></tr>`;
+  const zips=[...new Set(docs.map(d=>d.zipCode).filter(Boolean))].sort()
+  document.getElementById('zipAnalyticsBody').innerHTML=zips.length
+    ?zips.map(z=>{
+        const zd=docs.filter(d=>d.zipCode===z)
+        const zIds=new Set(zd.map(d=>d.id))
+        const zv=visits.filter(v=>zIds.has(v.doctorId))
+        const zConvo=zv.filter(v=>v.result==='got doctor conversation').length
+        const zYes=zd.filter(d=>d.status==='yes').length
+        const zRate=zd.length?((zYes/zd.length)*100).toFixed(1):0
+        return `<tr><td>${escHtml(z)}</td><td class="num">${zd.length}</td><td class="num">${zv.length}</td><td class="num">${zConvo}</td><td class="num"><span style="color:var(--green)">${zYes}</span></td><td class="num">${zRate}%</td></tr>`
       }).join('')
-    : '<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px">No data</td></tr>';
+    :'<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:20px">No data</td></tr>'
 }
 
-function avgVisitsBeforeConvo(docs, visits) {
-  const totals = [];
-  docs.forEach(doc => {
-    const dv = visits.filter(v=>v.doctorId===doc.id).sort((a,b)=>a.date.localeCompare(b.date));
-    const idx = dv.findIndex(v=>v.result==='got doctor conversation');
-    if (idx >= 0) totals.push(idx+1);
-  });
-  return totals.length ? (totals.reduce((a,b)=>a+b,0)/totals.length).toFixed(1) : '—';
-}
+function renderMaybeTrend(docs,visits){
+  // Compare doctors currently "maybe" vs doctors who converted to "yes"
+  const maybeDocs=docs.filter(d=>d.status==='maybe')
+  const yesDocs=docs.filter(d=>d.status==='yes')
 
-function avgConvosBeforeYes(docs, visits) {
-  const totals = [];
-  docs.filter(d=>d.status==='yes').forEach(doc => {
-    const n = visits.filter(v=>v.doctorId===doc.id&&v.result==='got doctor conversation').length;
-    if (n>0) totals.push(n);
-  });
-  return totals.length ? (totals.reduce((a,b)=>a+b,0)/totals.length).toFixed(1) : '—';
-}
-
-// ========== IMPORT ==========
-let _pendingImport = [];
-
-function handleCSVUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => parseAndPreviewCSV(ev.target.result);
-  reader.readAsText(file);
-  e.target.value = '';
-}
-
-const uploadZone = document.getElementById('uploadZone');
-uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag'); });
-uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag'));
-uploadZone.addEventListener('drop', e => {
-  e.preventDefault(); uploadZone.classList.remove('drag');
-  const file = e.dataTransfer.files[0];
-  if (file) { const r = new FileReader(); r.onload = ev => parseAndPreviewCSV(ev.target.result); r.readAsText(file); }
-});
-
-function parseCSVLine(line) {
-  const res = []; let cur = '', inQ = false;
-  for (const c of line) {
-    if (c === '"') inQ = !inQ;
-    else if (c === ',' && !inQ) { res.push(cur); cur = ''; }
-    else cur += c;
-  }
-  res.push(cur);
-  return res.map(s => s.trim().replace(/^"|"$/g,''));
-}
-
-function findCol(header, names) {
-  for (const name of names) {
-    const i = header.indexOf(name);
-    if (i >= 0) return i;
-  }
-  for (const name of names) {
-    const i = header.findIndex(h => h.includes(name));
-    if (i >= 0) return i;
-  }
-  return -1;
-}
-
-function parseAndPreviewCSV(text) {
-  const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-  if (lines.length < 2) { toast('CSV needs at least a header row and one data row', 'error'); return; }
-  const header = parseCSVLine(lines[0]).map(h => h.toLowerCase().replace(/[^a-z ]/g,'').trim());
-
-  const cols = {
-    name: findCol(header, ['doctor name','name','doctor','physician','dr']),
-    practice: findCol(header, ['practice name','practice','clinic','group']),
-    hospitalSystem: findCol(header, ['hospital system','hospital','system','health system','network']),
-    phone: findCol(header, ['phone','phone number','tel','telephone']),
-    address: findCol(header, ['address','street','location']),
-    zipCode: findCol(header, ['zip code','zip','postal code','postal','post code'])
-  };
-
-  _pendingImport = [];
-  for (let i = 1; i < lines.length; i++) {
-    const c = parseCSVLine(lines[i]);
-    const row = {
-      name: cols.name >= 0 ? c[cols.name]||'' : '',
-      practice: cols.practice >= 0 ? c[cols.practice]||'' : '',
-      hospitalSystem: cols.hospitalSystem >= 0 ? c[cols.hospitalSystem]||'' : '',
-      phone: cols.phone >= 0 ? c[cols.phone]||'' : '',
-      address: cols.address >= 0 ? c[cols.address]||'' : '',
-      zipCode: cols.zipCode >= 0 ? c[cols.zipCode]||'' : ''
-    };
-    if (row.name) _pendingImport.push(row);
+  const avgDaysBetween=(docList)=>{
+    const intervals=[]
+    docList.forEach(doc=>{
+      const dv=visits.filter(v=>v.doctorId===doc.id).sort((a,b)=>a.date.localeCompare(b.date))
+      for(let i=1;i<dv.length;i++){
+        const d=daysSince(dv[i-1].date)-daysSince(dv[i].date)
+        if(d>0&&d<90) intervals.push(d)
+      }
+    })
+    return intervals.length?(intervals.reduce((a,b)=>a+b,0)/intervals.length).toFixed(1):'—'
   }
 
-  if (!_pendingImport.length) { toast('No valid doctor rows found — check column headers', 'error'); return; }
+  const avgConvosYes=(docList)=>{
+    const vals=docList.map(doc=>visits.filter(v=>v.doctorId===doc.id&&v.result==='got doctor conversation').length)
+    return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—'
+  }
 
-  document.getElementById('importSummary').textContent = `${_pendingImport.length} doctors ready to import`;
-  document.getElementById('importPreviewBody').innerHTML = _pendingImport.slice(0,30).map((r,i) =>
-    `<tr><td style="color:var(--text2)">${i+1}</td><td>${escHtml(r.name)}</td><td>${escHtml(r.practice)}</td><td>${escHtml(r.hospitalSystem)}</td><td>${escHtml(r.phone)}</td><td>${escHtml(r.address)}</td><td>${escHtml(r.zipCode)}</td></tr>`
-  ).join('') + (_pendingImport.length > 30 ? `<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:10px">…and ${_pendingImport.length-30} more rows</td></tr>` : '');
-  document.getElementById('importPreview').style.display = 'block';
+  const avgVisitsYes=(docList)=>{
+    const vals=docList.map(doc=>visits.filter(v=>v.doctorId===doc.id).length)
+    return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—'
+  }
+
+  const el=document.getElementById('maybeTrend')
+  if(!maybeDocs.length&&!yesDocs.length){
+    el.innerHTML='<div style="color:var(--text2);font-size:13px;padding:12px 0">No "maybe" or "yes" doctors yet to compare.</div>'
+    return
+  }
+
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
+        <div style="font-weight:600;margin-bottom:10px;color:var(--yellow)">🟡 Still "Maybe" (${maybeDocs.length} doctors)</div>
+        <div class="metric-label">Avg days between visits</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px">${avgDaysBetween(maybeDocs)}</div>
+        <div class="metric-label">Avg total visits</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px">${avgVisitsYes(maybeDocs)}</div>
+        <div class="metric-label">Avg Dr conversations</div>
+        <div style="font-size:22px;font-weight:700">${avgConvosYes(maybeDocs)}</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid rgba(63,185,80,.3);border-radius:var(--radius);padding:14px">
+        <div style="font-weight:600;margin-bottom:10px;color:var(--green)">🟢 Converted to "Yes" (${yesDocs.length} doctors)</div>
+        <div class="metric-label">Avg days between visits</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px">${avgDaysBetween(yesDocs)}</div>
+        <div class="metric-label">Avg total visits</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px">${avgVisitsYes(yesDocs)}</div>
+        <div class="metric-label">Avg Dr conversations</div>
+        <div style="font-size:22px;font-weight:700">${avgConvosYes(yesDocs)}</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text2)">
+      Tip: Compare avg days between visits for "maybe" doctors vs converted "yes" doctors to identify optimal cadence.
+    </div>
+  `
 }
 
-function cancelImport() {
-  _pendingImport = [];
-  document.getElementById('importPreview').style.display = 'none';
+function avgVisitsBeforeConvo(docs,visits){
+  const totals=[]
+  docs.forEach(doc=>{
+    const dv=visits.filter(v=>v.doctorId===doc.id).sort((a,b)=>a.date.localeCompare(b.date))
+    const idx=dv.findIndex(v=>v.result==='got doctor conversation')
+    if(idx>=0) totals.push(idx+1)
+  })
+  return totals.length?(totals.reduce((a,b)=>a+b,0)/totals.length).toFixed(1):'—'
 }
 
-function confirmImport() {
-  if (!_pendingImport.length) return;
-  const existing = DB.doctors;
-  const newDocs = _pendingImport.map(r => ({
-    id: uid(), ...r, repId: '', status: 'not contacted'
-  }));
-  DB.doctors = [...existing, ...newDocs];
-  _pendingImport = [];
-  document.getElementById('importPreview').style.display = 'none';
-  populateFilterSelects();
-  toast(`✓ Imported ${newDocs.length} doctors`);
+function avgConvosBeforeYes(docs,visits){
+  const totals=[]
+  docs.filter(d=>d.status==='yes').forEach(doc=>{
+    const n=visits.filter(v=>v.doctorId===doc.id&&v.result==='got doctor conversation').length
+    if(n>0) totals.push(n)
+  })
+  return totals.length?(totals.reduce((a,b)=>a+b,0)/totals.length).toFixed(1):'—'
 }
 
-function downloadSampleCSV() {
-  const csv = `doctor name,practice name,hospital system,phone,address,zip code\r\nDr. Jane Smith,Women's Health Clinic,Mayo Clinic,555-123-4567,123 Main St,55901\r\nDr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902\r\nDr. Maria Chen,Lakeside Women's Center,Allina Health,555-456-7890,789 Lake Dr,55903`;
-  dlFile('sample_doctors.csv', csv, 'text/csv');
+// ═══════════════════════════════════════════
+// IMPORT
+// ═══════════════════════════════════════════
+let _pendingImport=[]
+
+function handleCSVUpload(e){
+  const file=e.target.files[0]; if(!file) return
+  const reader=new FileReader()
+  reader.onload=ev=>parseAndPreviewCSV(ev.target.result)
+  reader.readAsText(file)
+  e.target.value=''
 }
 
-function dlFile(name, content, type='text/csv') {
-  const blob = new Blob([content], { type });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = name;
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+const _uploadZone=document.getElementById('uploadZone')
+_uploadZone.addEventListener('dragover',e=>{e.preventDefault();_uploadZone.classList.add('drag')})
+_uploadZone.addEventListener('dragleave',()=>_uploadZone.classList.remove('drag'))
+_uploadZone.addEventListener('drop',e=>{
+  e.preventDefault();_uploadZone.classList.remove('drag')
+  const file=e.dataTransfer.files[0]
+  if(file){const r=new FileReader();r.onload=ev=>parseAndPreviewCSV(ev.target.result);r.readAsText(file)}
+})
+
+function parseCSVLine(line){
+  const res=[];let cur='',inQ=false
+  for(const c of line){
+    if(c==='"') inQ=!inQ
+    else if(c===','&&!inQ){res.push(cur);cur=''}
+    else cur+=c
+  }
+  res.push(cur)
+  return res.map(s=>s.trim().replace(/^"|"$/g,''))
 }
 
-// ========== EXPORT ==========
-function csvRow(arr) {
-  return arr.map(c => `"${(c||'').toString().replace(/"/g,'""')}"`).join(',');
+function findCol(header,names){
+  for(const name of names){const i=header.indexOf(name);if(i>=0)return i}
+  for(const name of names){const i=header.findIndex(h=>h.includes(name));if(i>=0)return i}
+  return -1
 }
 
-function exportDashboardCSV() {
-  const docs = DB.doctors;
-  const rows = [csvRow(['Doctor Name','Practice','Hospital System','Phone','Zip','Rep','Status','Total Visits','Dr Convos','Front Desk','Last Visit Date','Days Since Last Visit','Next Follow-up Date'])];
-  docs.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(d => {
-    const visits = getDoctorVisits(d.id);
-    const lv = visits[0];
-    const drC = visits.filter(v=>v.result==='got doctor conversation').length;
-    const fdC = visits.filter(v=>v.result==='front desk only').length;
-    rows.push(csvRow([d.name,d.practice,d.hospitalSystem,d.phone,d.zipCode,getRepName(d.repId),d.status,visits.length,drC,fdC,lv?lv.date:'',lv?daysSince(lv.date):'',lv?getFollowupDate(lv):'']));
-  });
-  dlFile('doctors_export.csv', rows.join('\r\n'));
+function parseAndPreviewCSV(text){
+  const lines=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean)
+  if(lines.length<2){toast('CSV needs a header row + at least one data row','error');return}
+  const header=parseCSVLine(lines[0]).map(h=>h.toLowerCase().replace(/[^a-z ]/g,'').trim())
+
+  const cols={
+    name:findCol(header,['doctor name','name','doctor','physician','dr']),
+    practice:findCol(header,['practice name','practice','clinic','group']),
+    hospitalSystem:findCol(header,['hospital system','hospital','system','health system','network']),
+    phone:findCol(header,['phone','phone number','tel','telephone']),
+    address:findCol(header,['address','street','location']),
+    zipCode:findCol(header,['zip code','zip','postal code','postal','post code'])
+  }
+
+  const existingNames=new Set(DB.doctors.map(d=>d.name.toLowerCase().trim()))
+  _pendingImport=[]
+  for(let i=1;i<lines.length;i++){
+    const c=parseCSVLine(lines[i])
+    const row={
+      name:cols.name>=0?c[cols.name]||'':'',
+      practice:cols.practice>=0?c[cols.practice]||'':'',
+      hospitalSystem:cols.hospitalSystem>=0?c[cols.hospitalSystem]||'':'',
+      phone:cols.phone>=0?c[cols.phone]||'':'',
+      address:cols.address>=0?c[cols.address]||'':'',
+      zipCode:cols.zipCode>=0?c[cols.zipCode]||'':''
+    }
+    if(row.name){
+      row._dup=existingNames.has(row.name.toLowerCase().trim())
+      _pendingImport.push(row)
+    }
+  }
+
+  if(!_pendingImport.length){toast('No valid doctor rows found — check column headers','error');return}
+
+  const dups=_pendingImport.filter(r=>r._dup).length
+  const newCount=_pendingImport.length-dups
+  document.getElementById('importSummary').innerHTML=`
+    <strong>${_pendingImport.length}</strong> rows found &nbsp;·&nbsp;
+    <span style="color:var(--green)">${newCount} new</span>&nbsp;·&nbsp;
+    <span style="color:var(--yellow)">${dups} possible duplicates</span>`
+
+  document.getElementById('importPreviewBody').innerHTML=_pendingImport.slice(0,50).map((r,i)=>{
+    const badge=r._dup?'<span class="badge badge-yellow">Dup?</span>':'<span class="badge badge-green">New</span>'
+    return `<tr ${r._dup?'style="opacity:.7"':''}>
+      <td style="color:var(--text2)">${i+1}</td>
+      <td>${badge}</td>
+      <td>${escHtml(r.name)}</td><td>${escHtml(r.practice)}</td><td>${escHtml(r.hospitalSystem)}</td>
+      <td>${escHtml(r.phone)}</td><td>${escHtml(r.zipCode)}</td>
+    </tr>`
+  }).join('')+(_pendingImport.length>50?`<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:8px">…and ${_pendingImport.length-50} more rows</td></tr>`:'')
+
+  // populate assign rep select
+  populateRepSelect('importRepAssign',false)
+  document.getElementById('importOptions').style.display='block'
+  document.getElementById('importPreview').style.display='block'
 }
 
-function exportAnalyticsCSV() {
-  const docs = DB.doctors;
-  const rows = [csvRow(['Visit Date','Doctor Name','Practice','Hospital System','Rep','Result','Notes'])];
-  DB.visits.slice().sort((a,b)=>b.date.localeCompare(a.date)).forEach(v => {
-    const doc = docs.find(d => d.id === v.doctorId);
-    rows.push(csvRow([v.date,doc?.name||'',doc?.practice||'',doc?.hospitalSystem||'',getRepName(doc?.repId),v.result,v.notes||'']));
-  });
-  dlFile('visit_log_export.csv', rows.join('\r\n'));
+function cancelImport(){
+  _pendingImport=[]
+  document.getElementById('importPreview').style.display='none'
+  document.getElementById('importOptions').style.display='none'
 }
 
-function exportAllData() {
-  const data = { doctors: DB.doctors, visits: DB.visits, reps: DB.reps, companyName: DB.companyName, followupWindows: DB.followupWindows, exportedAt: new Date().toISOString(), version: 1 };
-  dlFile('crm_backup.json', JSON.stringify(data, null, 2), 'application/json');
+function confirmImport(){
+  if(!_pendingImport.length) return
+  const dupAction=document.getElementById('importDupAction').value
+  const assignRepId=document.getElementById('importRepAssign').value
+  const existing=DB.doctors
+  const existingNames=new Set(existing.map(d=>d.name.toLowerCase().trim()))
+  let imported=0,skipped=0
+  const newDocs=[]
+  _pendingImport.forEach(r=>{
+    if(r._dup&&dupAction==='skip'){ skipped++; return }
+    newDocs.push({id:uid(),...r,_dup:undefined,repId:assignRepId,status:'not contacted',notes:''})
+    imported++
+  })
+  DB.doctors=[...existing,...newDocs]
+  _pendingImport=[]
+  invalidateCache()
+  document.getElementById('importPreview').style.display='none'
+  document.getElementById('importOptions').style.display='none'
+  populateFilterDropdowns()
+  updateHeaderBadge()
+  toast(`✓ Imported ${imported} doctors${skipped?`, skipped ${skipped} duplicates`:''}`)
 }
 
-function handleJSONImport(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      const data = JSON.parse(ev.target.result);
-      if (!confirm(`Restore backup? This will replace all current data.\n\nBackup contains: ${data.doctors?.length||0} doctors, ${data.visits?.length||0} visits, ${data.reps?.length||0} reps.\nExported: ${data.exportedAt||'unknown'}`)) return;
-      if (data.doctors) DB.doctors = data.doctors;
-      if (data.visits) DB.visits = data.visits;
-      if (data.reps) DB.reps = data.reps;
-      if (data.companyName) DB.companyName = data.companyName;
-      if (data.followupWindows) DB.followupWindows = data.followupWindows;
-      initCompanyName();
-      renderDashboard();
-      toast('Backup restored!');
-    } catch { toast('Invalid or corrupt JSON file', 'error'); }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
+function downloadSampleCSV(){
+  const csv=`doctor name,practice name,hospital system,phone,address,zip code\r\nDr. Jane Smith,Women's Health Clinic,Mayo Clinic,555-123-4567,123 Main St,55901\r\nDr. Robert Lee,OB/GYN Associates,Ascension Health,555-987-6543,456 Oak Ave,55902\r\nDr. Maria Chen,Lakeside Women's Center,Allina Health,555-456-7890,789 Lake Dr,55903`
+  dlFile('sample_doctors.csv',csv,'text/csv')
 }
 
-function clearAllData() {
-  if (!confirm('Delete ALL data? This cannot be undone.')) return;
-  if (!confirm('Final confirmation: permanently delete all doctors, visits, and reps?')) return;
-  ['crm_doctors','crm_visits','crm_reps','crm_company','crm_followup'].forEach(k => localStorage.removeItem(k));
-  initCompanyName();
-  renderDashboard();
-  renderSettings();
-  toast('All data cleared');
+function dlFile(name,content,type='text/csv'){
+  const blob=new Blob([content],{type})
+  const a=document.createElement('a')
+  a.href=URL.createObjectURL(blob)
+  a.download=name; a.click()
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000)
 }
 
-// ========== SETTINGS ==========
-function addRep() {
-  const name = document.getElementById('newRepName').value.trim();
-  if (!name) return;
-  const reps = DB.reps;
-  if (reps.find(r => r.name.toLowerCase() === name.toLowerCase())) { toast('Rep already exists', 'error'); return; }
-  reps.push({ id: uid(), name });
-  DB.reps = reps;
-  document.getElementById('newRepName').value = '';
-  renderSettings();
-  toast('Rep added!');
+// ═══════════════════════════════════════════
+// EXPORT
+// ═══════════════════════════════════════════
+function csvRow(arr){
+  return arr.map(c=>`"${(c||'').toString().replace(/"/g,'""')}"`).join(',')
 }
 
-function deleteRep(id) {
-  const rep = DB.reps.find(r => r.id === id);
-  const docCount = DB.doctors.filter(d => d.repId === id).length;
-  if (!confirm(`Remove rep "${rep?.name}"? Their ${docCount} doctor(s) will become unassigned.`)) return;
-  DB.reps = DB.reps.filter(r => r.id !== id);
-  const docs = DB.doctors;
-  docs.forEach(d => { if (d.repId === id) d.repId = ''; });
-  DB.doctors = docs;
-  renderSettings();
-  toast('Rep removed');
+function exportDashboardCSV(){
+  invalidateCache()
+  const docs=DB.doctors.slice().sort((a,b)=>a.name.localeCompare(b.name))
+  const rows=[csvRow(['Doctor Name','Practice','Hospital System','Phone','Address','Zip','Rep','Status','Notes','Total Visits','Dr Convos','Front Desk','No Entry','Last Visit','Days Since','Next Follow-up'])]
+  docs.forEach(d=>{
+    const visits=getDoctorVisits(d.id)
+    const lv=visits[0]
+    const drC=visits.filter(v=>v.result==='got doctor conversation').length
+    const fdC=visits.filter(v=>v.result==='front desk only').length
+    const ne=visits.filter(v=>v.result==="didn't get in").length
+    rows.push(csvRow([d.name,d.practice,d.hospitalSystem,d.phone,d.address,d.zipCode,getRepName(d.repId),d.status,d.notes||'',visits.length,drC,fdC,ne,lv?lv.date:'',lv?daysSince(lv.date):'',lv?getFollowupDate(lv):'']))
+  })
+  dlFile('doctors_export.csv',rows.join('\r\n'))
 }
 
-function renderSettings() {
-  const reps = DB.reps;
-  const el = document.getElementById('repsList');
-  if (!reps.length) {
-    el.innerHTML = '<div style="color:var(--text2);padding:10px 0">No reps yet. Add one above.</div>';
-  } else {
-    el.innerHTML = reps.map(r => {
-      const docCount = DB.doctors.filter(d => d.repId === r.id).length;
-      const visitCount = DB.visits.filter(v => {
-        const doc = DB.doctors.find(d => d.id === v.doctorId);
-        return doc?.repId === r.id;
-      }).length;
+function exportAnalyticsCSV(){
+  const docs=DB.doctors
+  const rows=[csvRow(['Visit Date','Doctor Name','Practice','Hospital System','Zip','Rep','Result','Notes'])]
+  DB.visits.slice().sort((a,b)=>b.date.localeCompare(a.date)).forEach(v=>{
+    const doc=docs.find(d=>d.id===v.doctorId)
+    rows.push(csvRow([v.date,doc?.name||'',doc?.practice||'',doc?.hospitalSystem||'',doc?.zipCode||'',getRepName(doc?.repId),v.result,v.notes||'']))
+  })
+  dlFile('visit_log_export.csv',rows.join('\r\n'))
+}
+
+function exportAllData(){
+  const data={doctors:DB.doctors,visits:DB.visits,reps:DB.reps,companyName:DB.companyName,followupWindows:DB.followupWindows,exportedAt:new Date().toISOString(),version:2}
+  dlFile('crm_backup.json',JSON.stringify(data,null,2),'application/json')
+}
+
+function handleJSONImport(e){
+  const file=e.target.files[0]; if(!file) return
+  const reader=new FileReader()
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result)
+      if(!confirm(`Restore backup? This replaces all current data.\n\nBackup: ${data.doctors?.length||0} doctors, ${data.visits?.length||0} visits, ${data.reps?.length||0} reps\nExported: ${data.exportedAt||'unknown'}`)) return
+      if(data.doctors) DB.doctors=data.doctors
+      if(data.visits) DB.visits=data.visits
+      if(data.reps) DB.reps=data.reps
+      if(data.companyName) DB.companyName=data.companyName
+      if(data.followupWindows) DB.followupWindows=data.followupWindows
+      invalidateCache()
+      initCompanyName()
+      renderDashboard()
+      toast('Backup restored!')
+    }catch{toast('Invalid or corrupt JSON file','error')}
+  }
+  reader.readAsText(file)
+  e.target.value=''
+}
+
+function clearAllData(){
+  if(!confirm('Delete ALL data? This cannot be undone.')) return
+  if(!confirm('Final confirmation: permanently delete all doctors, visits, and reps?')) return
+  ;['crm_doctors','crm_visits','crm_reps','crm_company','crm_followup'].forEach(k=>localStorage.removeItem(k))
+  invalidateCache()
+  initCompanyName()
+  updateHeaderBadge()
+  renderDashboard()
+  renderSettings()
+  toast('All data cleared')
+}
+
+// ═══════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════
+function addRep(){
+  const name=document.getElementById('newRepName').value.trim()
+  if(!name) return
+  const reps=DB.reps
+  if(reps.find(r=>r.name.toLowerCase()===name.toLowerCase())){toast('Rep already exists','error');return}
+  reps.push({id:uid(),name})
+  DB.reps=reps
+  document.getElementById('newRepName').value=''
+  renderSettings()
+  toast('Rep added!')
+}
+
+function openRenameRep(id){
+  const rep=DB.reps.find(r=>r.id===id)
+  if(!rep) return
+  document.getElementById('renameRepId').value=id
+  document.getElementById('renameRepName').value=rep.name
+  openModal('renameRepModal')
+  setTimeout(()=>document.getElementById('renameRepName').select(),50)
+}
+
+function saveRenameRep(){
+  const id=document.getElementById('renameRepId').value
+  const name=document.getElementById('renameRepName').value.trim()
+  if(!name){toast('Name required','error');return}
+  const reps=DB.reps
+  const i=reps.findIndex(r=>r.id===id)
+  if(i>=0){reps[i].name=name;DB.reps=reps}
+  closeModal('renameRepModal')
+  renderSettings()
+  toast('Rep renamed')
+}
+
+function deleteRep(id){
+  const rep=DB.reps.find(r=>r.id===id)
+  const docCount=DB.doctors.filter(d=>d.repId===id).length
+  if(!confirm(`Remove rep "${rep?.name}"? Their ${docCount} doctor(s) become unassigned.`)) return
+  DB.reps=DB.reps.filter(r=>r.id!==id)
+  const docs=DB.doctors
+  docs.forEach(d=>{if(d.repId===id)d.repId=''})
+  DB.doctors=docs
+  renderSettings()
+  toast('Rep removed')
+}
+
+function renderSettings(){
+  const reps=DB.reps
+  const el=document.getElementById('repsList')
+  if(!reps.length){
+    el.innerHTML='<div style="color:var(--text2);padding:10px 0">No reps yet. Add one above.</div>'
+  }else{
+    el.innerHTML=reps.map(r=>{
+      const docCount=DB.doctors.filter(d=>d.repId===r.id).length
+      const visitCount=DB.visits.filter(v=>{const doc=DB.doctors.find(d=>d.id===v.doctorId);return doc?.repId===r.id}).length
+      const yes=DB.doctors.filter(d=>d.repId===r.id&&d.status==='yes').length
       return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
         <div style="flex:1">
           <div style="font-weight:600">${escHtml(r.name)}</div>
-          <div style="color:var(--text2);font-size:12px">${docCount} doctors · ${visitCount} visits</div>
+          <div style="color:var(--text2);font-size:12px">${docCount} doctors · ${visitCount} visits · <span style="color:var(--green)">${yes} yes</span></div>
         </div>
+        <button class="btn btn-secondary btn-xs" onclick="openRenameRep('${r.id}')">Rename</button>
         <button class="btn btn-danger btn-xs" onclick="deleteRep('${r.id}')">Remove</button>
-      </div>`;
-    }).join('');
+      </div>`
+    }).join('')
   }
 
-  const fw = DB.followupWindows;
-  document.getElementById('fwFrontDesk').value = fw['front desk only'] || 7;
-  document.getElementById('fwDoctorConvo').value = fw['got doctor conversation'] || 14;
-  document.getElementById('fwNoEntry').value = fw["didn't get in"] || 5;
+  const fw=DB.followupWindows
+  document.getElementById('fwFrontDesk').value=fw['front desk only']||7
+  document.getElementById('fwDoctorConvo').value=fw['got doctor conversation']||14
+  document.getElementById('fwNoEntry').value=fw["didn't get in"]||5
 }
 
-function saveFollowupWindows() {
-  DB.followupWindows = {
-    'front desk only': parseInt(document.getElementById('fwFrontDesk').value) || 7,
-    'got doctor conversation': parseInt(document.getElementById('fwDoctorConvo').value) || 14,
-    "didn't get in": parseInt(document.getElementById('fwNoEntry').value) || 5
-  };
-  toast('Follow-up windows saved');
+function saveFollowupWindows(){
+  DB.followupWindows={
+    'front desk only':parseInt(document.getElementById('fwFrontDesk').value)||7,
+    'got doctor conversation':parseInt(document.getElementById('fwDoctorConvo').value)||14,
+    "didn't get in":parseInt(document.getElementById('fwNoEntry').value)||5
+  }
+  toast('Follow-up windows saved')
 }
 
-// ========== INIT ==========
-initCompanyName();
-renderDashboard();
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+initCompanyName()
+updateHeaderBadge()
+renderDashboard()
 </script>
 </body>
 </html>
